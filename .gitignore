@@ -2,8 +2,10 @@
 .DS_Store
 
 # Tex Files
-.aux
-.log
-.fls
-.out
-.fdb*
+*.aux
+*.log
+*.fls
+*.out
+*.fdb*
+*.gz
+*.toc
