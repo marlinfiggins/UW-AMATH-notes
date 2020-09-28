@@ -1,0 +1,9 @@
+# MacFiles
+.DS_Store
+
+# Tex Files
+.aux
+.log
+.fls
+.out
+.fdb*

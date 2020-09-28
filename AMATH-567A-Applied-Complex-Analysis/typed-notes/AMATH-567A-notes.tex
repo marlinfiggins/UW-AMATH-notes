@@ -1,0 +1,141 @@
+\documentclass[12pt]{article}
+
+%Preamble
+
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{amsrefs}
+\usepackage{amsfonts}
+%\usepackage{dsfont}
+\usepackage{mathrsfs}
+\usepackage{mathtools}
+%\usepackage{stmaryrd}
+%\usepackage[all]{xy}
+\usepackage{enumerate}
+\usepackage[shortlabels]{enumitem}
+\usepackage{verbatim} %% includes comment environment
+\usepackage{hyperref}
+\usepackage[capitalize]{cleveref}
+\crefformat{equation}{~(#2#1#3)}
+\usepackage{caption, subcaption}
+\usepackage{graphicx}
+\graphicspath{{figures/}}
+\usepackage{fullpage} %%smaller margins
+\usepackage[all,arc]{xy}
+\usepackage{mathrsfs}
+
+%% Sectioning, Header / Footer, ToC
+\usepackage{titlesec}
+\usepackage{fancyhdr}
+\usepackage{tocloft}
+
+\hypersetup{
+    linktoc=all,     %set to all if you want both sections and subsections linked
+}
+
+\newcommand{\bbF}{\mathbb{F}}
+\newcommand{\bbN}{\mathbb{N}}
+\newcommand{\bbQ}{\mathbb{Q}}
+\newcommand{\bbR}{\mathbb{R}}
+\newcommand{\bbZ}{\mathbb{Z}}
+\newcommand{\bbC}{\mathbb{C}}
+
+\newcommand{\abs}[1]{ \left| #1 \right| }
+\newcommand{\diff}[2]{\frac{d #1}{d #2}}
+\newcommand{\infsum}[1]{\sum_{#1}^{\infty}}
+\newcommand{\norm}[1]{ \left|\left| #1 \right|\right| }
+\newcommand{\eval}[1]{ \left. #1 \right| }
+
+\renewcommand{\phi}{\varphi}
+
+%--------Theorem Environments--------
+%theoremstyle{plain} --- default
+\newtheorem{thm}{Theorem}[section]
+\newtheorem{cor}[thm]{Corollary}
+\newtheorem{prop}[thm]{Proposition}
+\newtheorem{lem}[thm]{Lemma}
+\newtheorem{conj}[thm]{Conjecture}
+\newtheorem{quest}[thm]{Question}
+
+\theoremstyle{definition}
+\newtheorem{defn}[thm]{Definition}
+\newtheorem{defns}[thm]{Definitions}
+\newtheorem{con}[thm]{Construction}
+\newtheorem{exmp}[thm]{Example}
+\newtheorem{exmps}[thm]{Examples}
+\newtheorem{notn}[thm]{Notation}
+\newtheorem{notns}[thm]{Notations}
+\newtheorem{addm}[thm]{Addendum}
+\newtheorem{exer}[thm]{Exercise}
+
+\theoremstyle{remark}
+\newtheorem{rem}[thm]{Remark}
+\newtheorem{rems}[thm]{Remarks}
+\newtheorem{warn}[thm]{Warning}
+\newtheorem{sch}[thm]{Scholium}
+
+\makeatletter
+\let\c@equation\c@thm
+\makeatother
+\numberwithin{equation}{section}
+
+\bibliographystyle{plain}
+
+%% Sectioning Aesthetics
+\titleformat{\section}
+{\normalfont\LARGE\bfseries}{\thesection.}{1em}{}
+\titleformat{\subsection}
+{\normalfont\Large\bfseries}{\thesubsection}{1em}{}
+\titleformat{\subsubsection}
+{\normalfont\normalsize\bfseries}{\thesubsubsection}{1em}{}
+\titleformat{\paragraph}[runin]
+{\normalfont\normalsize\bfseries}{\theparagraph}{1em}{}
+\titleformat{\subparagraph}[runin]
+{\normalfont\normalsize\bfseries}{\thesubparagraph}{1em}{}
+
+
+%% Header Aesthetics
+\pagestyle{fancy}
+
+\setlength{\headheight}{12pt}
+\setlength{\headsep}{0.3in}
+\renewcommand{\headrulewidth}{0.4pt}
+\renewcommand{\footrulewidth}{0.4pt}
+\renewcommand{\contentsname}{\hfill\bfseries\Large Table of Contents\hfill}
+\renewcommand{\sectionmark}[1]{\markright{ #1}}
+
+\lhead{\textbf{}} % controls the left corner of the header
+%\chead{\fancyplain{}{\rightmark }}
+ % controls the center of the header / adds section # to top
+\rhead[]{Marlin Figgins} % controls the right corner of the header
+\lfoot{Last updated: \today} % controls the left corner of the footer
+\cfoot{} % controls the center of the footer
+\rfoot{Page~\thepage} % controls the right corner of the footer
+
+\title{\bfseries\huge{AMATH 567A: Applied Complex Analysis}\vspace{-1ex}} \author{\href{marlinfiggins@gmail.com}{\Large{Marlin Figgins}}\vspace{-2ex}}
+\date{\large{Oct. 1, 2020}}
+
+\begin{document}
+
+\maketitle
+
+	\section*{\hfill Introduction \hfill}
+
+  This document is a collection of my personal notes on complex analysis during my time as a student in AMATH 567A in fall quarter 2020 at the University of Washington.
+
+  \thispagestyle{empty}
+
+  %% Table of Contents Page/
+  \newpage
+  \tableofcontents
+  \thispagestyle{empty}
+  \newpage
+
+  %% Set first page after ToC
+  \setcounter{page}{1}
+
+
+  %% Start here.
+
+\end{document}
