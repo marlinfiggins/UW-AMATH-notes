@@ -49,6 +49,10 @@
 
 \renewcommand{\phi}{\varphi}
 
+% Declare real and imaginary operators 
+%\DeclareMathOperator{\Re}{Re}
+%\DeclareMathOperator{\Im}{Im}
+
 %--------Theorem Environments--------
 %theoremstyle{plain} --- default
 \newtheorem{thm}{Theorem}[section]
@@ -98,7 +102,7 @@
 %% Header Aesthetics
 \pagestyle{fancy}
 
-\setlength{\headheight}{12pt}
+\setlength{\headheight}{16pt}
 \setlength{\headsep}{0.3in}
 \renewcommand{\headrulewidth}{0.4pt}
 \renewcommand{\footrulewidth}{0.4pt}
@@ -124,6 +128,11 @@
 
   This document is a collection of my personal notes on complex analysis during my time as a student in AMATH 567A in fall quarter 2020 at the University of Washington.
 
+  \subsection*{Logistics}%
+  \label{sub:logistics}
+  
+  Homework is 70 \% of the the grade and is due on Wed (at midnight?). Final is worth 30 \% of the grade and will be take-home. There will be office hours with Tung on Tu and one day to be determined. TA office hours are Mon. and Wed. from 4 to 5pm.  
+
   \thispagestyle{empty}
 
   %% Table of Contents Page/
@@ -137,5 +146,137 @@
 
 
   %% Start here.
+
+  \section{Complex Numbers}
+  \label{sec:complex_numbers}
+
+We begin our discussion of complex analysis with their motivation. Consider the polynomial equation with integer coefficients
+
+\begin{equation}
+  x^2 + 1 = 0. %\rightarrow z_* = \pm 1
+\end{equation}
+
+In the real numbers $\bbR$, this has no solution. Since $x^2 \geq 0$ for any real number $x$, we know that
+
+\begin{equation*}
+x^2 + 1 > 0 \text{ for all } x\in \bbR.
+\end{equation*}
+
+In an ideal world, we would want to have a number system in which every polynomial equation has a solution. This is where the complex numbers arise. Breaking from our traditions of real numbers, we can simply invent some other number $i$, so that
+%% Why do we want the fundamental theorem of algebra?
+\begin{equation*}
+  i^2 = -1 \Rightarrow i = \sqrt{-1}.
+\end{equation*}
+
+We call this number $i$ an \emph{imaginary} or \emph{complex} number. As we can see, the number $i$ is clearly \textbf{not} a real number due to it having a negative square. Using $i$, we can define the set of complex numbers as follows. The complex numbers are numbers of the form 
+
+\begin{defn}
+  We define the set of complex numbers as 
+\begin{equation}
+  \bbC = \{ a + bi \mid a, b \in \bbR \text{ and } i = \sqrt{-1} \}.
+\end{equation}
+\end{defn}
+
+Notice that under this construction, $\bbR$ is the subset of $\bbC$ such that $b=0$. In fact, we can define two binary operations \emph{complex addition} $+_\bbC$ and \emph{complex muliplication} $\cdot_\bbC$ on $\bbC$ which turn out to operate simuliarly to those in the real numbers.
+
+\begin{defn}
+  Given complex numbers $z=a+ib$ and $w=c+id$, define
+\begin{align}
+  z +_\bbC w=& (a+ib)+(c+id)=(a+c)+i(b+d)\\
+  z\cdot_\bbC w=&= (a+ib)\cdot(c+id)=(ac-bd)+ i(ad+bc).
+\end{align}
+\end{defn}
+
+\begin{rem}
+  We often write $zw$ in place of $z\cdot_\bbC$ for simplicity.
+\end{rem}
+
+You can derive these operations directly from the definition of the complex numbers yourself by using the substitution $i = \sqrt{-1}$. One can show that under these operations $\bbC$ is a field much like $\bbR$ and that in fact, real and complex addition and multiplication are exactly the same when working on $\bbR \subset \bbC$. In this way, we can think of $\bbC$ as an extension of $\bbR$. Because of this, we'll drop the subscript $_\bbC$ when dealing with complex operations and simply use the same notation as their real counterparts $+$ and $\cdot$.
+
+\begin{prop}
+  The complex numbers $\bbC$ are a field when endowed with complex addition and multiplication as above.
+\end{prop}
+
+%%%%% Ordered Field Stuff%%%%
+Though $\bbC$ is a field, it is not an ordered field. We say that $F$ is an ordered field if there exists $P\subset F$ such that $P$ is closed under addition and multiplication and exactly one holds: $x=0, x\in P, -x\in P$. This cannot be not the case for the complex numbers since $x^2\in P$ i.e. $i^2=-1\in P$ and $1^2=1\in P$.
+%%%%%%%
+
+One significant benefit of extending the real numbers to the complex numbers is that it guarantees us that any polynomial with complex coefficients of degree $n$ has exactly $n$ complex roots. This statement is called the \emph{Fundamental Theorem of Algebra} and we'll prove it for later. For now, let's return to our beginning example, but now using complex numbers. We can rely on the algebraic rules defined above to see that
+
+\begin{equation}
+  z^2 + 1 = 0 \Rightarrow z^2 = -1 \Rightarrow z = \pm i.
+\end{equation}
+
+By extending our problem to the complex numbers, we can see that $z^2 + 1$ had two roots all along. They just lived in the complex numbers, outside of the real number line.
+
+%Complex analysis also allows us to understand questions like:
+
+%\begin{equation}
+%  \text{Why does } \frac{1}{1+z^2} = \sum_{n \in \bbN} (-1)^n z^{2n} \text{ diverge at } \abs{z} = 1?
+%\end{equation}
+
+The reality is that complex numbers also behave like vectors in nice ways. Instead of thinking of the complex number $z = x + iy$ as being a sum, we can write it in terms of coordinates as a point in the plane $(x,y)$. This allows us to define the magnitude of complex numbers as the distance from the origin $0 \in \bbC$ as
+
+\begin{equation}
+\abs{z} = \sqrt{x^2 + y^2}.
+\end{equation}
+This is simply the Pythagorean theorem that you may have seen in earlier mathematics classes. We can use this similarity to show that this definition of magnitude defines a distance metric on $\bbC$.
+
+\begin{prop}
+  We can use the magnitude of complex numbers to define a distance metric on $\bbC$. The distance between any two points $z$ and $w$ in $\bbC$ is given by the magnitude of their difference.
+  \begin{equation}
+    d(z,w) = \abs{z - w}. 
+  \end{equation}
+
+\end{prop}
+Writing $z = a + ib$ and $w = c + id$, we can compute this by looking at the real and imaginary parts of $z$ and $w$ individually, so that
+\begin{equation}
+  \abs{z - w} = \sqrt{(a-c)^2 + (b-d)^2}
+\end{equation}
+
+\begin{rem}
+  Since $\abs{\cdot}$ is a distance metric on $\bbC$, it satisfies the triangle inequality i.e. that
+  \begin{equation}
+    \abs{z+w}\leq \abs{z} + \abs{w}.
+  \end{equation}
+\end{rem}
+
+Notice that this is equivalent to the distance between these points if we were to consider them as $z=(a,b)$ and $(c,d)$ in $\bbR^2$. With this representation in mind, we'll define some more operations for dealing with geometry of the complex numbers. To start, we'll break our complex number's down into two seperate components.
+
+\begin{defn}
+Given a complex number $z = a + bi$, we define the real $\Re$ and imaginary $\Im$ parts of $z$ to be
+\begin{equation}
+  \Re[z] = a \text{ and  } \Im[z] = b.
+\end{equation}
+\end{defn}
+
+We also define the complex conjugate of $z$.
+\begin{defn}
+For any complex number $z = a + bi$, we define the \emph{complex conjugate} of $z$ to be 
+\begin{equation}
+  \bar{z} = a - bi
+\end{equation}
+\end{defn}
+
+The complex conjugate is extremely useful in discussion of the geometry of the complex plane. One direct consequence of our definition of it is that complex conjugate of a product of two complex numbers is the product of the complex conjugates of the individual numbers.
+
+\begin{prop}
+  For any complex numbers $z$ and $w$, $\bar{zw} = \bar{z}\bar{w}$
+\end{prop}
+
+With a quick computation, we can see that magnitude of a complex number can also be found using its complex conjugate.
+\begin{equation}
+  \abs{z} = \sqrt{z\bar{z}}. 
+\end{equation}
+
+The complex conjugate also gives us an easy formala for computing the multiplicative inverse of any non-zero complex number.
+
+\begin{prop}
+  If $z\neq 0$, then $z\cdot \left(\frac{\bar{z}}{\left|z\right|^2}\right)=1$. Therefore, we can compute the multplicative inverse of $z$ as
+
+  \begin{equation}
+    z^{-1}  = \frac{\bar{z}}{\left|z\right|^2}. 
+  \end{equation}
+\end{prop}
 
 \end{document}
