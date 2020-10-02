@@ -47,6 +47,8 @@
 \newcommand{\bbR}{\mathbb{R}}
 \newcommand{\bbZ}{\mathbb{Z}}
 \newcommand{\bbC}{\mathbb{C}}
+\newcommand{\calF}{\mathcal{F}}
+\newcommand{\Prob}{\mathbb{P}}
 
 \newcommand{\abs}[1]{ \left| #1 \right| }
 \newcommand{\diff}[2]{\frac{d #1}{d #2}}
@@ -91,7 +93,7 @@
 
 %% Sectioning Aesthetics
 \titleformat{\section}
-{\normalfont\LARGE\bfseries}{\thesection.}{1em}{}
+{\normalfont\Large\bfseries}{\thesection.}{1em}{}
 \titleformat{\subsection}
 {\normalfont\Large\bfseries}{\thesubsection}{1em}{}
 \titleformat{\subsubsection}
@@ -105,7 +107,7 @@
 %% Header Aesthetics
 \pagestyle{fancy}
 
-\setlength{\headheight}{12pt}
+\setlength{\headheight}{16pt}
 \setlength{\headsep}{0.3in}
 \renewcommand{\headrulewidth}{0.4pt}
 \renewcommand{\footrulewidth}{0.4pt}
@@ -146,10 +148,171 @@
 
   \section{Probability Spaces and Random Variables}%
   \label{sec:probability_spaces_and_random_variables}
-  
-  \section{Independence, Martingales, and Conditioning}%
+  %TODO: Port over some of old notes / blog post figures introducing the study of probability.
+
+  % We'll begin with a slightly informal definition of a probability space. 
+
+  \begin{defn}[Probability Space: Version A]
+    A \emph{probability space} is a triple $(\Omega, \calF, \Prob)$ where $\Omega$ is the \emph{sample space} or the space of possible outcomes, $\calF$ is the set of events which are subsets of $\Omega$ and $\Prob \colon \calF \to [0,1]$ is a probability measure that assigns probabilities to events.
+ \end{defn} 
+
+ \begin{exmp}[Rolling a fair standard die]
+ In this case, we have six possible outcomes as our die is six-sided. Therefore, our sample space is 
+
+ \begin{equation}
+   \Omega = \{ 1, 2, 3, 4, 5, 6 \}.
+ \end{equation}
+
+ The set of events in this case are all possible subsets of $\Omega$ i.e. the power set $\mathcal{P}(\Omega)$. Finally, since we specificed that the die is fair, each outcome is equally likely, so our probability measure $\Prob$ is uniform over $\Omega$. Therefore, our probability of a given event is just the fraction of our possible out comes which are in the event.
+
+ \begin{equation}
+ \Prob(A) = \frac{\abs{A}}{\abs{\Omega}} = \frac{\abs{A}}{6} \text{ for all  } A \in \calF.
+ \end{equation}
+
+ For example, we would say that the probability of rolling an even number would be given by
+
+ \begin{equation}
+   \Prob(\{ 2, 4, 6 \}) = \frac{3}{6} = 0.5.
+ \end{equation}
+ \end{exmp}
+
+ In this example, it is simple enough to use all possible subets are our set of events, but as we attempt to deal with more complicated probability spaces, we'll need to develop a more rigorous notion of what constitutes an event, so that our probability measures will have certain properties of interest. This idea is formalized by the $\sigma$-algebra.
+
+ \begin{defn}[$\sigma$-algebra]
+   A non-empty collection of subsets of $\Omega$ is a \emph{$\sigma$-algebra} of $\Omega$ if it satistifies the following:
+
+ \begin{enumerate}[(i)]
+   \item For each event $A\in \calF$, then its complement $A^c\in \calF$
+   \item If we have a countable sequence of sets $A_i \in \calF$, then their union $\bigcup_i A_i \in \calF$.
+ \end{enumerate}
+
+ These two conditions form the statement that a $\sigma$-algebra is closed under complements and countable unions.
+ \end{defn}
+
+ \begin{prop}
+ The definition of the $\sigma$-algebra implies that $\sigma$-algebras are also closed under countable intersection because
+ \begin{equation}
+   \bigcap_i A_i = \left( \bigcup_i A_i^c \right)^c.
+ \end{equation}
+ \end{prop}
+
+ % TODO: Add text- This formalizes the notion of events and combinations of events espressed earlier. Now, we'll develop a formal notion of probabiltiy.
+% TODO: Add text- Minimally, we know that a $\sigma$-algebra must contain the empty set and the space on which it lives. 
+ \begin{exer}
+   Show that any $\sigma$-algebra of $\Omega$ contains both the entire space $\Omega$ and the empty set.
+ \end{exer}
+
+%TODO: Clean this up and perhaps limit to probability measures.
+ When we have a probability space $\Omega$ and a $\sigma$-algebra $\calF$ on $\Omega$, we can define a measure on the space $(\Omega, \calF)$. \emph{Describe what a measure is intuitively.}
+
+ \begin{defn}[Measure]
+   A \emph{measure} is a function $\mu: \calF \to [0, \infty)$ which satisfies:
+   \begin{enumerate}[(i)]
+     \item $\mu(A) \geq \mu(\emptyset) = 0$ for all $A\in\calF$
+     \item if $A_i \in F$ is a countable sequence of disjoint sets, then 
+       \begin{equation}
+         \mu\left(\bigcup_i A_i \right) = \sum_i \mu(A_i).
+       \end{equation}
+   \end{enumerate}
+   In the case that $\mu(\Omega)$, we will call $\mu$ a \emph{probability measure} and denote it as $\Prob$.
+ \end{defn}
+
+ %%% TODO: Import picture of probability measure from blog post.
+
+ Our definition of measure allows us to ensure that our notion of probabilty satisifies some of the intuitive properties one might expect of probabilities.
+
+ \begin{thm}[Properties of measure]\leavevmode
+   \begin{enumerate}[(i)]
+     \item \emph{Monotonicity.} If $A\subset B$, then $\mu(A) \leq  \mu(B)$.
+   \item \emph{Subadditivity.} If $A\subset \bigcup_{j\in\bbN} A_j$, then 
+        \begin{equation}
+        \mu(A) \leq \sum_{j\in\bbN} \mu(A_m).
+        \end{equation}
+ \end{enumerate}
+ \end{thm}
+
+ \begin{proof}[Proof of monotonicity]
+   Finish proof. % TODO: Add figure from blog post
+ \end{proof}
+
+ \begin{proof}[Proof of subadditivity]
+  Finish proof. 
+ \end{proof}
+ 
+ % TODO: Exposition about the fact that we can pass to limits
+ \begin{thm}[Continuity of measure]\leavevmode
+   \begin{enumerate}[(i)]
+     \item \emph{Continuity from above.} If we have a sequence of increasing subsets $A_1 \subset A_2 \subset \cdots $ such that $\bigcup_i A_i = A$, then 
+       \begin{equation}
+         \mu(A_i) \uparrow \mu(A) \text{ as } i \to \infty.
+       \end{equation}
+     \item \emph{Continuity from below.} If we have a sequence of decreasing subsets $A_1 \supset A_2 \supset \cdots $ such that $\bigcup_i A_i = A$, then 
+       \begin{equation}
+         \mu(A_i) \downarrow \mu(A) \text{ as } i \to \infty. 
+       \end{equation}
+ \end{enumerate}
+ \end{thm}
+
+ \begin{exer}
+   Prove that in a probability space $(\Omega, \calF, \Prob)$ 
+   \begin{equation} 
+     \Prob(A) = 1 - \Prob(A^c) \text{ for any event } A \in \cal F.
+   \end{equation}
+ \end{exer}
+
+\subsubsection*{Discrete Probability Spaces}%
+\label{ssub:discrete_probability_spaces}
+
+\paragraph{Constructing a discrete probability space.}
+
+We'll now focus on the case of discrete probability spaces. Let $\Omega$ be a countable set. That is, either finite or countably infinite. Also, let $\calF$ be the set of all subsets of $\Omega$ which we will call the power set $\mathcal{P}(\Omega)$. We can know endow $(\Omega, \calF)$ with a probability measure. 
+
+\begin{thm}
+  Suppose we have a countable set $\Omega$ with a $\sigma$-algebra $\calF=\mathcal{P}(\Omega)$. Then any function $p \colon \Omega \to [0, 1]$ such that 
+\begin{equation}
+  \sum_{\omega\in\Omega} p(\omega) = 1
+\end{equation}
+induces a probability measure $\Prob$ on $(\Omega, \calF)$ as follows. For any event $A\in \calF$, we define the probability of $A$ as 
+\begin{equation}
+  \Prob(A) = \sum_{\omega \in A} p(\omega).
+\end{equation}
+We call the function $p$ the \emph{probability mass function} of $\Prob$.
+\end{thm}
+
+\begin{exmp}[Repeated fair coins]
+Consider the following experiment: We have a fair coin and we flip it until it lands on heads. We can write the possible outcomes as sequences of heads and tails, so that
+\begin{equation}
+  \Omega = \{ H, TH, TTH, TTH, \ldots \}.
+\end{equation}
+
+As before, we can let $\calF = \mathcal{P}(\Omega)$. Let's motivate our choice of probability mass function $p$. Assuming that the probability of heads and tails at every flip is $\frac{1}{2}$, then we have a probability of $\left(\frac{1}{2}\right)^n$ for having $n$ consequective flips. This tells us that
+\begin{equation}
+p(\underbrace{T\cdots T}_{n \text{ tails}} H) = \left(\frac{1}{2}\right)^n.
+\end{equation}
+
+We can check that this indeed sums to one:
+
+\begin{equation}
+  \sum_{\omega\in\Omega}p(\omega) = \sum_{i=1}^{\infty} \left(\frac{1}{2}\right)^n. 
+\end{equation}
+
+As shown above, this probability mass function induces a probability measure $\Prob$ on $(\Omega, \calF)$. We can now use this measure the compute the probability of events like:
+
+\begin{align}
+  A &= \{ \text{Heads appears before third toss.} \} = \{H, TH \},\\
+  B &= \{ \text{There are an even number of tails.}\} = \{H, TTH, TTTTH, \ldots\}.
+\end{align}
+
+We can then compute these probabilities as:
+\begin{align}
+  \Prob(A) &= \frac{1}{2} + \frac{1}{4}, \\
+  \Prob(B) &= \frac{1}{2} + \frac{1}{2^3} + \frac{1}{2^5} + \cdots = \frac{2}{3}.   
+\end{align}
+\end{exmp}
+
+\section{Independence, Martingales, and Conditioning}%
   \label{sec:independence_martingales_and_conditioning}
-  
+ 
   \section{Characteristic Functions}%
   \label{sec:characteristic_functions}
   
