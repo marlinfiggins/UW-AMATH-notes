@@ -105,7 +105,7 @@
 %% Header Aesthetics
 \pagestyle{fancy}
 
-\setlength{\headheight}{12pt}
+\setlength{\headheight}{16pt}
 \setlength{\headsep}{0.3in}
 \renewcommand{\headrulewidth}{0.4pt}
 \renewcommand{\footrulewidth}{0.4pt}
@@ -142,5 +142,92 @@
 
 
   %% Start here.
+
+  \section{Lecture 1: Overview}%
+  \label{sec:lecture_1}
+ 
+  This course will be entirely about the problem of $Ax=b$. That is, we're concerning with linear systems. In fact, many problems are of this form. In the age of data science, these variables $A$ and $x$ can get huge quickly. In your typical linear algebra classes, you learn to solve this with Gaussian elimination, but the reality is that this is one of the slowest ways you can solve this problem.  
+
+  \subsection{Matrix Decompositions}%
+  \label{sub:matrix_decompositions}
+
+  Matrix decompositions allow us to solve the problem $Ax = b$ much faster. Let's start with the case of complex square matrices $A\in \bbC^{n \times n}$.
+
+  To solve this problem with Gaussian Elimination, the cost would be on the order of $O(n^3)$. This is fine for small matrices, but immagine you're dealing with large matrices and this begins to blow up in computation time rather quickly.
+
+  % Rephrase cost of computation to the number of computations necessary.
+  \subsubsection{LU decomposiiton}%
+  \label{ssub:lu_decomposiiton}
+  
+  The $LU$ decomposition allows us to represent our matrix $A$ as 
+
+  \begin{equation}
+    A = LU
+  \end{equation}
+  
+  where $L$ is lower triangular and $U$ is upper triangular. Our problem becomes
+
+  \begin{align}
+    A x= b \\
+    LUx = b \\
+    Ux = y \\
+    Ly = b 
+  \end{align}
+  
+  This allows us to use forward and back substituion individually which are of order $O(n^2)$ to solve this probelm. This $LU$ decompoisition already gives a saving of order of $n$. This is all well and good, but what does it take to get an $LU$ decomposition?
+
+  \subsubsection{QR decomposition}%
+  \label{ssub:qr_decomposition}
+  
+  We want to express our matrix $A$ in the form
+
+  \begin{equation}
+    A = QR
+  \end{equation}
+  
+  where $Q$ is a unitary matrix and $R$ is upper triangular. Solving $Ax=b$ with this decomposiiton gives us,
+  
+  \begin{align}
+    QRx=b\\
+    Rx = y\\
+    Qy = b \\
+    Q^T [Qy = b] \\
+    y = Q^T b
+  \end{align}
+
+\subsubsection{Eigenvalue Decomposition}%
+\label{ssub:eigenvalue_decomposition}
+
+We can write the eigenvale decomposition as 
+
+\begin{equation}
+  A = V \Lambda V^{-1}
+\end{equation}
+
+Using this to solve $Ax=b$, we get that
+
+\begin{align}
+  V^{-1} [ V \Lambda V^{-1} x = b]\\
+  \Lambda y = V^{-1} b
+ \end{align}
+
+ Since $\Lambda$ is diagonal, the answer is very clear here.
+
+\subsubsection{Singular Value Decomposition}%
+ \label{ssub:singular_value_decomposition}
+ 
+The singular value decomposition is one of the most important decomposition algorithms. We decompose $A$ as
+
+\begin{equation}
+  A = U \Sigma V^{*} 
+\end{equation}
+
+Solving $Ax=b$,
+
+\begin{align}
+  U\Sigma V^{*} x = b \\
+\Sigma V^* x = U^* b \\
+\Sigma \hat{x} = \hat{b}
+\end{align}
 
 \end{document}
