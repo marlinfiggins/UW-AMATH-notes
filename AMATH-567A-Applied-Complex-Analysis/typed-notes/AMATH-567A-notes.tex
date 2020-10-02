@@ -50,8 +50,8 @@
 \renewcommand{\phi}{\varphi}
 
 % Declare real and imaginary operators 
-%\DeclareMathOperator{\Re}{Re}
-%\DeclareMathOperator{\Im}{Im}
+\renewcommand{\Re}{\text{Re}}
+\renewcommand{\Im}{\text{Im}}
 
 %--------Theorem Environments--------
 %theoremstyle{plain} --- default
@@ -79,9 +79,6 @@
 \newtheorem{warn}[thm]{Warning}
 \newtheorem{sch}[thm]{Scholium}
 
-\makeatletter
-\let\c@equation\c@thm
-\makeatother
 \numberwithin{equation}{section}
 
 \bibliographystyle{plain}
@@ -191,11 +188,15 @@ Notice that under this construction, $\bbR$ is the subset of $\bbC$ such that $b
   We often write $zw$ in place of $z\cdot_\bbC$ for simplicity.
 \end{rem}
 
+% TODO: Insert figure showing how complex addition works.
+
 You can derive these operations directly from the definition of the complex numbers yourself by using the substitution $i = \sqrt{-1}$. One can show that under these operations $\bbC$ is a field much like $\bbR$ and that in fact, real and complex addition and multiplication are exactly the same when working on $\bbR \subset \bbC$. In this way, we can think of $\bbC$ as an extension of $\bbR$. Because of this, we'll drop the subscript $_\bbC$ when dealing with complex operations and simply use the same notation as their real counterparts $+$ and $\cdot$.
 
 \begin{prop}
   The complex numbers $\bbC$ are a field when endowed with complex addition and multiplication as above.
 \end{prop}
+
+% TODO: Show how to divide complex numbers with a similar formuala.
 
 %%%%% Ordered Field Stuff%%%%
 Though $\bbC$ is a field, it is not an ordered field. We say that $F$ is an ordered field if there exists $P\subset F$ such that $P$ is closed under addition and multiplication and exactly one holds: $x=0, x\in P, -x\in P$. This cannot be not the case for the complex numbers since $x^2\in P$ i.e. $i^2=-1\in P$ and $1^2=1\in P$.
@@ -231,7 +232,7 @@ This is simply the Pythagorean theorem that you may have seen in earlier mathema
 \end{prop}
 Writing $z = a + ib$ and $w = c + id$, we can compute this by looking at the real and imaginary parts of $z$ and $w$ individually, so that
 \begin{equation}
-  \abs{z - w} = \sqrt{(a-c)^2 + (b-d)^2}
+  \abs{z - w} = \sqrt{(a-c)^2 + (b-d)^2}.
 \end{equation}
 
 \begin{rem}
@@ -244,7 +245,7 @@ Writing $z = a + ib$ and $w = c + id$, we can compute this by looking at the rea
 Notice that this is equivalent to the distance between these points if we were to consider them as $z=(a,b)$ and $w=(c,d)$ in $\bbR^2$. With this representation in mind, we'll define some more operations for dealing with geometry of the complex numbers. To start, we'll break our complex number's down into two seperate components.
 
 \begin{defn}
-Given a complex number $z = a + bi$, we define the real $\Re$ and imaginary $\Im$ parts of $z$ to be
+Given a complex number $z = a + bi$, we define the real and imaginary parts of $z$ to be
 \begin{equation}
   \Re[z] = a \text{ and  } \Im[z] = b.
 \end{equation}
@@ -278,5 +279,85 @@ The complex conjugate also gives us an easy formala for computing the multiplica
     z^{-1}  = \frac{\bar{z}}{\left|z\right|^2}. 
   \end{equation}
 \end{prop}
+
+% TODO: Show how to take inverse of complex numbers with formulas like those for addition, mult, and dicidusion 
+
+\subsection{Polar Coordinates}%
+\label{sub:polar_coordinates}
+% TODO: Clean up maybe move second half to elementarty functions
+
+As we've seen, we can represent the complex numbers using Cartesian coordinates as ordered pairs in $\bbR^2$. We can also represent a complex number $z\in\bbC$ with polar coordinates.
+
+\begin{equation}
+  z = x + iy = r(\cos\theta + i\sin\theta)
+\end{equation}
+
+Euler was able to prove that the right had side of this equation was equivalent to
+
+\begin{equation}
+  e^{i\theta} = \cos\theta + i\sin\theta.
+\end{equation}
+
+This allows us to define $\sin$ and $\cos$ in terms of the complex exponentional as
+
+\begin{align}
+  \sin\theta = \frac{1}{2}(e^{i\theta} - e^{-i\theta}),\\
+  \cos\theta = \frac{1}{2}(e^{i\theta} + e^{-i\theta}).
+\end{align}
+
+\begin{proof}[Proof of Euler's formula]
+  Let $f(\theta) = \cos\theta + i\sin\theta$. Since both $\sin$ and $\cos$ satisfy the second order equation,
+  \begin{equation}
+    \frac{d^2}{d\theta^2}g + g = 0
+  \end{equation}
+  then we know that $f$ does as well with initial conditions $f(0) = 1$ and $f'(0) = i$. The exponential function should have the property that
+  \begin{equation}
+    \frac{d}{d\theta} e^{\lambda \theta} = \lambda e^{\lambda \theta}.
+  \end{equation}
+  By taking another derivative, we can see that 
+  \begin{equation} 
+    \frac{d^2}{d\theta^2} e^{\lambda \theta} + e^{\lambda \theta} = (\lambda^2 + 1)(e^{\lambda \theta}).
+  \end{equation}
+  We see that for $\lambda = i$, this function satisfies the same differential equation as $f$. Likewise, $e^{\lambda 0} = 1$ and $\frac{d}{d\theta} e^{\lambda \theta} \mid_{\theta = 0} = \lambda$. Therefore, by the uniqueness of this differential equation. We have
+  \begin{equation}  
+  e^{i\theta} = \cos\theta + i\sin\theta.
+  \end{equation}
+\end{proof}
+
+\section{Elementary Functions}%
+\label{sec:elementary_functions}
+
+\subsection{Complex Exponenital}%
+\label{sub:complex_exponenital}
+
+
+\begin{defn}[Complex exponential]
+  Define 
+  \begin{equation}
+    e^z = 1 + z + \frac{z^2}{2!} + \cdots = \sum_{i=1}^{\infty}\frac{z^n}{n!}
+  \end{equation}
+\end{defn}
+
+\begin{prop}[Properties of the complex exponential]
+  %TODO: Fill out properties of complex exponential
+\end{prop}
+
+%TODO: Define the complex power series for each of the $\sin $ and $\cos$. Define hyperbolic sine and cosine.
+
+\subsection{The logarithm}%
+\label{sub:the_logarithm}
+
+Can the familiar logarithm function in the real numbers also be generalized easily in the complex numbers. Define a function $w=f(z)$ such that $z = e^w$ with $e$ defined with infinite series.
+
+With $z = re^{i\theta}$ and $w = u + iv$. We see that 
+
+\begin{equation*}
+  r = e^u \text{ and } \theta = v.
+\end{equation*}
+
+Therefore, $u = \ln r$ is real and singular-valued, but $\theta$ can only be determined up to a shift by $2n\pi$ since the complex exponential $e^{i\theta}$ is equivalent for 
+\begin{equation}
+  \theta = \theta_p + 2n\pi \text{ with } -\pi < \theta_p \leq \pi.
+\end{equation}
 
 \end{document}

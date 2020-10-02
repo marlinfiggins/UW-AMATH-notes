@@ -82,9 +82,6 @@
 \newtheorem{warn}[thm]{Warning}
 \newtheorem{sch}[thm]{Scholium}
 
-\makeatletter
-\let\c@equation\c@thm
-\makeatother
 \numberwithin{equation}{section}
 
 \bibliographystyle{plain}
@@ -229,5 +226,102 @@ Solving $Ax=b$,
 \Sigma V^* x = U^* b \\
 \Sigma \hat{x} = \hat{b}
 \end{align}
+
+\section{Lecture 2}%
+\label{sec:lecture_2}
+
+In reality, we're often dealing with systems and matrices which are not perfectly square. Many problems are not perfectly square. In reality, very few are. The rest of these problems fall into two general categories of systems which we call underdetermined and overdetermined systems. When it comes to solving $Ax=b$ for these problems, the question is ill-posed. Though these systems may have no solutions or infinitely many solutions, most software will still be able to solve the problem $Ax=b$, how is this done?
+%TODO: More exposition on what it means for a system to be OD or UD.
+\paragraph{Underdetermined systems $(m < n)$.}
+
+These systems fundamentally have infinitely many solutions, so $Ax=b$ is instead posed as an optimization problem
+\begin{equation}
+  \min_x \norm{x}_2 \text{ such that } Ax = b.
+\end{equation}
+In this case, the minimization of the $L^2$ norm acts as a regularizer for our desired solution $x$.
+
+\paragraph{Overdetermined systsems $(m>n)$.}
+
+Due to the abundance of constraints, satisfying $Ax=b$ is technically impossible. In this case, we attempt to find the closest possible solution i.e.
+
+\begin{equation}
+  \min_x \norm{Ax + b} + \lambda \norm{x}_2.
+\end{equation}
+
+Here the $L^2$ norm acts as a regularizer for our solution $x$. We use the parameter $\lambda$ as a hyperparameter which determines the relative importance of the regularizer $\lambda$. Indeed, there are several different ways to do this regularization such as using the $L^1$ norm.
+
+\begin{equation}
+  \min_x \norm{Ax + b} + \lambda_1 \norm{x}_1 + \lambda_2 \norm{x}_2.
+\end{equation}
+
+\subsection{Norms}%
+\label{sub:norms}
+
+In short, a norm is just a way of quantifying distance. In particular, the two most interesting norms that we'll cover are the $L^2$ and $L^1$ norms.
+
+\paragraph{$L^2$ norm}%
+\label{par:_l_2_norm}
+We can define the $L^2$ norm of a vector $x$ as 
+\begin{equation}
+  \norm{x}_2 = \sqrt{\abs{x_1}^2 + \abs{x_2}^2}
+\end{equation}
+
+Notice, this is the distance that we're used to in most geometric contexts.
+
+\paragraph{$L^1$ norm}%
+\label{par:_l_1_norm}
+
+There are also various other norms such as the $L^1$ norm which we denote as $\norm{\cdot}_1$
+\begin{equation}
+  \norm{x}_1 = \abs{x_1} + \abs{x_2}
+\end{equation}
+
+In applications, the $L^1$ norm tends to promote sparsity in solutions.
+
+\paragraph{Other norms}%
+\label{par:other_norms} 
+
+In general, we can compute the $L^p$ norm of a vector $x$ as 
+\begin{equation}
+  \norm{x}_p = (\abs{x_1}^p + \abs{x_2}^p)^{1/p}.
+\end{equation}
+
+There are also the $L^\infty$ and $L^0$ norms.
+
+\subsection{Nullspaces and zero eigenvalues}%
+\label{sub:nullspaces}
+
+Consider the problem $A^*y = 0$ where $A^*$ is the adjoint of the matrix $A$. When does $Ax=b$ have a solution?
+\begin{align}
+  Ax \cdot y &= b \cdot y\\
+  x\cdot A^*y &= b\cdot y \\
+  b\cdot y &= 0
+\end{align}
+
+The Fredholm alternative is the statement that $b$ is not orthogonal to $y$, then $Ax=b$ has no solutions.
+% TODO: Double check this. Flesh this out.
+
+Suppose we have the problem $Ax=b$ and a vector $x_0$ with 0 eigenvalue $Ax_0 = 0$. Then we can generate solutions as any vector of the form
+\begin{equation}
+  x = \xi + \alpha x_0,
+\end{equation}
+where $\xi$ is a solution. The regularization process is an attempt to avoid this by minimizing across the vectors $x_0$ in the nullspace.
+%TODO: Clean up this langauge.
+
+\subsection{Linear Operators}%
+\label{sub:linear_operators}
+
+Linear operators are communtative and associative under addition.
+\begin{enumerate}[(i)]
+  \item \emph{Commutative. (+)} $A + B = B + A$
+  \item \emph{Associative. (+)} $A + (B + C) = (A + B) + C$
+  \item \emph{Distributive.} $A(B + C) = AB + BC$
+  \item \emph{Associative ($\cdot$).} $(AB)C = A(BC)$
+\end{enumerate}
+
+Though we have all these algebraic properties, it is important to know that multiplication is not commutative for matrices in general i.e.
+\begin{equation}
+  BA \neq AB. 
+\end{equation}
 
 \end{document}
