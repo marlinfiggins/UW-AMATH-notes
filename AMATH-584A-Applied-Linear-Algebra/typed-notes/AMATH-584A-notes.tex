@@ -401,12 +401,17 @@ There are also the $L^\infty$ and $L^0$ norms.
 \paragraph{Inner products}%
 \label{par:inner_products}
 
-
 The inner product of two vectors $\vec{x}, \vec{y} \in \bbC^{m}$ is given by 
 \begin{equation}
   \vec{x}^*\vec{y} = \sum_{i=1}^{m} \bar{x}_i y_i,
 \end{equation}
-where $\bar{z}$ denotes the \emph{complex conjugate of $z$}.   Notice that the inner product $\vec{x}^*\vec{y}$ is a scalar.
+where $\bar{z}$ denotes the \emph{complex conjugate of $z$}.   Notice that the inner product $\vec{x}^*\vec{y}$ is a scalar. The inner product is bilinear in the following sense. Suppose we have vectors $\vec{x}_1, \vec{x}_2, \vec{y}\in \bbC^m$ and two scalars $\alpha, \beta \in \bbC$. 
+
+\begin{align}
+  (\vec{x}_1 + \vec{x}_2)^*\vec{y} &= \vec{x}_1^*\vec{y} + \vec{x}_2^*\vec{y} \\
+\vec{y}^*(\vec{x}_1 + \vec{x}_2) &= \vec{y}^*\vec{x}_1 + \vec{y}^*\vec{x}_2 \\
+(\alpha \vec{x})^*(\beta \vec{y}) &= \bar{\alpha}\beta \vec{x}^*\vec{y}.
+\end{align}
 
 \subsection{Adjoint and Unitary Operators}%
 \label{sub:adjoint_and_unitary_operators}
@@ -450,6 +455,8 @@ Under our definition, its adjoint is given by
   \end{pmatrix}. 
 \end{equation}
 \end{exmp}
+
+%TODO: AB)^* = B^*A^*
 
 \paragraph{Hermitian Matrices}%
 \label{par:hermitian_matrices}
