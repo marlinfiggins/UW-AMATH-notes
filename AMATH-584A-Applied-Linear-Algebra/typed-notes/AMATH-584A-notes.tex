@@ -55,6 +55,7 @@
 \newcommand{\eval}[1]{ \left. #1 \right| }
 
 \renewcommand{\phi}{\varphi}
+\renewcommand{\vec}[1]{\mathbf{#1}}
 
 %--------Theorem Environments--------
 %theoremstyle{plain} --- default
@@ -139,30 +140,31 @@
 
 
   %% Start here.
-
-  \section{Lecture 1: Overview}%
-  \label{sec:lecture_1}
- 
-  This course will be entirely about the problem of $Ax=b$. That is, we're concerning with linear systems. In fact, many problems are of this form. In the age of data science, these variables $A$ and $x$ can get huge quickly. In your typical linear algebra classes, you learn to solve this with Gaussian elimination, but the reality is that this is one of the slowest ways you can solve this problem.  
-
+  \section{Overview: The problem Ax=b}
+  This course will be almost entirely about the problem of $\vec{Ax}=\vec{b}$. That is, we're concerning with linear systems. In fact, many problems are of this form. In the age of data science, these matrix $\vec{A}$ and vector $\vec{x}$ can get huge quickly. 
+  
   \subsection{Matrix Decompositions}%
   \label{sub:matrix_decompositions}
 
-  Matrix decompositions allow us to solve the problem $Ax = b$ much faster. Let's start with the case of complex square matrices $A\in \bbC^{n \times n}$.
+  In what follows, let's assume we are given a complex matrix $\vec{A}\in \bbC^{n \times n}$ and a vector $\vec{b}$. Suppose that we're given the problem
+  
+  \begin{equation}
+    \vec{Ax} = \vec{b}.
+  \end{equation}
 
-  To solve this problem with Gaussian Elimination, the cost would be on the order of $O(n^3)$. This is fine for small matrices, but immagine you're dealing with large matrices and this begins to blow up in computation time rather quickly.
+In your typical linear algebra classes, you learn to solve this with Gaussian elimination, but the reality is that this is one of the slowest ways you can solve this problem. To solve this problem with Gaussian Elimination, the cost would be on the order of $O(n^3)$. This is fine for small matrices, but immagine you're dealing with large matrices and this begins to blow up in computation time rather quickly. Matrix decompositions allow us to solve the problem $\vec{Ax} = \vec{b}$ much faster. We'll start with a simple overview of several matrix decompositions such as the $\vec{LU}$, $\vec{QR}$, eigenvalue, and singular value decompositions.
 
-  % Rephrase cost of computation to the number of computations necessary.
+  %TODO: Rephrase cost of computation to the number of computations necessary.
   \subsubsection{LU decomposiiton}%
   \label{ssub:lu_decomposiiton}
   
-  The $LU$ decomposition allows us to represent our matrix $A$ as 
+  The $\vec{LU}$ decomposition allows us to represent our matrix $\vec{A}$ as 
 
   \begin{equation}
-    A = LU
+    \vec{A} = \vec{LU}
   \end{equation}
   
-  where $L$ is lower triangular and $U$ is upper triangular. Our problem becomes
+  where $\vec{L}$ is a lower triangular matrix and $\vec{U}$ is upper triangular. Our problem becomes
 
   \begin{align}
     A x= b \\
@@ -171,18 +173,19 @@
     Ly = b 
   \end{align}
   
-  This allows us to use forward and back substituion individually which are of order $O(n^2)$ to solve this probelm. This $LU$ decompoisition already gives a saving of order of $n$. This is all well and good, but what does it take to get an $LU$ decomposition?
+  This allows us to use forward and back substituion individually which are of order $O(n^2)$ to solve this probelm. This $\vec{LU}$ decompoisition already gives a saving of order of $n$. This is all well and good, but what does it take to get an $\vec{LU}$ decomposition?
+
 
   \subsubsection{QR decomposition}%
   \label{ssub:qr_decomposition}
   
-  We want to express our matrix $A$ in the form
+  We want to express our matrix $\vec{A}$ in the form
 
   \begin{equation}
-    A = QR
+    \vec{A} = \vec{QR}
   \end{equation}
   
-  where $Q$ is a unitary matrix and $R$ is upper triangular. Solving $Ax=b$ with this decomposiiton gives us,
+  where $\vec{Q}$ is a unitary matrix and $\vec{R}$ is upper triangular. Solving $vec{A}x=b$ with this decomposiiton gives us,
   
   \begin{align}
     QRx=b\\
@@ -195,31 +198,33 @@
 \subsubsection{Eigenvalue Decomposition}%
 \label{ssub:eigenvalue_decomposition}
 
-We can write the eigenvale decomposition as 
+We can write the eigenvalue decomposition as 
 
 \begin{equation}
-  A = V \Lambda V^{-1}
+  \vec{A} = \vec{V} \vec{\Lambda} \vec{V}^{-1}
 \end{equation}
 
-Using this to solve $Ax=b$, we get that
+Using this to solve $\vec{Ax}=\vec{b}$, we get that
 
 \begin{align}
   V^{-1} [ V \Lambda V^{-1} x = b]\\
   \Lambda y = V^{-1} b
  \end{align}
 
- Since $\Lambda$ is diagonal, the answer is very clear here.
+ Since $\vec{\Lambda}$ is diagonal, the answer is very clear here.
 
 \subsubsection{Singular Value Decomposition}%
  \label{ssub:singular_value_decomposition}
  
-The singular value decomposition is one of the most important decomposition algorithms. We decompose $A$ as
+The singular value decomposition is one of the most important decomposition algorithms. We decompose $\vec{A}$ as
 
 \begin{equation}
-  A = U \Sigma V^{*} 
+  \vec{A} = \vec{U \Sigma V}^{*}. 
 \end{equation}
 
-Solving $Ax=b$,
+%TODO: Talk a bit more about this decomposition and its usefulness
+
+Solving $\vec{A}x=b$,
 
 \begin{align}
   U\Sigma V^{*} x = b \\
@@ -227,14 +232,19 @@ Solving $Ax=b$,
 \Sigma \hat{x} = \hat{b}
 \end{align}
 
-\section{Lecture 2}%
-\label{sec:lecture_2}
+%TODO: Take notes on the video lectures
 
-In reality, we're often dealing with systems and matrices which are not perfectly square. Many problems are not perfectly square. In reality, very few are. The rest of these problems fall into two general categories of systems which we call underdetermined and overdetermined systems. When it comes to solving $Ax=b$ for these problems, the question is ill-posed. Though these systems may have no solutions or infinitely many solutions, most software will still be able to solve the problem $Ax=b$, how is this done?
+\subsection{Under and over determined systems}%
+\label{sub:under_and_over_determined_systems}
+
+
+In reality, we're often dealing with systems and matrices which are not perfectly square. Many problems are not perfectly square. In reality, very few are. The rest of these problems fall into two general categories of systems which we call underdetermined and overdetermined systems. When it comes to solving $\vec{A}x=b$ for these problems, the question is ill-posed. Though these systems may have no solutions or infinitely many solutions, most software will still be able to solve the problem $\vec{A}x=b$, how is this done?
+
 %TODO: More exposition on what it means for a system to be OD or UD.
+
 \paragraph{Underdetermined systems $(m < n)$.}
 
-These systems fundamentally have infinitely many solutions, so $Ax=b$ is instead posed as an optimization problem
+These systems fundamentally have infinitely many solutions, so $\vec{A}x=b$ is instead posed as an optimization problem
 \begin{equation}
   \min_x \norm{x}_2 \text{ such that } Ax = b.
 \end{equation}
@@ -242,7 +252,7 @@ In this case, the minimization of the $L^2$ norm acts as a regularizer for our d
 
 \paragraph{Overdetermined systsems $(m>n)$.}
 
-Due to the abundance of constraints, satisfying $Ax=b$ is technically impossible. In this case, we attempt to find the closest possible solution i.e.
+Due to the abundance of constraints, satisfying $\vec{A}x=b$ is technically impossible. In this case, we attempt to find the closest possible solution i.e.
 
 \begin{equation}
   \min_x \norm{Ax + b} + \lambda \norm{x}_2.
@@ -254,16 +264,105 @@ Here the $L^2$ norm acts as a regularizer for our solution $x$. We use the param
   \min_x \norm{Ax + b} + \lambda_1 \norm{x}_1 + \lambda_2 \norm{x}_2.
 \end{equation}
 
-\subsection{Norms}%
+
+
+\section{Linear Operators}%
+\label{sec:linear_operators}
+
+\paragraph{Linear operators.}%
+\label{par:linear_operators}
+%TODO: What should I include before these properties.
+
+Linear operators are communtative and associative under addition.
+\begin{enumerate}[(i)]
+  \item \emph{Commutative} ($+$). $\vec{A} + \vec{B} = \vec{B} + \vec{A}$
+  \item \emph{Associative} ($+$). $\vec{A} + (\vec{B} + \vec{C}) = (\vec{A} + \vec{B}) + \vec{C}$
+  \item \emph{Distributive}. $\vec{A}(\vec{B} + \vec{C}) = \vec{AB} + \vec{BC}$
+  \item \emph{Associative} ($\cdot$). $(\vec{AB})\vec{C} = \vec{A}(\vec{BC})$
+\end{enumerate}
+
+Though we have all these algebraic properties, it is important to know that multiplication is not commutative for matrices in general i.e. given any two linear operators, it is not necessary true that
+\begin{equation}
+  BA \neq AB. 
+\end{equation}
+
+\subsection{Matrix Fundamentals}
+\paragraph{Matrices and vectors.}
+For the majority of these notes, the linear operators we will work with will be complex matrices $\vec{A} \in \bbC^{n \times m}$ which operate on complex (column) vectors $\vec{x}\in\bbC^m$. We can illustrate these matrices and vectors with the following notation:
+\begin{equation}
+  \vec{A} = \begin{pmatrix}
+    a_{11} & a_{12} & \cdots & a_{1m} \\
+    a_{21} & a_{22} &        & a_{2m} \\
+    \vdots &        & \ddots & \vdots \\
+    a_{n1} & a_{n2} & \cdots & a_{nm}
+  \end{pmatrix} \text{ and } 
+  \vec{x} = \begin{pmatrix}
+  x_1 \\
+  x_2 \\
+  \vdots \\
+  x_m
+  \end{pmatrix}.
+\end{equation}
+where the numbers $a_{ij} \in \bbC$ and $x_i \in \bbC$ are called the entries of $\vec{A}$ and the elements of $\vec{x}$ respectively. Alternatively, we can represent this same matrix by its columns $\vec{a}_1, \ldots, \vec{a}_n$:
+
+\begin{equation}
+  \vec{A} = \begin{pmatrix}
+    \vdots & \vdots &   & \vdots\\
+    \vec{a}_1 & \vec{a}_2 & \cdots & \vec{a}_n \\
+    \vdots & \vdots &  & \vdots
+  \end{pmatrix}.
+\end{equation}
+Notice that the matrix $\vec{A}$ has $n$ rows and $m$ columns and that $\vec{x}$ is written so that it has $m$ rows. 
+
+\paragraph{Addition on matrices and vectors.}
+Addition between vectors happens element-wise. Similarly, addition between matrices occurs entry-wise. This means that addition is only well defined between matrices and vectors of the same size.
+
+\paragraph{Scalar multiplication of vectors and matrices.}
+
+\paragraph{Multiplying vectors by matrices.}
+
+Given a matrix $\vec{A} \in \bbC^{n\times m}$ and a vector $\vec{x} \in \bbC^{m}$, we can make $\vec{A}$ act as a linear operator on $\vec{x}$. We can write the resulting vector $n$-vector $\vec{Ax}$ element-wise as:
+
+\begin{equation}
+  (\vec{Ax})_{i} = \sum_{j=1}^{n} a_{ij}x_j 
+\end{equation}
+
+We can also write this as a linear combination of the columns of $\vec{A}$.
+\begin{equation}
+  \vec{Ax} = \begin{pmatrix}
+    \vdots \\
+    x_1\vec{a}_1\\
+    \vdots
+  \end{pmatrix} + 
+  \begin{pmatrix}
+    \vdots \\
+    x_2\vec{a}_2\\
+    \vdots
+  \end{pmatrix} + \cdots +
+  \begin{pmatrix}
+    \vdots \\
+    x_n\vec{a}_n\\
+    \vdots
+  \end{pmatrix}.
+\end{equation}
+
+\paragraph{Matrix multiplication.}
+
+\paragraph{Matrix inverses.}
+
+\subsection{Norms and inner products}%
 \label{sub:norms}
+
+\paragraph{Defining the norm}
+%TODO: Parahgraph describing norms and formal definition.
 
 In short, a norm is just a way of quantifying distance. In particular, the two most interesting norms that we'll cover are the $L^2$ and $L^1$ norms.
 
 \paragraph{$L^2$ norm}%
 \label{par:_l_2_norm}
-We can define the $L^2$ norm of a vector $x$ as 
+We can define the $L^2$ norm of a vector $\vec{x}$ as 
 \begin{equation}
-  \norm{x}_2 = \sqrt{\abs{x_1}^2 + \abs{x_2}^2}
+  \norm{\vec{x}}_2 = \sqrt{\abs{x_1}^2 + \abs{x_2}^2}
 \end{equation}
 
 Notice, this is the distance that we're used to in most geometric contexts.
@@ -273,55 +372,115 @@ Notice, this is the distance that we're used to in most geometric contexts.
 
 There are also various other norms such as the $L^1$ norm which we denote as $\norm{\cdot}_1$
 \begin{equation}
-  \norm{x}_1 = \abs{x_1} + \abs{x_2}
+  \norm{\vec{x}}_1 = \abs{x_1} + \abs{x_2}
 \end{equation}
 
 In applications, the $L^1$ norm tends to promote sparsity in solutions.
 
-\paragraph{Other norms}%
+\paragraph{$L^p$ norms}%
 \label{par:other_norms} 
 
 In general, we can compute the $L^p$ norm of a vector $x$ as 
 \begin{equation}
-  \norm{x}_p = (\abs{x_1}^p + \abs{x_2}^p)^{1/p}.
+  \norm{\vec{x}}_p = (\abs{x_1}^p + \abs{x_2}^p)^{1/p}.
 \end{equation}
 
+There are additionally two \emph{special} $L$ norms which are the $L^\infty$ and $L^0$ norms.
+
+%TODO: More info leading into this section.
+
+\paragraph{$L^\infty$ norm}
+
+\paragraph{$L^0$ norm}
+%TODO: Talk about combinatorial difficuly associated with this.
+
 There are also the $L^\infty$ and $L^0$ norms.
+%TODO: Properties of norms
+%TODO: Norm definition scalar mutliplication.
+
+\paragraph{Inner products}%
+\label{par:inner_products}
+
+
+The inner product of two vectors $\vec{x}, \vec{y} \in \bbC^{m}$ is given by 
+\begin{equation}
+  \vec{x}^*\vec{y} = \sum_{i=1}^{m} \bar{x}_i y_i,
+\end{equation}
+where $\bar{z}$ denotes the \emph{complex conjugate of $z$}.   Notice that the inner product $\vec{x}^*\vec{y}$ is a scalar.
+
+\subsection{Adjoint and Unitary Operators}%
+\label{sub:adjoint_and_unitary_operators}
+
+\paragraph{Adjoint}
+
+We define the \emph{adjoint} of a matrix $\vec{A}$ to be the complex conjugate of its transpose $\vec{A}^*$. That is,
+
+\begin{equation}
+  \vec{A} = \begin{pmatrix}
+    a_{11} & a_{12} & \cdots & a_{1m} \\
+    \vdots &        & \ddots & \vdots \\
+    a_{n1} & a_{n2} & \cdots & a_{nm}
+  \end{pmatrix} \implies
+  \vec{A}^* = \begin{pmatrix}
+    \bar{a}_{11} & \cdots & \bar{a}_{n1} \\
+    \bar{a}_{12} &        & \bar{a}_{n2} \\
+    \vdots       & \ddots & \vdots \\
+    \bar{a}_{1m} & \cdots & \bar{a}_{nm}
+  \end{pmatrix}. 
+\end{equation}
+
+Similarly, we note that the adjoint of a vector $\vec{x}$ is also the complex conjugate of its transpose. Therefore, our definition of the inner product simplifies to be multiplication of a vector and its adjoint. This why we use the same symbol $^*$ to denote both the inner product and adjoint.
+%TODO: Expand upon the same symbol issue using an example.
+\begin{exmp}
+As a concrete example, consider the following matrix:
+
+\begin{equation}
+  \vec{A} = \begin{pmatrix}
+    2 + i & 7 & i \\
+    7i & 4 & 12 - i 
+  \end{pmatrix}
+\end{equation}
+
+Under our definition, its adjoint is given by
+\begin{equation}
+  \vec{A}^* = \begin{pmatrix}
+    2-i & -7i \\
+    7   & 4   \\ 
+    -i  & 12 + i
+  \end{pmatrix}. 
+\end{equation}
+\end{exmp}
+
+\paragraph{Hermitian Matrices}%
+\label{par:hermitian_matrices}
+
+In the case, that a matrix is its own adjoint i.e. $\vec{A} = \vec{A}^*$. We say that it is \emph{self-adjoint} or \emph{Hermitian}. All Hermitian matrices are square matrices.
+
+%TODO: Properties of Hermitian matrices
+
+\paragraph{Unitary Matrices}%
+\label{par:unitary_matrices}
+Another class of matrices related to the adjoint are the unitary matrices. A matrix $\vec{U}$ is said to be $\emph{unitary}$ if $\vec{U}^* \vec{U} = \vec{I}$. 
+
+% TODO: Properties of Unitary Matrices
 
 \subsection{Nullspaces and zero eigenvalues}%
 \label{sub:nullspaces}
 
-Consider the problem $A^*y = 0$ where $A^*$ is the adjoint of the matrix $A$. When does $Ax=b$ have a solution?
+%TODO: Clean up this langauge and section.
+Consider the problem $\vec{A}^*y = 0$ where $\vec{A}^*$ is the adjoint of the matrix $\vec{A}$. When does $\vec{A}x=b$ have a solution?
 \begin{align}
   Ax \cdot y &= b \cdot y\\
   x\cdot A^*y &= b\cdot y \\
   b\cdot y &= 0
 \end{align}
 
-The Fredholm alternative is the statement that $b$ is not orthogonal to $y$, then $Ax=b$ has no solutions.
+The Fredholm alternative is the statement that $b$ is not orthogonal to $y$, then $\vec{A}x=b$ has no solutions.
 % TODO: Double check this. Flesh this out.
 
-Suppose we have the problem $Ax=b$ and a vector $x_0$ with 0 eigenvalue $Ax_0 = 0$. Then we can generate solutions as any vector of the form
+Suppose we have the problem $\vec{A}x=b$ and a vector $x_0$ with 0 eigenvalue $\vec{A}x_0 = 0$. Then we can generate solutions as any vector of the form
 \begin{equation}
   x = \xi + \alpha x_0,
 \end{equation}
 where $\xi$ is a solution. The regularization process is an attempt to avoid this by minimizing across the vectors $x_0$ in the nullspace.
-%TODO: Clean up this langauge.
-
-\subsection{Linear Operators}%
-\label{sub:linear_operators}
-
-Linear operators are communtative and associative under addition.
-\begin{enumerate}[(i)]
-  \item \emph{Commutative. (+)} $A + B = B + A$
-  \item \emph{Associative. (+)} $A + (B + C) = (A + B) + C$
-  \item \emph{Distributive.} $A(B + C) = AB + BC$
-  \item \emph{Associative ($\cdot$).} $(AB)C = A(BC)$
-\end{enumerate}
-
-Though we have all these algebraic properties, it is important to know that multiplication is not commutative for matrices in general i.e.
-\begin{equation}
-  BA \neq AB. 
-\end{equation}
-
 \end{document}
