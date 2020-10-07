@@ -490,4 +490,122 @@ Suppose we have the problem $\vec{A}x=b$ and a vector $x_0$ with 0 eigenvalue $\
   x = \xi + \alpha x_0,
 \end{equation}
 where $\xi$ is a solution. The regularization process is an attempt to avoid this by minimizing across the vectors $x_0$ in the nullspace.
+
+\section{Singular Value Decomposition}%
+\label{sec:singular_value_decomposition}
+
+%TODO: Supplement this section with notes from textbook
+
+Here, we return to the singular value decomposition which is one of the most important matrix decompositions in the modern world. We'll begin with an example in 2-dimensions and then scale up the problem.
+
+\begin{exmp}
+Consider the following matrix and vector:
+  \begin{equation}  
+  \vec{A} = \begin{pmatrix}
+    2 & 1\\
+    -1 & 1
+    \end{pmatrix} \quad \vec{x} = \begin{pmatrix}
+    1 \\
+    3
+  \end{pmatrix}
+  \end{equation}
+
+  Using our standard linear algebra muscles, we can easily compute the product $\vec{Ax}$ as 
+
+  \begin{equation}  
+  \vec{Ax} = \begin{pmatrix}
+    2 & 1\\
+    -1 & 1
+    \end{pmatrix}\begin{pmatrix}
+    1 \\
+    3
+  \end{pmatrix} = \begin{pmatrix}
+    5 \\
+    2
+  \end{pmatrix} = \vec{y}.
+  \end{equation}
+  Thinking about this geometrically, we can say that the matrix $\vec{A}$ rotated the vector $\vec{A}$ and then stretched it. In order to decompose this operation, we might ask: "How can we decompose the matrix $\vec{A}$ as a rotation and a stretching?". The former aspect is done with the standard rotation matrix $R_\theta$ which rotates a vector by an angle $\theta$
+
+\begin{equation}
+  R_\theta = \begin{pmatrix}
+    \cos \theta & -\sin\theta\\
+    \sin \theta & \cos\theta 
+  \end{pmatrix}
+\end{equation}
+
+Similarly, the stretching can be accomplishing by multiplication by the matrix
+
+\begin{equation}
+\alpha\vec{I} = \begin{pmatrix}
+  \alpha & 0 \\
+         0 & \alpha
+\end{pmatrix}.
+\end{equation}
+\end{exmp}
+
+%TODO: IF we were to stretch each axis seperatingly, we would instead get a matrix like
+%TODO: Applying a matrix like $\vec{A}$ assuming it has full rank takes your basis to a new orthonormal basis (Principal Axes) $\vec{u}_i$ with singular values which stretch them $sigma_i$.
+
+Mathematically, we can write this as:
+\begin{equation}
+\vec{Av}_i = \sigma_1 \vec{u}_i.
+\end{equation}
+%TODO: Figure of this made in Julia
+
+We can also stack these vectors $\vec{v}_i$ and $\vec{u}_i$ into a matrices of size $n \times n$, so that
+%TODO: Are these sizes right?
+\begin{equation}
+  \vec{A} \begin{pmatrix}
+    \vec{v}_1 & \vec{v}_2 & \cdots & \vec{v}_n
+  \end{pmatrix} = \begin{pmatrix}
+    \vec{u}_1 & \vec{u}_2 & \cdots & \vec{u}_n
+    \end{pmatrix} \begin{pmatrix}
+    \sigma_1 & & &  \\
+             & \sigma_2 & & \\
+             & & \ddots &  \\
+             & & & \sigma_n
+  \end{pmatrix}.
+\end{equation}
+
+More compactly, we can write this as 
+\begin{equation}
+  \vec{AV} = \vec{U\Sigma}.
+\end{equation}
+
+Since our vectors $\vec{v}_i$ map to another orthonormal basis $\vec{u_i}$, we can simply think of them as a kind of rotation. In fact the matrices, we construct $\vec{V}$ and $\vec{U}$ are both unitary matrices. Lastly, as we seen the matrix $\Sigma$ is a diagonal matrix. We can re-write this by taking advatange of the fact that $\vec{V}$ is unitary. Simply, right multiplying by the inverse of $\vec{V}$ shows that 
+\begin{equation}
+  A = \vec{U} \vec{\Sigma} \vec{V}^*.
+\end{equation}
+This is called the reduced singular value decomposition. 
+%TODO: Go back and write the differnece between the reduced form and full form 
+
+Usually, the columns of the singular value decomposition are ordered, so that $\sigma_1 \geq \sigma_2 \ldots$.
+
+This decomposition is extremely robust in fact it is guaranteed to exist for any matrix $\vec{A}$.
+\begin{thm}
+  Every matriz $\vec{A} \in \bbC^{m\times n}$ has a singular value decomposition. Moreover,
+  \begin{enumerate}[(i)]
+    \item The singular values are uniquely determined and if the matrix $\vec{A}$ is square, then they are also distinct.
+    \item The vectors $\vec{u}_i$ and $\vec{v}_i$ are also unique up to a complex sign.
+  \end{enumerate}
+\end{thm}
+
+Suppose we've taken the SVD of $\vec{A}$, we can compute the following relationship between the eigenvalues and the SVD.
+\begin{equation}
+  \vec{A}^*\vec{A} = \vec{V}\vec{\Sigma}^2\vec{V}^*.
+\end{equation}
+
+Right multiplying by $\vec{V}$, we see that 
+
+\begin{equation}
+  \vec{A}^*\vec{A} \vec{V} = \vec{V}\vec{\Sigma}^2 \implies \lambda_j = \sigma_j^2.
+\end{equation}
+
+With a similar computation, we can show that
+\begin{equation}
+  \vec{A}\vec{A}^* \vec{U} = \vec{U} \vec{\Sigma}^2,
+\end{equation}
+
+which allows us to recover our matrix $\vec{U}$.
+
 \end{document}
