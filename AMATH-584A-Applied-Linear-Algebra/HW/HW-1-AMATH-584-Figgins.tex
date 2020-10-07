@@ -71,7 +71,7 @@
 \newcommand{\eval}[1]{ \left. #1 \right| }
 \newcommand{\Expect}[1]{\mathbb{E}\left[#1 \right]}
 \newcommand{\Var}[1]{\mathbb{V}\left[#1 \right]}
-\renewcommand{\v}[1]{\mathbf{#1}}
+\renewcommand{\vec}[1]{\mathbf{#1}}
 
 \renewcommand{\phi}{\varphi}
 \renewcommand{\emptyset}{\O}
@@ -112,7 +112,7 @@
 \begin{document}
 
 \begin{exer}
-    Show that if $\v{A}$ is triangular and unitary, then it is diagonal.
+    Show that if $\vec{A}$ is triangular and unitary, then it is diagonal.
 \end{exer}
 
 \begin{sol}
@@ -121,10 +121,10 @@
 
 
 \begin{exer}
-    Consider Hermitian (self-adjoint) matrices $\v{A}, \v{B} \in \bbC^{n\times m}$.
+    Consider Hermitian (self-adjoint) matrices $\vec{A}, \vec{B} \in \bbC^{n\times n}$.
     \begin{enumerate}[a.]
-        \item Prove that all eigenvalues of $\v{A}$ are real.
-        \item Porve that if $\v{x}_k$ is the $k$th eigenvector, then eigenvectors with distinct eigenvalues are orthogonal.
+        \item Prove that all eigenvalues of $\vec{A}$ are real.
+        \item Prove that if $\vec{x}_k$ is the $k$th eigenvector, then eigenvectors with distinct eigenvalues are orthogonal.
         \item Prove that the sum of two Hermitian matrices is Hermitian.
         \item Prove that the inverse of an invertible Hermitian matrix is Hermitian.
         \item Prove that the product of two Hermitian matrices is Hermitian if and only if $\vec{AB} = \vec{BA}$.
@@ -132,14 +132,107 @@
 \end{exer}
 
 \begin{sol}
+    \begin{proof}[2a.]
+        Suppose that $\vec{A}$ has an eigenvalue $\lambda$ with corresponding eigenvector $\vec{v}$. 
+        \begin{align}
+            \vec{v}^*(\vec{Av}) &= \vec{v}^*(\lambda \vec{v})\\
+                                &= \lambda \vec{v}^*\vec{v} = \lambda \norm{\vec{v}}_2.
+        \end{align}
+We take the the complex conjugate of both sides to see
+\begin{align}
+    \bar{\lambda} \norm{\vec{v}}_2 = (\vec{v}^*(\vec{Av}))^* &= (\vec{Av})^*\vec{v}^{**} \quad ((\vec{AB})^* = \vec{B}^*\vec{A}^*.) \\
+                            &= (\vec{v}^* \vec{A}^*)\vec{v}^{**} \quad (\vec{v}^{**} = \vec{v}.)\\
+                            &= (\vec{v}^* \vec{A}^*)\vec{v} \\ 
+                            &= \vec{v}^*\vec{A}^*\vec{v} \\
+                            &= \vec{v}^* \vec{A}\vec{v} \quad ( \vec{A}^* = \vec{A}. )\\
+                            &= \lambda \norm{\vec{v}}_2.
+\end{align}
 
+This leaves us with the equality $\bar{\lambda}\norm{\vec{v}}_2 = \lambda \norm{\vec{v}}_2$. This can only hold if either $\lambda = \bar{\lambda}$ i.e. $\lambda$ is real or $\norm{v}_2 = 0$. As $\vec{v}$ is an eigenvector, it cannot be zero, $\norm{v}_2 > 0$. Therefore, the eigenvalues of $\vec{A}$ must be real.
+    \end{proof}
+
+    \begin{proof}[2b.]
+        Suppose that we have two eigenvectors $\vec{v}_i$ and $\vec{v}_j$ corresponding to dustinct eigenvalues $\lambda_i$ and $\lambda_j$. Starting from the relation $\vec{Av}_i = \lambda_i\vec{v}_i$, we compute
+        \begin{align}
+            (\lambda_i \vec{v}_i)^*\vec{v}_j &= (\vec{A}\vec{v}_i)^*\vec{v}_j \quad ((\vec{AB})^* = \vec{B}^*\vec{A}^*.) \\
+                                             &= \vec{v_i}^*\vec{A}^*\vec{v}_j  \quad ( \vec{A}^* = \vec{A}. )\\
+                                             &= \vec{v_i}^*\vec{A}\vec{v}_j \quad (\text{Eigenvalue defn.})\\
+                                             &= \vec{v_i}^*(\lambda_j\vec{v}_j).
+        \end{align}
+Using the fact that the eigenvalues $\lambda_i$ and $\lambda_j$ are real, we can see that
+        \begin{equation}
+            (\lambda_i - \lambda_j) (\vec{v}_i^*\vec{v}_j) = 0.
+        \end{equation}
+Since the eigenvalues are distinct ($\lambda_i - \lambda_j \neq 0$), we have that
+\begin{equation}
+            \vec{v}_i^*\vec{v}_j = 0.
+\end{equation}
+Therefore, the eigenvectors $\vec{v}_i$ and $\vec{v}_j$ are orthogonal.
+
+    \end{proof}
+
+    \begin{proof}[2c.] Let $\vec{A}$ and $\vec{B}$ be Hermitian matrices.
+        \begin{align}
+            (\vec{A} + \vec{B})^* &= \vec{A}^* + \vec{B}^* \\
+                                  &= \vec{A} + \vec{B}.
+        \end{align}
+        The first line follow because the sum of the adjoint is equivalent to the adjoint of the sum. The last line follows because both $\vec{A}$ and $\vec{B}$ are Hermitian. 
+
+Alternatively, we can show the same by an entry-wise argument on $\vec{A}$ and $\vec{B}$. Let $(\vec{A})_{ij} = a_{ij}$ and $(\vec{B})_{ij} = b_{ij}$ denote the entries of $\vec{A}$ and $\vec{B}$ respectively. We can then see that
+        \begin{equation}
+            (\vec{A}+\vec{B})_{ij} = c_{ij} = a_{ij} + b_{ij}.
+        \end{equation} 
+Because both $\vec{A}$ and $\vec{B}$ are Hermitian, we have that
+\begin{equation}
+    (\vec{A}^*)_{ij} = \bar{a}_{ji} = a_{ij} \text{ and } (\vec{B}^*)_{ij} = \bar{b}_{ji} = b_{ij}.
+\end{equation}
+
+Taking the adjoint of $\vec{A}$ and $\vec{B}$, we see that 
+\begin{align}
+    ((\vec{A}+\vec{B})^*)_{ij} = \bar{c_{ji}} &= \bar{a}_{ji} + \bar{b}_{ji}\\
+                                              &= a_{ij} + b_{ij}\\
+                                              &= c_{ij}\\
+                                              &=  (\vec{A}+\vec{B})_{ij}.
+\end{align}
+Since all entries are the same, we have that $(\vec{A} + \vec{B})^* = \vec{A} + \vec{B}$. Therefore, the sum of two Hermitian matrices is Hermitian.
+    \end{proof}
+
+    \begin{proof}[2d.] Suppose that $\vec{A}$ is an invertible Hermitian matrix with inverse $\vec{B}$. We write this as
+        \begin{equation}
+            \vec{AB} = \vec{I}.
+        \end{equation}
+    Taking the conjugate tanspose of both sides, we have that
+    \begin{equation}
+        \vec{B}^*\vec{A}^* = \vec{B}^*\vec{A} = \vec{I}.
+    \end{equation}
+    Right multiplying by $\vec{B}$ and using that $\vec{B}$ is the inverse of $\vec{A}$, 
+    \begin{equation} 
+        \vec{B}^*\vec{A}\vec{B} = \vec{B}^* \vec{I} = \vec{I}\vec{B}.
+    \end{equation}
+    As $\vec{I}$ is the identity matrix, we get the desired result $\vec{B}^* = \vec{B}$.
+    \end{proof}
+
+    \begin{proof}[2e.]Let $\vec{A}$ and $\vec{B}$ be Hermitian matrices.
+
+        ($\leftarrow$) First suppose that $\vec{AB} = \vec{BA}$. Then taking the adjoint of both sides, we see that
+        \begin{equation}
+            (\vec{AB})^* = (\vec{BA})^* = \vec{A}^*\vec{B}^*.
+        \end{equation}
+    Using that $\vec{A}$ and $\vec{B}$ are Hermitian, we simplify the right hand side, so that $(\vec{AB})^* = \vec{AB}$.
+
+    ($\rightarrow$) Now, suppose that the product $\vec{AB}$ is Hermitian. Then we have that $(\vec{AB})^* = \vec{AB}$. We exapand the lefthand side as
+    \begin{equation}
+        (\vec{AB})^* = \vec{B}^*\vec{A}^* = \vec{B}\vec{A}.
+    \end{equation}
+    The rightmost equality holds because both $\vec{A}$ and $\vec{B}$ are Hermitian. Combining the previous two equations gives us the desired results $\vec{AB} = \vec{BA}$.
+    \end{proof}
 \end{sol}
 
 \begin{exer}
-    Consider a Unitary matrix $\v{U} \in \bbC^{n \times m}$. 
+    Consider a Unitary matrix $\vec{U} \in \bbC^{n \times m}$. 
     \begin{enumerate}[a.]
         \item Prove that the matrix is diagonalizable
-    \item Prove that the iverse is $\v{U}^{-1} = \v{U}^*$.
+    \item Prove that the inverse is $\vec{U}^{-1} = \vec{U}^*$.
     \item Prove it is isometric with respect to the $L^2$ norm.
     \item Prove that all eigenvalues have modulus 1.
 \end{enumerate}
@@ -147,6 +240,44 @@
 
 \begin{sol}
 
+\begin{proof}[3a.]
+    
+\end{proof}
+
+\begin{proof}[3b.]
+    A matrix is unitary if it satisfies $\vec{U}^*\vec{U} = \vec{I}$. If we right multiply by the inverse of $\vec{U}$ (assuming it exists), we see that
+\begin{align}
+    \vec{U^{-1}} &= \vec{U}^*\vec{U}\vec{U}^{-1}  \\
+                 &= \vec{U}^*.
+\end{align}
+\end{proof}
+
+\begin{proof}[3c.]
+Using the fact that $\norm{\vec{y}}_2^2 = \vec{y}^*\vec{y}$ for any vector $\vec{y}\in\bbC^m$. We have
+
+\begin{align}
+    \norm{ \vec{Ux} }_2^2 &= (\vec{Ux})^*(\vec{Ux}) \\
+                          &= \vec{x}^*\vec{U}^*\vec{Ux} \\
+                          &= \vec{x}^*\vec{x} = \norm{\vec{x}}_2^2,
+\end{align}
+where we have used that $(\vec{AB})^* = \vec{B}^*\vec{A}^*$ and $\vec{U}^*\vec{U} = \vec{I}$ for unitary matrices $\vec{U}$.
+Taking the square root of both sides then shows that $\norm{ \vec{Ux} }_2 = \norm{\vec{x}}_2$.
+\end{proof}
+
+\begin{proof}[3d.]
+    Suppose that we have a unitary matrix $\vec{U}$. Let $\lambda$ be an eigenvalue of $\vec{U}$ and $\vec{v}$ be the corresponding eigenvector. Starting from the definition of the eigenvalue, we have $\vec{Uv} = \lambda \vec{v}$. Taking the norm of both sides, we compute 
+    \begin{equation}\label{eq:eigen_norm}
+    \norm{\vec{Uv}}_2 = \norm{\lambda\vec{v}}_2 = \abs{\lambda} \norm{\vec{v}}_2.
+\end{equation}
+In part c., we showed that 
+\begin{equation}
+    \norm{\vec{Uv}}_2 = \norm{\vec{v}}_2.
+\end{equation}
+Since $\vec{v}$ is an eigenvector, it cannot be the 0 vector. Therefore, we know that $\norm{\vec{v}}_2 \neq 0$. Dividing equation \ref{eq:eigen_norm} by $\norm{\vec{v}}_2$, we see
+\begin{equation}
+    \frac{\norm{\vec{Uv}}_2}{\norm{\vec{v}}_2} = 1 = \abs{\lambda}. 
+\end{equation}
+\end{proof}
 \end{sol}
 
 \end{document}
