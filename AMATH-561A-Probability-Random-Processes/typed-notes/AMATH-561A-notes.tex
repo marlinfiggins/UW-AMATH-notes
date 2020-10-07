@@ -58,6 +58,11 @@
 
 \renewcommand{\phi}{\varphi}
 
+% Indicator Function
+\DeclareSymbolFont{bbold}{U}{bbold}{m}{n}
+\DeclareSymbolFontAlphabet{\mathbbold}{bbold}
+\newcommand{\ind}{\mathbbold{1}}
+
 %--------Theorem Environments--------
 %theoremstyle{plain} --- default
 \newtheorem{thm}{Theorem}[section]
@@ -361,7 +366,7 @@ Thus, if we are given a sample space $\Omega$ and $\mathcal{A}$ a collection of 
 Let's consider the experiment of drawing a random number between $[0,1]$. In this case, our sample space is clearly $\Omega = [0,1]$. In this case, we would like each number to be equally likely, but we can't simply set each number to occur with probability $\Prob(A) = \frac{\abs{A}}{\abs{\Omega}}$ as with the case of the fair die because our space is uncountable! Ideally, we want to find some function $p(x)=p$ which describes the probability that we choose $x\in[0,1]$. What is the probabiltiy that our chosen number is rational (in $\bbQ$). By the countable additivity of our probability measure, 
 
 \begin{align}
-  \Prob(\bbQ \cap [0,1]) &= \Prob( \bigcup_{ x\in \bbQ\cap[0,1]} \{x\}) \\ 
+  \Prob(\bbQ \cap [0,1]) &= \Prob \left( \bigcup_{ x\in \bbQ\cap[0,1]} \{x\} \right) \\ 
                          &= \sum_{x\in Q\cap[0,1]} p(x) = \sum_{x\in Q\cap[0,1]} p. 
 \end{align}
 
@@ -404,9 +409,186 @@ We can similarly extend this to the events in $\calF_n$. Due to our construction
 \end{equation}
 However,$ \{ w_H\}$ is not in $\calF_n$ for any $n$ since it depends on the results of all coin tosses. This means that $\calF_\infty$ cannot be a $\sigma$-algebra as it does not contain the countable union of $\{ \omega_{nH}\mid n\in\bbN\} \in \calF_\infty$. To remedy this, we can just use $\calF = \sigma(\calF_\infty)$. Once again, we can extend our probabilities to events in $\calF$ that are in $\calF_\infty$ uniquely. Unlike $\calF_\infty$, $\calF$ contains events which cannot be specified by any finite number of coin tosses like $\omega_H$ which we discussed before. We can assign a probability to this event using the continuity of measure from above. Since $\{\omega_{nH}\} \supset \{\omega_{(n+1)H}\}$ and $\{\omega_H \} = \cap_{n\in\bbN} \{\omega_{mH}\}$, it follows that 
 \begin{equation}
-  \Prob(\{\omega_{nH} \}) = p^n \downarrow P(\{\omega_H\}) = 0.
+  \Prob(\{\omega_{nH} \}) = p^n \downarrow \Prob(\{\omega_H\}) = 0.
 \end{equation}
 \end{exmp}
+
+\subsection{Random variables and distributions}%
+\label{sub:random_variables_and_distributions}
+
+\paragraph{Defining random variables.}%
+\label{par:defining_random_variables_}
+
+Though probability spaces are plenty interesting themselves, we're often interested in evaluating functions of probability spaces to pick apart to answer the questions which interest us. For this purpose, we'll rely on random variables.
+
+\begin{defn}
+  Let $(\Omega, \calF, \Prob)$ be a probability space. A function $X\colon \Omega \to \bbR$ is called a random variable if for every Borel set $B\in \mathcal{B}(\bbR)$, we have that
+  \begin{equation}
+    X^{-1}(B) = \{ \omega \mid X(\omega) \in B\} \in \calF.
+  \end{equation}
+  To be precise about the choice of $\sigma$-algebra, we would say that $X$ is $\calF$-measurable and write $X \in \calF$.
+\end{defn}
+
+In the case where $\Omega$ is discrete, then any function $X\colon \Omega \to \bbR$ is a random variable because the $\sigma$-algebra $\calF = \mathcal{P}$ which contains all subsets of $\Omega$. 
+
+\paragraph{Indicator functions}%
+\label{par:indicator_functions}
+ One of the most simple examples of random variables are the indicator function. An indicator function is a random variable of the form
+ \begin{equation}
+   \ind_A(\omega) = \begin{cases} 1, \quad \omega \in A \\
+     0, \quad \omega \not\in A,
+   \end{cases}
+ \end{equation}
+ where is some event $A\in\calF$. We can prove directly that $\ind_A$ is indeed a random variable through a bit of case work. Suppose that we have a Borel set $B$, then
+
+ \begin{equation}
+   \ind_A(B) = \begin{cases}
+     A, \quad 1\in B \text{ and } 0 \notin B \\
+     A^c, \quad 0 \in B \text{ and } 1\notin B \\
+     \Omega, \quad 0,1 \in B \\
+    \emptyset, \quad 0,1\not\in B.
+   \end{cases}
+ \end{equation}
+
+\paragraph{Distributions of random variables.}%
+\label{par:distributions}
+
+We can use random variables to create entirely new probability distributions. 
+
+\begin{prop}
+  If $X$ is a random variable on $(\Omega, \calF, \Prob)$, then $X$ induces a new probability measure $\mu$ on $\bbR$ by
+  \begin{equation}
+    \mu(B) = \Prob(X \in B) = \Prob( X^{-1}(B) ).
+  \end{equation}
+\end{prop}
+We call this new probablity measure the \emph{distribution of $X$.} We won't prove proposition entirely, but note that countable additivity follows from the fact that $\Prob$ is countably additive and 
+\begin{equation}
+   X^{-1}\left(\bigcup_{i\in\bbN} B_i\right) = \bigcup_{i\in\bbN} X^{-1}(B_i) 
+\end{equation}
+when the $B_i$ are disjoint.
+%TODO: Rewrite this to say that proving that it is indeed a probability measure is an exercise.
+
+\paragraph{Distributions functions}%
+\label{par:distributions_functions}
+
+The distribution of a random variable $X$ is usually described by its \emph{distribution function}
+\begin{equation}
+  F(x) = \Prob(X \leq x) = \Prob( X \in (-\infty, x) ).
+\end{equation}
+
+There are certain properties that distribution function must follow in order to properly characterize a probability distribution. 
+\begin{prop}[Properties of distribution functions.]
+  A distribution function $F$ must satisfy the following:\leavevmode
+  \begin{enumerate}[(i)]
+    \item $F$ must be non-decreasing.
+    \item $F(x) \xrightarrow[x\to\infty]{} 1$ and $F(x) \xrightarrow[x\to-\infty]{} 0$.
+    \item $F$ is right continuous i.e. $\lim_{y\to x^+}F(y) = F(x)$.
+    \item If $F(x-) = \lim_{y\to x^-}F(y)$, then $F(x-)=\Prob(X<x)$.
+    \item $\Prob(X = x) = F(x) - F(x-)$.
+  \end{enumerate}
+\end{prop}
+
+\begin{proof}
+  Insert proof.
+\end{proof}
+%TODO: Insert proof
+
+%TODO: If a function has above properties it is the distribution of some random variable. Threorem and show sketch of the proof.
+\begin{thm}
+  If a function $F$ satisfies $(i), (ii)$, and $(iii)$ of the previous proposition, then it is the distribution function of some random variable,
+\end{thm}
+\begin{proof}[Sketch of proof]
+  
+\end{proof}
+
+%TODO: Flesh out this section and reorganize.
+\paragraph{Generating random variables}%
+\label{par:generating_random_variables}
+
+Though the distribution function may not actually have a proper incerse, we will call the random variable $X$ in the above theorem the inverse of $F$ and denote it as $F^{-1}$. Using the sketch outlined above, we can actually generate random variables using a bit of algebra and a computer. In computer systems, standard algorithms generate random variables with uniform distributions $U$. We can use this fact to find the proper inverse function taking $U$ to desired distribution of a random variable $X$
+\begin{equation}
+  F_X = F^{-1}(U).
+\end{equation}
+
+%TODO: Equality of distributions.
+
+\paragraph{Density functions}%
+\label{par:density_functions}
+
+When the distribution function $F(x)$ of a random variable $X$ can be written in the form
+\begin{equation}
+  F(x) = \int_{-\infty}^{x} f(y)dy,
+\end{equation}
+
+we say that the random variable $X$ has density $f$. 
+%TODO: The density must satisfy integral and non-negativity. Because of properties i, ii, blah blah, the density must satisfy...
+
+%TODO: Uniform distributions on $[a, b]$
+\begin{exmp}[Uniform distribution on $(a,b)$]
+Suppose we're given a density function 
+\begin{equation}
+  f(x) = \begin{cases}
+    \frac{1}{b-a}, \quad x\in[a,b] \\
+    0, \quad \text{ otherwise.}
+  \end{cases}
+\end{equation}
+Here $a$ and $b$ are real numbers such that $a<b$. We can integrate this function directly to find the distribution function of this random variable to find
+\begin{equation}
+  F(x) = \int_{-\infty}^{x} f(y)dy = \begin{cases}
+    0, \quad x < a\\
+    \frac{x}{b-a}, \quad a\leq x \leq b \\
+    1, \quad x > b.
+  \end{cases}
+\end{equation}
+This distribution is called the uniform distribution on $[a,b]$.
+%TODO: Return to write shorthand for this distribution.
+\end{exmp}
+
+%TODO: Exponential distrbution with rate $\lambda$.
+\begin{exmp}[Exponential distribution with rate parameter $\lambda$]
+Suppose we're given the density funciton 
+\begin{equation}
+  f(x) = \begin{cases}
+        \lambda e^{-\lambda x}, \quad x\geq 0\\
+        0, \quad x < 0.
+      \end{cases}
+\end{equation}
+Once again, we can integrate to find that 
+
+\begin{equation}
+  F(x)= \int_{-\infty}^{x}f(y)dy = \begin{cases}
+        1 - e^{-\lambda x}, \quad x\geq 0\\
+        0, \quad x < 0.
+      \end{cases}
+\end{equation}
+
+This distribution is called the exponential distribution with rate parameter $\lambda$.
+%TODO: Return to write shorthand for this distribution.
+\end{exmp}
+
+%TODO: Constructing the exponential function from Uniform. 
+\paragraph{Constructing the exponential distribution}%
+\label{par:constructing_the_exponential_distribution}
+
+Following the sketch proof of INSERT REFERENCE, we can constuct an exponential random variable $X$ from the Uniform random variable on $[0,1]$. Starting with FORMULA REFERENCE
+\begin{equation}
+  X(\omega) = \sup\{y \mid F(y) > \omega \} = \sup\{ \omega \mid 1 - e^{\lambda y} < \omega \}.
+\end{equation}
+
+Since the distribution function is continuous, we can compute the above supremum as the value $x$ which satisfies $1 - e^{-\lambda x} = \omega$, Solving for $x$, we obtain that 
+\begin{equation}
+  X(\omega) = x = \frac{-\log(1-\omega)}{\lambda}.
+\end{equation}
+
+Therefore, if we wanted to generate random samples from an expoenetial random variable,, we could generate random numbers $\omega$ from the uniform distribution on $[0,1]$ and apply $X$ to them.
+
+%TODO: What it means for a probability measure or distribution to be discrete. Quick mention of absolute continuity.
+
+\paragraph{Discrete probability distributions}%
+\label{par:discrete_probability_distributions}
+
+A probability measure or distribution is called discrete if it only obtains positive value on a countable set.
+%TODO: Give example of discrete distribution. Point masses.
 
 \section{Independence, Martingales, and Conditioning}%
   \label{sec:independence_martingales_and_conditioning}
