@@ -196,10 +196,16 @@ You can derive these operations directly from the definition of the complex numb
   The complex numbers $\bbC$ are a field when endowed with complex addition and multiplication as above.
 \end{prop}
 
+Since complex numebers are a field, we are also able to define divison for these numbers as follows
+
+\begin{equation}
+  z %Put a formula here for dividing complex numbers.
+\end{equation}
+
 % TODO: Show how to divide complex numbers with a similar formuala.
 
 %%%%% Ordered Field Stuff%%%%
-Though $\bbC$ is a field, it is not an ordered field. We say that $F$ is an ordered field if there exists $P\subset F$ such that $P$ is closed under addition and multiplication and exactly one holds: $x=0, x\in P, -x\in P$. This cannot be not the case for the complex numbers since $x^2\in P$ i.e. $i^2=-1\in P$ and $1^2=1\in P$.
+%Though $\bbC$ is a field, it is not an ordered field. We say that $F$ is an ordered field if there exists $P\subset F$ such that $P$ is closed under addition and multiplication and exactly one holds: $x=0, x\in P, -x\in P$. This cannot be not the case for the complex numbers since $x^2\in P$ i.e. $i^2=-1\in P$ and $1^2=1\in P$.
 %%%%%%%
 
 One significant benefit of extending the real numbers to the complex numbers is that it guarantees us that any polynomial with complex coefficients of degree $n$ has exactly $n$ complex roots. This statement is called the \emph{Fundamental Theorem of Algebra} and we'll prove it for later. For now, let's return to our beginning example, but now using complex numbers. We can rely on the algebraic rules defined above to see that
@@ -270,7 +276,7 @@ With a quick computation, we can see that magnitude of a complex number can also
   \abs{z} = \sqrt{z\bar{z}}. 
 \end{equation}
 
-The complex conjugate also gives us an easy formala for computing the multiplicative inverse of any non-zero complex number.
+The complex conjugate also gives us an easy formula for computing the multiplicative inverse of any non-zero complex number.
 
 \begin{prop}
   If $z\neq 0$, then $z\cdot \left(\frac{\bar{z}}{\left|z\right|^2}\right)=1$. Therefore, we can compute the multplicative inverse of $z$ as
@@ -284,7 +290,7 @@ The complex conjugate also gives us an easy formala for computing the multiplica
 
 \subsection{Polar Coordinates}%
 \label{sub:polar_coordinates}
-% TODO: Clean up maybe move second half to elementarty functions
+% TODO: Clean up maybe move second half to elementary functions
 
 As we've seen, we can represent the complex numbers using Cartesian coordinates as ordered pairs in $\bbR^2$. We can also represent a complex number $z\in\bbC$ with polar coordinates.
 
@@ -298,15 +304,16 @@ Euler was able to prove that the right had side of this equation was equivalent 
   e^{i\theta} = \cos\theta + i\sin\theta.
 \end{equation}
 
-This allows us to define $\sin$ and $\cos$ in terms of the complex exponentional as
+This allows us to define $\sin$ and $\cos$ in terms of the complex exponential as
 
 \begin{align}
   \sin\theta = \frac{1}{2}(e^{i\theta} - e^{-i\theta}),\\
   \cos\theta = \frac{1}{2}(e^{i\theta} + e^{-i\theta}).
 \end{align}
 
-\begin{proof}[Proof of Euler's formula]
-  Let $f(\theta) = \cos\theta + i\sin\theta$. Since both $\sin$ and $\cos$ satisfy the second order equation,
+\begin{proof}[Proof of Euler's formula]\leavevmode
+
+  \noindent Let $f(\theta) = \cos\theta + i\sin\theta$. Since both $\sin$ and $\cos$ satisfy the second order equation,
   \begin{equation}
     \frac{d^2}{d\theta^2}g + g = 0
   \end{equation}
@@ -318,7 +325,7 @@ This allows us to define $\sin$ and $\cos$ in terms of the complex exponentional
   \begin{equation} 
     \frac{d^2}{d\theta^2} e^{\lambda \theta} + e^{\lambda \theta} = (\lambda^2 + 1)(e^{\lambda \theta}).
   \end{equation}
-  We see that for $\lambda = i$, this function satisfies the same differential equation as $f$. Likewise, $e^{\lambda 0} = 1$ and $\frac{d}{d\theta} e^{\lambda \theta} \mid_{\theta = 0} = \lambda$. Therefore, by the uniqueness of this differential equation. We have
+  We see that for $\lambda = i$, this function satisfies the same differential equation as $f$. Likewise, $e^{\lambda 0} = 1$ and $\frac{d}{d\theta} e^{\lambda \theta} \mid_{\theta = 0} = \lambda$. Therefore, by the uniqueness of this differential equation, we have
   \begin{equation}  
   e^{i\theta} = \cos\theta + i\sin\theta.
   \end{equation}
@@ -327,8 +334,8 @@ This allows us to define $\sin$ and $\cos$ in terms of the complex exponentional
 \section{Elementary Functions}%
 \label{sec:elementary_functions}
 
-\subsection{Complex Exponenital}%
-\label{sub:complex_exponenital}
+\subsection{Complex Exponental}%
+\label{sub:complex_exponental}
 
 
 \begin{defn}[Complex exponential]
@@ -340,16 +347,20 @@ This allows us to define $\sin$ and $\cos$ in terms of the complex exponentional
 
 \begin{prop}[Properties of the complex exponential]
   %TODO: Fill out properties of complex exponential
+
+The complex exponential has the following properties:
+\begin{enumerate}[(i)]
+  \item First
+  \item Second %TODO: The complex exponentional is 2\pi periodic
+\end{enumerate}
 \end{prop}
 
 %TODO: Define the complex power series for each of the $\sin $ and $\cos$. Define hyperbolic sine and cosine.
 
-\subsection{The logarithm}%
+\subsection{Complex logarithm}%
 \label{sub:the_logarithm}
 
-Can the familiar logarithm function in the real numbers also be generalized easily in the complex numbers. Define a function $w=f(z)$ such that $z = e^w$ with $e$ defined with infinite series.
-
-With $z = re^{i\theta}$ and $w = u + iv$. We see that 
+Can the familiar logarithm function in the real numbers also be generalized easily in the complex numbers? Let's start from the definition of the logarithm. Suppose $w=f(z)$ is a function such that $z = e^w$ with $e$ defined as above. With $z = re^{i\theta}$ and $w = u + iv$. We see that 
 
 \begin{equation*}
   r = e^u \text{ and } \theta = v.
@@ -359,5 +370,112 @@ Therefore, $u = \ln r$ is real and singular-valued, but $\theta$ can only be det
 \begin{equation}
   \theta = \theta_p + 2n\pi \text{ with } -\pi < \theta_p \leq \pi.
 \end{equation}
+%%TODO: Prehaps, just say that this is due to the complex exponential being periodic. Mention that we pick the princple logarithm which is...
+We can somewhat solve this issue by restricting $\theta$ to the interval $[0,2\pi]$ or $[-\pi, \pi]$. 
 
+\subsection{Analytic functions}%
+\label{sub:analytic_functions}
+
+%TODO: Why do we discuss differentiability?
+
+\begin{defn}
+  A function $f$ of a complex variable $z$ is \emph{analytic} at a point $z_0$ if it is single-valued and its derivative exists not only at $z_0$ but at each point $z$ in some neighborhood of $z_0$. We call the function analytic in a region $R$ if it is analytic at every point in $R$.
+\end{defn}
+This definition is a bit terse. Let's explore what this means through a couple of examples and non-examples of analytic functions.
+
+%TODO: Review the limit definition of the derivative. If you remember from calculus, we define the derivative of a function of a real variable essentially the same way.
+
+%TODO: Talk about the derivative existance and path independence. For the derivative to exist in a consistent way, we need it to be independent of the path taken to it.
+
+%TODO: Tease that you can differentiate an analytic function infinitely often.
+
+\begin{exmp}[Differentiating $z^2$]
+  As an example, let's differentiation the function $f(z)=z^2$.
+
+  \begin{align}
+    \diff{}{z}z^2 = ... = 2z
+  \end{align}
+\end{exmp}
+
+\begin{exmp}[Non-differentiability of $\bar{z}$]
+  Consider now $f(z)=\bar{z}$.
+
+  %TODO: Show this is not differentiable anywhere because the path you take matters
+\end{exmp}
+
+The reality is that functions like $f(z)=\abs{z}^2=z\bar{z}$ are really functions of two variables $z$ and $\bar{z}$ since 
+\begin{equation}
+  x = \frac{1}{2}(z + \bar{z}) \text{ and } y = \frac{1}{2}(z - \bar{z}).
+\end{equation}
+
+% The bulk of the theory is the theory of complex variables is to define the conditions under which $f(z)$ is a function of $z$ only (is analytic). 
+
+\paragraph{Informal perspective on path independence.}
+Consider a complex function of two variables $f(z, \bar{z})$. Supposing we expand $f$ in a Taylor series, we see that 
+\begin{equation}
+  f(z, \bar{z}) - f(z_0, \bar{z}_0) = a(z-z_0) + b(\bar{z}-\bar{z}_0) + \text{higher order terms.}
+\end{equation}
+
+Taking the derivative allows the higher order terms to fall out giving:
+\begin{equation}
+  \lim\limits_{z\to z_0} \frac{f(z, z_0) - f(z_0, \bar{z}_0)}{z - z_0} = a + b \frac{\bar{z}-\bar{z}_0}{z-z_0}.
+\end{equation}
+
+%TODO: Why does this mean that $\frac{df}{dz^*} = 0$?
+
+%TODO: Rewatch lecture 3 to finish this.
+
+%%TODO: Consider making multivalued functions a seperate subsetion
+\paragraph{Multivalued Functions}%
+\label{par:multivalued_functions}
+Our definition of analyticity required that the function in question be single-valued. As we've seen, this requirement automatically disqualifies complex functions like 
+\begin{equation*}
+  z^{1/2} \text{ and } \ln z
+\end{equation*}
+from being analytic despite the fact they are at least somewhere differentiable in the real case. These functions are nowhere analytic due to the fact they are multi-valued, but we can make these singular valued by restricting the argument of $z$ to an inteval of length $2\pi$ e.g. we might define that $\arg z \in (0, 2\pi]$. This restriction creates a line of discontinuity, so it is certainly not differentiable along that line. In hopes to find a region where it is analytic we must first cut away. 
+
+\begin{exmp}[Re-defining $z^{1/2}$]
+  Let's redefine a single-valued $z^{1/2}$ by 
+  \begin{equation}
+    f(z) = z^{1/2}, \quad 0 \leq \arg z < 2\pi.
+  \end{equation}
+
+  Consider points $A = re^{i0}$ and $B = re^{i2\pi}$. Then wihtout restricting our argument, we would have
+\begin{equation}
+  f(A) = r^{1/2} \text{ and } f(B) = (re^{i2\pi})^{1/2}= r^{1/2}e^{i\pi} = -r^{1/2}. 
+\end{equation}
+%TODO: Rewatch lecture 3 to finish this.
+
+Therefore, without restricting our argument we would run into issues rather quickly. Due to our actual definition which includes $A$ in its domain and not $B$, we would observe that $f(A) = r^{1/2}$. Regardless of our choice of whether to include $A$ or $B$, this introduces a line of discontuity along the positive real axis. This is called the \emph{branch cut}.
+\end{exmp}
+
+\paragraph{Branch cuts} The above example shows that a branch cut goes from the origin to the point at infinity $z_\infty = \lim_{z\to 0}\frac{1}{z}$. We call these two points the \emph{branch points}.
+%TODO: Add visualize aid here: https://flothesof.github.io/branch-cuts-with-square-roots.html 
+
+%TODO: Make sure my reader can understand why throughout. Never define something completely unmotivated. There is a reason behind each decision we make.
+
+\subsection{Cauchy-Riemann equations}%
+\label{sub:cauchy_riemann_equations}
+
+Here is the first interesting conseequence of our requirement that the derivative of $f$ be path-independent. As we showed before, if $f$ is analytic at $z$, then
+\begin{equation}
+  f'(z) = \lim_{\Delta z \to 0} = \frac{f(z + \Delta z) - f(z)}{\Delta z}.
+\end{equation}
+
+We can take the derivative along two seperate directions. First, along the real axis. Now along the imaginary axis.
+
+%TODO: Finish this to derive the cauchy riemann equations.
+
+\begin{exmp}
+Let's consider an example
+\begin{equation}
+  f(z) = z \cdot z^* = x^2 + y^*
+\end{equation}
+
+%TODO: Show that CR is only satisified at a point. Therefore, the function is nowhere analytic.
+
+%TODO: Other example from notes / lecture 4.
+
+%TODO: Application: Laplace equation
+\end{exmp}
 \end{document}
