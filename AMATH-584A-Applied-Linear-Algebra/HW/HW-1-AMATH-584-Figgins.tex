@@ -34,7 +34,7 @@
 \headsep=0.25in
 \setlength{\headheight}{16pt}
 
-\linespread{1.1}
+\linespread{1.0}
 
 \pagestyle{fancy}
 \lhead{\Name}
@@ -115,10 +115,52 @@
     Show that if $\vec{A}$ is triangular and unitary, then it is diagonal.
 \end{exer}
 
-\begin{sol}
-    
+\begin{sol}\leavevmode
+
+    \begin{proof}
+Let's assume that $\vec{A}$ is an upper triangular and unitary $n\times n$ matrix. Due to the fact that $\vec{A}$ is unitary, we have that
+\begin{equation}
+    \vec{A}^*\vec{A} = \vec{I}.
+\end{equation}
+This means that entry-wise, $\vec{A}^*\vec{A}$ is given by
+\begin{equation}
+    (\vec{A}^*\vec{A})_{ij} = \sum_{k=1}^{n} \bar{a}_{ki}a_{kj}= \delta_{ij}, \quad \delta_{ij} = \begin{cases}
+        1, \quad i = j \\
+        0, \quad i \neq j.
+    \end{cases}
+\end{equation}
+
+Since $\vec{A}$ is upper triangular, we also know that for $k>l$ then $a_{kl}=\bar{a_{kl}}=0$. Therefore,
+\begin{equation}
+    (\vec{A}^*\vec{A})_{ij} = \sum_{k=1}^{\min(i,j)} \bar{a}_{ki}a_{kj}= \delta_{ij}
+\end{equation}
+
+Iterating through the first row of the matrix, we see that
+\begin{equation}
+    (\vec{A}^*\vec{A})_{11} = \bar{a}_{11}a_{11} = \abs{a_{11}}^2 = 1.
+\end{equation}
+
+Taking the next element in the row, we can compute that
+\begin{equation}
+    (\vec{A}^*\vec{A})_{12} = \bar{a}_{11}a_{12} = \delta_{12} = 0.
+\end{equation}
+
+Since we know that $a_{11} \neq 0$, then the above equation implies $a_{12} = 0$. For the rest of the entries in this row ($j>2$):
+\begin{equation}
+    (\vec{A}^*\vec{A})_{1j} = \bar{a}_{11}a_{1j} = \delta_{1j} = 0 \implies a_{1j} =0.
+\end{equation}
+Moving onto the second row, the (known) non-zero entry is $(\vec{A}^*\vec{A})_{22} = \abs{a_{22}}^2 = 1$. We can then see that for the rest of the row $j > 2$,
+\begin{equation}
+    (\vec{A}^*\vec{A})_{2j} = \bar{a}_{12}a_{1j} + \bar{a}_{22}a_{2j} = 0.
+\end{equation}
+We've shown that the first term in this is 0 and $\bar{a}_{22} \neq 0$. Therefore, $a_{2j}=0$ and the rest of second row is 0. If we continue iterating through the rows, we will notice that the sum for each entry $(i,j)$ ($i\neq j$) will contain products from previous rows which we know to be zero and a single term of the form $\bar{a}_{ii}a_{ij}$. This implies that $a_{ij}$ is 0 whenever $i\neq j$. Therefore, $\vec{A}$ is a diagonal matrix.
+
+\textbf{Note:} If $\vec{A}$ is instead lower triangular, we take the transpose of $\vec{A}$ and do the same process which will show that $\vec{A}^T$ is a diagonal and therefore $\vec{A}$ is as well.
+\end{proof}
+
 \end{sol}
 
+\newpage
 
 \begin{exer}
     Consider Hermitian (self-adjoint) matrices $\vec{A}, \vec{B} \in \bbC^{n\times n}$.
@@ -131,9 +173,9 @@
     \end{enumerate}
 \end{exer}
 
-\begin{sol}
+\begin{sol}\leavevmode
     \begin{proof}[2a.]
-        Suppose that $\vec{A}$ has an eigenvalue $\lambda$ with corresponding eigenvector $\vec{v}$. 
+        Suppose that $\vec{A}$ has an eigenvalue $\lambda$ with corresponding eigenvector $\vec{v}$.
         \begin{align}
             \vec{v}^*(\vec{Av}) &= \vec{v}^*(\lambda \vec{v})\\
                                 &= \lambda \vec{v}^*\vec{v} = \lambda \norm{\vec{v}}_2.
@@ -142,7 +184,7 @@ We take the the complex conjugate of both sides to see
 \begin{align}
     \bar{\lambda} \norm{\vec{v}}_2 = (\vec{v}^*(\vec{Av}))^* &= (\vec{Av})^*\vec{v}^{**} \quad ((\vec{AB})^* = \vec{B}^*\vec{A}^*.) \\
                             &= (\vec{v}^* \vec{A}^*)\vec{v}^{**} \quad (\vec{v}^{**} = \vec{v}.)\\
-                            &= (\vec{v}^* \vec{A}^*)\vec{v} \\ 
+                            &= (\vec{v}^* \vec{A}^*)\vec{v} \\
                             &= \vec{v}^*\vec{A}^*\vec{v} \\
                             &= \vec{v}^* \vec{A}\vec{v} \quad ( \vec{A}^* = \vec{A}. )\\
                             &= \lambda \norm{\vec{v}}_2.
@@ -152,14 +194,14 @@ This leaves us with the equality $\bar{\lambda}\norm{\vec{v}}_2 = \lambda \norm{
     \end{proof}
 
     \begin{proof}[2b.]
-        Suppose that we have two eigenvectors $\vec{v}_i$ and $\vec{v}_j$ corresponding to dustinct eigenvalues $\lambda_i$ and $\lambda_j$. Starting from the relation $\vec{Av}_i = \lambda_i\vec{v}_i$, we compute
+        Suppose that we have two eigenvectors $\vec{v}_i$ and $\vec{v}_j$ corresponding to distinct eigenvalues $\lambda_i$ and $\lambda_j$. Starting from the relation $\vec{Av}_i = \lambda_i\vec{v}_i$, we compute
         \begin{align}
             (\lambda_i \vec{v}_i)^*\vec{v}_j &= (\vec{A}\vec{v}_i)^*\vec{v}_j \quad ((\vec{AB})^* = \vec{B}^*\vec{A}^*.) \\
                                              &= \vec{v_i}^*\vec{A}^*\vec{v}_j  \quad ( \vec{A}^* = \vec{A}. )\\
                                              &= \vec{v_i}^*\vec{A}\vec{v}_j \quad (\text{Eigenvalue defn.})\\
                                              &= \vec{v_i}^*(\lambda_j\vec{v}_j).
         \end{align}
-Using the fact that the eigenvalues $\lambda_i$ and $\lambda_j$ are real, we can see that
+Using the fact that the eigenvalues $\lambda_i$ and $\lambda_j$ are real by 2a., we can see that
         \begin{equation}
             (\lambda_i - \lambda_j) (\vec{v}_i^*\vec{v}_j) = 0.
         \end{equation}
@@ -176,18 +218,18 @@ Therefore, the eigenvectors $\vec{v}_i$ and $\vec{v}_j$ are orthogonal.
             (\vec{A} + \vec{B})^* &= \vec{A}^* + \vec{B}^* \\
                                   &= \vec{A} + \vec{B}.
         \end{align}
-        The first line follow because the sum of the adjoint is equivalent to the adjoint of the sum. The last line follows because both $\vec{A}$ and $\vec{B}$ are Hermitian. 
+        The first line follow because the sum of the adjoint is equivalent to the adjoint of the sum. The last line follows because both $\vec{A}$ and $\vec{B}$ are Hermitian.
 
 Alternatively, we can show the same by an entry-wise argument on $\vec{A}$ and $\vec{B}$. Let $(\vec{A})_{ij} = a_{ij}$ and $(\vec{B})_{ij} = b_{ij}$ denote the entries of $\vec{A}$ and $\vec{B}$ respectively. We can then see that
         \begin{equation}
             (\vec{A}+\vec{B})_{ij} = c_{ij} = a_{ij} + b_{ij}.
-        \end{equation} 
+        \end{equation}
 Because both $\vec{A}$ and $\vec{B}$ are Hermitian, we have that
 \begin{equation}
     (\vec{A}^*)_{ij} = \bar{a}_{ji} = a_{ij} \text{ and } (\vec{B}^*)_{ij} = \bar{b}_{ji} = b_{ij}.
 \end{equation}
 
-Taking the adjoint of $\vec{A}$ and $\vec{B}$, we see that 
+Taking the adjoint of $\vec{A}$ and $\vec{B}$, we see that
 \begin{align}
     ((\vec{A}+\vec{B})^*)_{ij} = \bar{c_{ji}} &= \bar{a}_{ji} + \bar{b}_{ji}\\
                                               &= a_{ij} + b_{ij}\\
@@ -205,8 +247,8 @@ Since all entries are the same, we have that $(\vec{A} + \vec{B})^* = \vec{A} + 
     \begin{equation}
         \vec{B}^*\vec{A}^* = \vec{B}^*\vec{A} = \vec{I}.
     \end{equation}
-    Right multiplying by $\vec{B}$ and using that $\vec{B}$ is the inverse of $\vec{A}$, 
-    \begin{equation} 
+    Right multiplying by $\vec{B}$ and using that $\vec{B}$ is the inverse of $\vec{A}$,
+    \begin{equation}
         \vec{B}^*\vec{A}\vec{B} = \vec{B}^* \vec{I} = \vec{I}\vec{B}.
     \end{equation}
     As $\vec{I}$ is the identity matrix, we get the desired result $\vec{B}^* = \vec{B}$.
@@ -228,8 +270,9 @@ Since all entries are the same, we have that $(\vec{A} + \vec{B})^* = \vec{A} + 
     \end{proof}
 \end{sol}
 
+\newpage
 \begin{exer}
-    Consider a Unitary matrix $\vec{U} \in \bbC^{n \times m}$. 
+    Consider a Unitary matrix $\vec{U} \in \bbC^{n \times n}$.
     \begin{enumerate}[a.]
         \item Prove that the matrix is diagonalizable
     \item Prove that the inverse is $\vec{U}^{-1} = \vec{U}^*$.
@@ -238,10 +281,22 @@ Since all entries are the same, we have that $(\vec{A} + \vec{B})^* = \vec{A} + 
 \end{enumerate}
 \end{exer}
 
-\begin{sol}
-
+\begin{sol}\leavevmode
 \begin{proof}[3a.]
-    
+   We'll first prove that the product of unitary matrices is unitary. Let $\vec{U}$ and $\vec{Q}$ be unitary matrices. Then we have that
+    \begin{align}
+        (\vec{U}\vec{Q})(\vec{U}\vec{Q})^* &= (\vec{U}\vec{Q})(\vec{Q}^*\vec{U}^*) \quad ((\vec{UQ})^* = \vec{Q}^*\vec{U}^*.) \\
+                                           &= \vec{U}(\vec{Q}\vec{Q}^*)\vec{U}^* \quad (\vec{Q} \text{ is unitary. })\\
+                                           &= \vec{U}\vec{U}^*  \quad (\vec{U} \text{ is unitary. }) \\
+                                           &= \vec{I}
+    \end{align}
+
+    To prove the main claim, we'll use the Schur decomposition. The Schur decomposition tells that, since $\vec{U}$ is complex and square, there is a unitary matrix $Q$ and an upper triangular matrix $T$ such that
+    \begin{equation}
+        \vec{U} = \vec{Q}\vec{T}\vec{Q}^{-1}.
+    \end{equation}
+
+    We can also rewrite this as $\vec{Q}^{-1}\vec{U}\vec{Q} = \vec{T}$. Since the matrices on the lefthand side are all unitary this means that $\vec{T}$ is as well. By Exercise 1., this means that $\vec{T}$ is a diagonal matrix as it is both triangular and unitary. Therefore, $\vec{U}$ is diagonalizable.
 \end{proof}
 
 \begin{proof}[3b.]
@@ -253,7 +308,7 @@ Since all entries are the same, we have that $(\vec{A} + \vec{B})^* = \vec{A} + 
 \end{proof}
 
 \begin{proof}[3c.]
-Using the fact that $\norm{\vec{y}}_2^2 = \vec{y}^*\vec{y}$ for any vector $\vec{y}\in\bbC^m$. We have
+Using the fact that $\norm{\vec{y}}_2^2 = \vec{y}^*\vec{y}$ for any vector $\vec{y}\in\bbC^m$, we have
 
 \begin{align}
     \norm{ \vec{Ux} }_2^2 &= (\vec{Ux})^*(\vec{Ux}) \\
@@ -265,17 +320,17 @@ Taking the square root of both sides then shows that $\norm{ \vec{Ux} }_2 = \nor
 \end{proof}
 
 \begin{proof}[3d.]
-    Suppose that we have a unitary matrix $\vec{U}$. Let $\lambda$ be an eigenvalue of $\vec{U}$ and $\vec{v}$ be the corresponding eigenvector. Starting from the definition of the eigenvalue, we have $\vec{Uv} = \lambda \vec{v}$. Taking the norm of both sides, we compute 
+    Suppose that we have a unitary matrix $\vec{U}$. Let $\lambda$ be an eigenvalue of $\vec{U}$ and $\vec{v}$ be the corresponding eigenvector. Starting from the definition of the eigenvalue, we have $\vec{Uv} = \lambda \vec{v}$. Taking the norm of both sides, we compute
     \begin{equation}\label{eq:eigen_norm}
     \norm{\vec{Uv}}_2 = \norm{\lambda\vec{v}}_2 = \abs{\lambda} \norm{\vec{v}}_2.
 \end{equation}
-In part c., we showed that 
+In part c., we showed that
 \begin{equation}
     \norm{\vec{Uv}}_2 = \norm{\vec{v}}_2.
 \end{equation}
 Since $\vec{v}$ is an eigenvector, it cannot be the 0 vector. Therefore, we know that $\norm{\vec{v}}_2 \neq 0$. Dividing equation \ref{eq:eigen_norm} by $\norm{\vec{v}}_2$, we see
 \begin{equation}
-    \frac{\norm{\vec{Uv}}_2}{\norm{\vec{v}}_2} = 1 = \abs{\lambda}. 
+    \frac{\norm{\vec{Uv}}_2}{\norm{\vec{v}}_2} = 1 = \abs{\lambda}.
 \end{equation}
 \end{proof}
 \end{sol}
