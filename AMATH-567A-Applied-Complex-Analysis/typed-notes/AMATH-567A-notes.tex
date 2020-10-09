@@ -43,6 +43,7 @@
 
 \newcommand{\abs}[1]{ \left| #1 \right| }
 \newcommand{\diff}[2]{\frac{d #1}{d #2}}
+\newcommand{\pdiff}[2]{\frac{\partial #1}{\partial #2}}
 \newcommand{\infsum}[1]{\sum_{#1}^{\infty}}
 \newcommand{\norm}[1]{ \left|\left| #1 \right|\right| }
 \newcommand{\eval}[1]{ \left. #1 \right| }
@@ -454,7 +455,7 @@ Therefore, without restricting our argument we would run into issues rather quic
 
 %TODO: Make sure my reader can understand why throughout. Never define something completely unmotivated. There is a reason behind each decision we make.
 
-\subsection{Cauchy-Riemann equations}%
+\subsection{Cauchy-Riemann equations.}%
 \label{sub:cauchy_riemann_equations}
 
 Here is the first interesting conseequence of our requirement that the derivative of $f$ be path-independent. As we showed before, if $f$ is analytic at $z$, then
@@ -462,20 +463,133 @@ Here is the first interesting conseequence of our requirement that the derivativ
   f'(z) = \lim_{\Delta z \to 0} = \frac{f(z + \Delta z) - f(z)}{\Delta z}.
 \end{equation}
 
-We can take the derivative along two seperate directions. First, along the real axis. Now along the imaginary axis.
+We can take the derivative along two seperate directions. First, along the real axis.
+
+
+Now along the imaginary axis.
 
 %TODO: Finish this to derive the cauchy riemann equations.
+
+This gives us the Cauchy-Riemann equations
+
+\begin{equation}
+  \pdiff{u}{x} =\pdiff{v}{y} \quad \pdiff{v}{x} = - \pdiff{v}{x}.
+\end{equation}
 
 \begin{exmp}
 Let's consider an example
 \begin{equation}
-  f(z) = z \cdot z^* = x^2 + y^*
+  f(z) = z \cdot z^* = x^2 + y^2
 \end{equation}
-
+\end{exmp}
 %TODO: Show that CR is only satisified at a point. Therefore, the function is nowhere analytic.
 
 %TODO: Other example from notes / lecture 4.
 
 %TODO: Application: Laplace equation
+
+\paragraph{Laplace's Equation.}%
+\label{par:laplaces_equation}
+
+%TODO: Give problem background from lecture 5.
+One application of this is Laplace's equation
+
+\begin{equation}
+  \nabla^2 \phi = 0,
+\end{equation}
+
+where $\nabla^2 = \frac{\partial^2}{\partial x^2} + \frac{\partial^2}{\partial y^2}$. The solution is a harmoninc function.
+
+\begin{thm}
+  The real and imaginary parts of an analytic function are both harmonic functions.
+\end{thm}
+
+\begin{proof}
+  Since $f$ is analytic, it satisifies the Cauchy-Riemann equations. Therefore,
+
+  %TODO: Finish derivation by differentiating the Cauchy-Riemann equations.
+\end{proof}
+
+%TODO: If I have energy, equipotential curves / surfaces. Define level curves
+%TODO: Level curves of real and imaginary parts are orthogonal.
+%TODO: Show that \nabla u \cdot nabla v = 0 
+
+\begin{exmp}[Equipotentials of $f(z)=z^2$]
+We'll now plot the level curves of the function
+  \begin{equation}
+    f(z) = z^2 = (x^2 - y^2) + i 2xy.
+  \end{equation}
+
+  %TODO: Plot level curves for various $c = u(x,y) = v(x,y)$ in julia.
 \end{exmp}
+
+%TODO: An example of computing the harmonic conjugate of a function. 
+
+\section{Complex Integration}%
+\label{sec:complex_integration}
+
+%TODO: Integral in the complex plane along a contour $C$ is the same as the real integral.
+%TODO: Contour is piecewise smooth and simple
+
+We can define this with the Riemann sum so that
+\begin{equation}
+  \int_C f(z)dz = \lim\limits_{L \to 0} \sum_{j=1}^{n} f(\zeta_j)\Delta z_j,
+\end{equation}
+
+where $\zeta_j = \frac{1}{2}(z_j + z_{j-1})$, $\Delta z_j = z_{j} - z_{j-1}$, and $L = \max_{j}\abs{\Delta z_j}$. When it comes to actually evaluating this integral, we typically write it in terms of its real and imaginary parts, so that $f(z) = u(x,y) + iv(x,y)$. Then
+
+\begin{equation}
+  \int_C f(z)dz = \int_C (u dx -v dy) + i\int_C (u dy + vdx).
+\end{equation}
+Here, we see that integrals in the complex plane can be reduced to real integrals in the $x-y$ plane. It's our hope that these integrals are path independent to simplify these 2D real integrals.
+
+\paragraph{Cauchy's Integral Theorem}%
+\label{par:cauchy_s_integral_theorem}
+
+%TODO: Double Check name
+\begin{thm}
+  If $f(z)$ is analytic inside and on a simple closed curve $C$, then 
+  \begin{equation}
+    \oint_C f(z) dz = 0.
+  \end{equation}
+\end{thm}
+
+We can prove this statment using Green's theorem in real variables
+
+\begin{thm}[Green's Theorem]
+\begin{equation}
+  \oint_C (V_1(x,y)dx + V_2(x,y)dy) = \iint (\diff{}{x}V_2 - \diff{}{y}V_1)dxdy
+\end{equation}
+\end{thm}
+
+
+%TODO: Fill this out and put in proof environment
+
+Applying this to prove Cauchy's Integral Theroem, we see taht 
+
+%TODO: Double check these equations and conclude the results.
+\begin{align}
+  \oint_C (u dx - vdy) = - \iint_S (\diff{v}{z} + \diff{u}{y})dxdy \\
+  \oint_C (v dx - udy) = - \iint_S (\diff{u}{z} + \diff{v}{y})dxdy 
+\end{align}
+
+\paragraph{Path Independence}%
+\label{par:path_independence}
+
+\begin{prop}
+For an analytic function $f$, we have
+\begin{equation}
+  \int_{z_0}^{z} f(z) dz = F(z) - F(z_0)
+\end{equation}
+
+if $f$ is analytic for all paths $C$ from $z_0$ to $z$ which be continuously deformed without leaving the region of analyticity of $f$. 
+%TODO: Rephrase this 
+\end{prop}
+\begin{proof}
+  Using Cauchy's Theorem and taking difference between integrals on curves $C_1$ and $C_2$.
+  %TODO: Finish this
+\end{proof}
+
+%TODO: Why does this matter? Allows you to choose the contour you want!
+
 \end{document}
