@@ -149,13 +149,16 @@ Since we know that $a_{11} \neq 0$, then the above equation implies $a_{12} = 0$
 \begin{equation}
     (\vec{A}^*\vec{A})_{1j} = \bar{a}_{11}a_{1j} = \delta_{1j} = 0 \implies a_{1j} =0.
 \end{equation}
-Moving onto the second row, the (known) non-zero entry is $(\vec{A}^*\vec{A})_{22} = \abs{a_{22}}^2 = 1$. We can then see that for the rest of the row $j > 2$,
+Moving onto the second row, the first (known) non-zero entry is $(\vec{A}^*\vec{A})_{22} = \abs{a_{22}}^2 = 1$. We can then see that for the rest of the row $j > 2$,
 \begin{equation}
     (\vec{A}^*\vec{A})_{2j} = \bar{a}_{12}a_{1j} + \bar{a}_{22}a_{2j} = 0.
 \end{equation}
-We've shown that the first term in this is 0 and $\bar{a}_{22} \neq 0$. Therefore, $a_{2j}=0$ and the rest of second row is 0. If we continue iterating through the rows, we will notice that the sum for each entry $(i,j)$ ($i\neq j$) will contain products from previous rows which we know to be zero and a single term of the form $\bar{a}_{ii}a_{ij}$. This implies that $a_{ij}$ is 0 whenever $i\neq j$. Therefore, $\vec{A}$ is a diagonal matrix.
-
-\textbf{Note:} If $\vec{A}$ is instead lower triangular, we take the transpose of $\vec{A}$ and do the same process which will show that $\vec{A}^T$ is a diagonal and therefore $\vec{A}$ is as well.
+We've shown that the first term in this sum is 0 and that $\bar{a}_{22} \neq 0$. Therefore, $a_{2j}=0$ and the rest of second row is 0. If we continue iterating through the rows, we will notice that the sum for each entry $(i,j)$ ($i\neq j$) will contain products from previous rows which we know to be zero and a single term of the form $\bar{a}_{ii}a_{ij}$. 
+\begin{equation}
+    (\vec{A}^*\vec{A})_{ij} = \underbrace{\bar{a}_{1i}a_{1j} + \bar{a}_{2i}a_{2j} + \cdots}_{=0} + \bar{a}_{ii}a_{ij} = 0.
+\end{equation}
+This implies that $a_{ij}$ is 0 for $i\neq j$ since $\bar{a}_{ii}\neq 0$. Therefore, $\vec{A}$ is a diagonal matrix.
+\textbf{Note:} If $\vec{A}$ is instead lower triangular, we take the transpose of $\vec{A}$ which will be upper triangular and do the same process which will show that $\vec{A}^T$ is a diagonal and therefore $\vec{A}$ is as well.
 \end{proof}
 
 \end{sol}
@@ -190,7 +193,7 @@ We take the the complex conjugate of both sides to see
                             &= \lambda \norm{\vec{v}}_2.
 \end{align}
 
-This leaves us with the equality $\bar{\lambda}\norm{\vec{v}}_2 = \lambda \norm{\vec{v}}_2$. This can only hold if either $\lambda = \bar{\lambda}$ i.e. $\lambda$ is real or $\norm{v}_2 = 0$. As $\vec{v}$ is an eigenvector, it cannot be zero, $\norm{v}_2 > 0$. Therefore, the eigenvalues of $\vec{A}$ must be real.
+This leaves us with the equality $\bar{\lambda}\norm{\vec{v}}_2 = \lambda \norm{\vec{v}}_2$. This can only hold if either $\lambda = \bar{\lambda}$ i.e. $\lambda$ is real or $\norm{v}_2 = 0$. As $\vec{v}$ is an eigenvector, it cannot be zero, so $\norm{v}_2 > 0$. Therefore, the eigenvalues of $\vec{A}$ must be real.
     \end{proof}
 
     \begin{proof}[2b.]
