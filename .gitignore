@@ -9,3 +9,9 @@
 *.fdb*
 *.gz
 *.toc
+
+# Notebook checkpoints
+.ipynb_checkpoints
+
+# Data folders
+data/
