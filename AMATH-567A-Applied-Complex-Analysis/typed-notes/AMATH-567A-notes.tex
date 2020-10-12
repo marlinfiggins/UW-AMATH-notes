@@ -186,7 +186,7 @@ Notice that under this construction, $\bbR$ is the subset of $\bbC$ such that $b
 \end{defn}
 
 \begin{rem}
-  We often write $zw$ in place of $z\cdot_\bbC$ for simplicity.
+  We often write $zw$ in place of $z\cdot_\bbC w$ for simplicity.
 \end{rem}
 
 % TODO: Insert figure showing how complex addition works.
@@ -473,7 +473,7 @@ Now along the imaginary axis.
 This gives us the Cauchy-Riemann equations
 
 \begin{equation}
-  \pdiff{u}{x} =\pdiff{v}{y} \quad \pdiff{v}{x} = - \pdiff{v}{x}.
+  \pdiff{u}{x} =\pdiff{v}{y} \quad\quad \pdiff{v}{x} = - \pdiff{v}{x}.
 \end{equation}
 
 \begin{exmp}
@@ -498,7 +498,7 @@ One application of this is Laplace's equation
   \nabla^2 \phi = 0,
 \end{equation}
 
-where $\nabla^2 = \frac{\partial^2}{\partial x^2} + \frac{\partial^2}{\partial y^2}$. The solution is a harmoninc function.
+where $\nabla^2 = \frac{\partial^2}{\partial x^2} + \frac{\partial^2}{\partial y^2}$. The solution is a harmonic function.
 
 \begin{thm}
   The real and imaginary parts of an analytic function are both harmonic functions.
@@ -514,7 +514,7 @@ where $\nabla^2 = \frac{\partial^2}{\partial x^2} + \frac{\partial^2}{\partial y
 %TODO: Level curves of real and imaginary parts are orthogonal.
 %TODO: Show that \nabla u \cdot nabla v = 0 
 
-\begin{exmp}[Equipotentials of $f(z)=z^2$]
+\begin{exmp}[Level curves of $f(z)=z^2$]
 We'll now plot the level curves of the function
   \begin{equation}
     f(z) = z^2 = (x^2 - y^2) + i 2xy.
@@ -558,19 +558,19 @@ We can prove this statment using Green's theorem in real variables
 
 \begin{thm}[Green's Theorem]
 \begin{equation}
-  \oint_C (V_1(x,y)dx + V_2(x,y)dy) = \iint (\diff{}{x}V_2 - \diff{}{y}V_1)dxdy
+  \oint_C (V_1(x,y)dx + V_2(x,y)dy) = \iint_S \left(\pdiff{}{x}V_2 - \pdiff{}{y}V_1\right)dxdy
 \end{equation}
 \end{thm}
 
 
 %TODO: Fill this out and put in proof environment
 
-Applying this to prove Cauchy's Integral Theroem, we see taht 
+Applying this to prove Cauchy's Integral Theroem, we see that 
 
-%TODO: Double check these equations and conclude the results.
+%TODO: Double check these equations and conclude the result.
 \begin{align}
-  \oint_C (u dx - vdy) = - \iint_S (\diff{v}{z} + \diff{u}{y})dxdy \\
-  \oint_C (v dx - udy) = - \iint_S (\diff{u}{z} + \diff{v}{y})dxdy 
+  \oint_C (u dx - vdy) = - \iint_S \left( \pdiff{v}{x} + \pdiff{u}{y}\right) dxdy \\
+  \oint_C (v dx - udy) = - \iint_S \left( \pdiff{u}{x} + \pdiff{v}{y}\right) dxdy 
 \end{align}
 
 \paragraph{Path Independence}%
@@ -579,9 +579,8 @@ Applying this to prove Cauchy's Integral Theroem, we see taht
 \begin{prop}
 For an analytic function $f$, we have
 \begin{equation}
-  \int_{z_0}^{z} f(z) dz = F(z) - F(z_0)
+  \int_{z_0}^{z} f(\xi) d\xi = F(z) - F(z_0),
 \end{equation}
-
 if $f$ is analytic for all paths $C$ from $z_0$ to $z$ which be continuously deformed without leaving the region of analyticity of $f$. 
 %TODO: Rephrase this 
 \end{prop}
@@ -592,4 +591,29 @@ if $f$ is analytic for all paths $C$ from $z_0$ to $z$ which be continuously def
 
 %TODO: Why does this matter? Allows you to choose the contour you want!
 
+%TODO: Path indep example
+
+%TODO: Put into context and expand
+\begin{thm}
+The integral of an analytic function is also an analytic function of its upper limit. That is, if 
+\begin{equation}
+  F(z) = \int_{z_0}^z f(\xi)d\xi,
+\end{equation}
+for some analytic function $f$, then $F$ is analytic. Moreover, the function $F(z)$ is the anti-derivative of $f(z)$ i.e.
+\begin{equation}
+  F'(z) = f(z).
+\end{equation}
+\end{thm}
+
+%TODO: Proof. 
+\paragraph{Several important integrals}%
+\label{par:several_important_integrals}
+
+%TODO: Int of z^n = 0, n\in\bbN for closed contour
+
+%TODO: Int of z^{-n} = 0, n > 1 for any closed contour not passing through zero
+%TODO: Proof of this: Two cases.
+%TODO: 1/z = 0 or 2pi i if contains origin or not. Can borrotw from old notes probably 
+
+%TODO: Our goal is to write the result that a function can be written as a Taylor-Laurent sereies -> a_{-1} 2\pi i...
 \end{document}
