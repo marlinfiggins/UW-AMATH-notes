@@ -49,6 +49,7 @@
 \newcommand{\bbC}{\mathbb{C}}
 \newcommand{\calF}{\mathcal{F}}
 \newcommand{\Prob}{\mathbb{P}}
+\newcommand{\Expect}{\mathbb{E}}
 
 \newcommand{\abs}[1]{ \left| #1 \right| }
 \newcommand{\diff}[2]{\frac{d #1}{d #2}}
@@ -589,6 +590,97 @@ Therefore, if we wanted to generate random samples from an expoenetial random va
 
 A probability measure or distribution is called discrete if it only obtains positive value on a countable set.
 %TODO: Give example of discrete distribution. Point masses.
+
+%TODO: Point mass example
+
+%TODO: Poisson example
+% Another example of a discrete random variable is the Poisson distribution. 
+\begin{exmp}[Poisson Random Variable]
+  The Poisson random is a random variable defined on $\Omega = \{ 0, 1, 2 , \ldots \}$ with $\sigma$-algebra $\calF = \mathcal{P}(\Omega)$. It has probability mass function
+  \begin{equation}
+    \Prob(\omega = k) = \frac{\lambda^k}{k!} e^\lambda.
+  \end{equation}
+  %TODO: What is the Poisson used for?
+\end{exmp}
+
+\subsection{Expectation}%
+\label{sub:expectation}
+
+%TODO: We define the expectation as the Lebesgue Integral ,,,,
+
+%TODO: Constructing the Lebesgue Integral. 1. Simple Functions. 2. Bounded Functions. 3. Non-negative Functions 4. General Functions.
+
+\begin{defn}[Expectation of a random variable]
+  The \emph{expctation of a random variable } $X\colon \Omega \to \bbR$ defined on a probability space $(\Omega, \calF, \Prob)$ is the Lebesgue integral
+  \begin{equation}
+    \Expect[X] = \int_\Omega X d\Prob.
+  \end{equation}
+\end{defn}
+
+\paragraph{Computing expectations} Moving forward, we will show several examples and techniques which can be used to compute the expectation of random variables. 
+
+\begin{exmp}[Expectation of an indicator function.]
+The simplest case is that of indicator functions. Consider the indicator function $\ind_A$ for set $A\in\calF$. Fromt the definition of the expectation, we can write this as
+\begin{equation}
+  \Expect[ \ind_A ] = \int_\Omega \ind_A d\Prob = 1 \cdot \Prob(A) + 0 \cdot \Prob(A^c) = \Prob(A).
+\end{equation}
+This example shows that we can easily compute the expectation by treating the indicator function as a simple function, then computing the expectation accordingly.
+\end{exmp}
+
+The previous example gives some necessary insight to the kinds of tricks we'll have to use in order to compute some expectations, but there are some simplifications we can make based on our calculus intuition for computing the expectation for random variables. In the more general setting, we can use a change of variables to do this integration over the real numbers, so that the expectation of a random variable $X$ on $(\Omega, \calF, \Prob)$ is given by
+\begin{equation}
+  \Expect[X] = \int_\Omega X d\Prob = \int_\bbR x \Prob_X(dx),
+\end{equation}
+where $\Prob_X$ is the distribution of $X$ on $\bbR$. In the case $X$ is continuous and has a density function $f_X$, we have that 
+\begin{equation}
+  \Prob_X(dx) = f_X(x)dx.
+\end{equation}
+Therefore, the full expectation can be computed as 
+\begin{equation}
+  \Expect[X] = \int_\Omega X d\Prob = \int_\bbR x f_X(x) dx,
+\end{equation}
+for continuous random variables $X$ with density $f_X$.
+
+When $X$ is instead discrete, then
+\begin{equation}
+  \Prob_X(dx) = \Prob(X^{-1}(\{x\})) = \Prob(X = x).
+\end{equation}
+This allows us to write the expectation as 
+\begin{equation}
+  \Expect[X] = \int_\Omega X d\Prob = \sum_{\omega\in\Omega} \omega \Prob(X = \omega).
+\end{equation}
+
+We can think of this as a change of variables from the probability space $(\Omega, \calF, \Prob)$ to the probability space $(\bbR, \mathcal{B}(\bbR), \Prob_X)$. 
+
+Let's use this technique to compute the expectation of several of the random variables we've previously discussed. 
+
+\begin{exmp}[Expectation of a Poisson Random Variable]
+  Using the previous definition of the Poisson variable $X$ with rate parameter $\lambda$, we can compute the expectation as
+  \begin{align}
+    \Expect[X] = \int_\Omega X d\Prob = \sum_{k=0}^\infty k\Prob(X = k) = \lambda.
+  \end{align}
+\end{exmp}
+
+\begin{exmp}[Expectation of an Exponential Random Variable]
+  %TODO: ADD EXPOSITION
+\begin{align}
+  \Expect[X] = \int_\Omega X d\Prob = \int_\bbR x \lambda e^{-\lambda x}dx = \frac{1}{\lambda}.
+\end{align}
+\end{exmp}
+
+We can also use this technique to compute the expectation of measurable functions $g$ of a random variable $X$. Since $g(X)$ itself is a random variable due to the measurability of $g$, we can compute the expecation of $g(X)$ as
+\begin{equation}
+  \Expect[g(X)] = \int_\Omega g(X)d\Prob = \int_\bbR g(x) \Prob_X(dx).
+\end{equation}
+
+This result allows us to prove some interesting consequences of the expectation. The most important one being that the expectation is linear.
+
+\begin{thm}[Linearity of expectation]
+  If $X$ and $Y$ are random variables and $a$ and $b$ are constants, then 
+  \begin{equation}
+    \Expect[aX + bY] = a \Expect[X] + b \Expect[Y].
+  \end{equation}
+\end{thm}
 
 \section{Independence, Martingales, and Conditioning}%
   \label{sec:independence_martingales_and_conditioning}
