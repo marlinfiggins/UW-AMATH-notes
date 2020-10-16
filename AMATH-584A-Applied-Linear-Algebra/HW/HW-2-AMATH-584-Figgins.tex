@@ -1,0 +1,204 @@
+%Preamble
+\documentclass[12pt]{article}
+\usepackage{fancyhdr}
+\usepackage{extramarks}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{amsrefs}
+\usepackage{amsfonts}
+\usepackage{mathrsfs}
+\usepackage{mathtools}
+\usepackage[mathcal]{eucal} %% changes meaning of \mathcal
+\usepackage{enumerate}
+\usepackage[shortlabels]{enumitem}
+\usepackage{verbatim} %% includes comment environment
+\usepackage{hyperref}
+\usepackage[capitalize]{cleveref}
+\crefformat{equation}{~(#2#1#3)}
+\usepackage{caption, subcaption}
+\usepackage{graphicx}
+\usepackage{fullpage} %%smaller margins
+\usepackage[all,arc]{xy}
+\usepackage{mathrsfs}
+
+\hypersetup{
+    linktoc=all,     % set to all if you want both sections and subsections linked
+}
+
+\topmargin=-0.45in
+\evensidemargin=0in
+\oddsidemargin=0in
+\textwidth=6.5in
+\textheight=9.0in
+\headsep=0.25in
+\setlength{\headheight}{16pt}
+
+\linespread{1.0}
+
+\pagestyle{fancy}
+\lhead{\Name}
+\chead{\hwClass: \hwTitle}
+\rhead{\hwDueDate}
+\lfoot{\lastxmark}
+\cfoot{\thepage}
+
+\renewcommand\headrulewidth{0.4pt}
+\renewcommand\footrulewidth{0.4pt}
+
+\setlength\parindent{0pt}
+
+%% Title Info
+\newcommand{\hwTitle}{HW \# 2}
+\newcommand{\hwDueDate}{October 16, 2020}
+\newcommand{\hwClass}{AMATH 584}
+\newcommand{\hwClassTime}{}
+\newcommand{\hwClassInstructor}{}
+\newcommand{\Name}{\textbf{Marlin Figgins}}
+
+
+%% MATH MACROS
+\newcommand{\bbF}{\mathbb{F}}
+\newcommand{\bbN}{\mathbb{N}}
+\newcommand{\bbQ}{\mathbb{Q}}
+\newcommand{\bbR}{\mathbb{R}}
+\newcommand{\bbZ}{\mathbb{Z}}
+\newcommand{\bbC}{\mathbb{C}}
+\newcommand{\abs}[1]{ \left| #1 \right| }
+\newcommand{\diff}[2]{\frac{d #1}{d #2}}
+\newcommand{\infsum}[1]{\sum_{#1}^{\infty}}
+\newcommand{\norm}[1]{ \left|\left| #1 \right|\right| }
+\newcommand{\eval}[1]{ \left. #1 \right| }
+\newcommand{\Expect}[1]{\mathbb{E}\left[#1 \right]}
+\newcommand{\Var}[1]{\mathbb{V}\left[#1 \right]}
+\renewcommand{\vec}[1]{\mathbf{#1}}
+
+\renewcommand{\phi}{\varphi}
+\renewcommand{\emptyset}{\O}
+
+%--------Theorem Environments--------
+%theoremstyle{plain} --- defaultx
+\newtheorem{thm}{Theorem}[section]
+\newtheorem{cor}[thm]{Corollary}
+\newtheorem{prop}[thm]{Proposition}
+\newtheorem{lem}[thm]{Lemma}
+\newtheorem{conj}[thm]{Conjecture}
+\newtheorem{quest}[thm]{Question}
+
+\theoremstyle{definition}
+\newtheorem{defn}[thm]{Definition}
+\newtheorem{defns}[thm]{Definitions}
+\newtheorem{con}[thm]{Construction}
+\newtheorem{exmp}[thm]{Example}
+\newtheorem{exmps}[thm]{Examples}
+\newtheorem{notn}[thm]{Notation}
+\newtheorem{notns}[thm]{Notations}
+\newtheorem{addm}[thm]{Addendum}
+
+% Environments for answers and solutions
+\newtheorem{exer}{Exercise}
+\newtheorem{sol}{Solution}
+
+\theoremstyle{remark}
+\newtheorem{rem}[thm]{Remark}
+\newtheorem{rems}[thm]{Remarks}
+\newtheorem{warn}[thm]{Warning}
+\newtheorem{sch}[thm]{Scholium}
+
+\makeatletter
+\let\c@equation\c@thm
+\makeatother
+
+\begin{document}
+\subsection*{Yale Faces B}%
+\label{sub:yale_faces_b}
+
+The code used for the following questions and figures was done in Julia and is attached to the end of this document. We start with an analysis of the cropped images.
+\begin{exer}
+Do an SVD analysis of the images (where each image is reshaped into a column vector and each column is a new image).
+\end{exer}
+
+\begin{exer}
+    What is the interpretation of the $\vec{U}$, $\vec{\Sigma}$ and $\vec{V}$ matrices? (Plot the first few reshaped columns of $\vec{U}$)
+\end{exer}
+\begin{sol}
+    We interpret the columns of the matrix $\vec{U}$. 
+\end{sol}
+\begin{exer}
+What does the singular value spectrum look like and how many modes are necessary for good image
+reconstructions using the PCA basis? (i.e. what is the rank $r$ of the face space?)
+\end{exer}
+\begin{sol}
+    
+    %TODO: Include an example reconstruction of a face.
+    %TODO: There are several ways to select the optimal rank,,,
+\end{sol}
+\begin{exer}
+Compare the difference between the cropped (and aligned) versus uncropped images in terms of singular
+value decay and reconstruction capabilities.
+\end{exer}
+\begin{sol}
+We see that for cropped images the spectrum is ... vs.... for the uncropped images. This is due to misalignment of the faces.
+\end{sol}
+\newpage
+
+\subsection*{Theorems}%
+\label{sub:theorems}
+
+\begin{exer}
+    The non-zero singular values of $\vec{A}$ are the square roots of the non-zero eigenvalue of $\vec{A}\vec{A}^*$ or $\vec{A}^*\vec{A}$.
+\end{exer}
+\begin{sol}
+    Let $\vec{A} = \vec{U\Sigma V}^*$. Then we can write 
+    \begin{align}
+        \vec{A A}^* &= \vec{U}\vec{\Sigma}\vec{\Sigma}^*\vec{U}^{-1},\\
+        \vec{A}^*\vec{A}  &= \vec{V}\vec{\Sigma}\vec{\Sigma}^*\vec{V}^{-1}
+    \end{align}
+    using the fact that $(\vec{AB})^* = \vec{B}^*\vec{A}^*$ and that both $\vec{U}$ and $\vec{V}$ are unitary. Notice that that both $\vec{\Sigma}\vec{\Sigma}^*$ and $\vec{\Sigma}^*\vec{\Sigma}$ are both diagonal with entries ($\sigma_1^2,\sigma_2^2, \ldots)$ which are the square of the non-zero singlar values $\sigma_i$. Looking at the above equations, we additionally see that $\vec{A}\vec{A}^*$ and $\vec{A}^*\vec{A}$ are diagonalizable. Therefore, the diagonal entries of the inner matrices $\vec{\Sigma}\vec{\Sigma}^*$ and $\vec{\Sigma}^*\vec{\Sigma}$ give their eigenvalues $\lambda_i$. This gives us that
+    \begin{equation}
+        \lambda_i = \sigma_i^2 \implies \sigma_i = \sqrt{\lambda_i}.
+    \end{equation}
+\end{sol}
+
+\begin{exer}
+    If $\vec{A}=\vec{A}^*$, then the singlar values are the absolute values of the eigenvalues of $\vec{A}$.
+\end{exer}
+
+\begin{sol}
+    Since the singular values are the square roots of the non-zero eigenvalues of $\vec{A}^*\vec{A}$ and $\vec{A}$ is Hermitian, we have 
+    \begin{equation}
+        \vec{A}^2=\vec{A}^*\vec{A}.
+    \end{equation}
+Therefore, the singular values of singular values are simple the square root of the eigenvalues of $\vec{A}^2$. Since $\vec{A}$ is diagonalizable, we have that
+\begin{equation}
+    \vec{A}^2 = (\vec{P}\vec{\Lambda}\vec{P}^{-1})^2 = \vec{P}\vec{\Lambda}^2\vec{P}.
+\end{equation}
+Therefore, the eigenvalues $\vec{A}^2$ are simply the square of the eigenvalues of $\vec{A}$. This means that each sngular value is given by
+\begin{equation}
+    \sigma_i = \sqrt{ \lambda_i^2 } = \abs{\lambda_i},
+\end{equation}
+where $\lambda_i$ is the $i$-th eigenvalue of $\vec{A}$.
+\end{sol}
+
+\begin{exer}
+    Given that the determinant of a unitary matrix is 1, show that $\abs{\det (\vec{A})} = \prod \sigma_i$.
+\end{exer}
+
+\begin{sol}
+    Writing the singular value decomposition of $\vec{A}$ as $\vec{A} = \vec{U}\vec{\Sigma}\vec{V}^*$, we can see that
+
+    \begin{align}
+    \abs{\det(\vec{A})} = \abs{\det(\vec{U})} \abs{\det(\vec{\Sigma})} \abs{\det(\vec{V}^*)}.   
+    \end{align}
+
+Since both $\vec{U}$ and $\vec{V}$ are unitary, this reduces to
+\begin{equation}
+    \abs{\det(\vec{A})} = \abs{\det(\vec{\Sigma})}. 
+\end{equation}
+
+Since $\vec{\Sigma}$ is diagonal, its determinant is simply the product of its diagonal entries which are the singular values $\sigma_i$. Therefore,
+\begin{equation}
+    \abs{\det(\vec{A})} = \prod \sigma_i. 
+\end{equation}
+\end{sol}
+\end{document}
