@@ -543,8 +543,8 @@ where $\zeta_j = \frac{1}{2}(z_j + z_{j-1})$, $\Delta z_j = z_{j} - z_{j-1}$, an
 \end{equation}
 Here, we see that integrals in the complex plane can be reduced to real integrals in the $x-y$ plane. It's our hope that these integrals are path independent to simplify these 2D real integrals.
 
-\paragraph{Cauchy's Integral Theorem}%
-\label{par:cauchy_s_integral_theorem}
+\paragraph{Cauchy's  Theorem}%
+\label{par:cauchys_theorem}
 
 %TODO: Double Check name
 \begin{thm}
@@ -565,7 +565,7 @@ We can prove this statment using Green's theorem in real variables
 
 %TODO: Fill this out and put in proof environment
 
-Applying this to prove Cauchy's Integral Theroem, we see that 
+Applying this to prove Cauchy's  Theroem, we see that 
 
 %TODO: Double check these equations and conclude the result.
 \begin{align}
@@ -606,6 +606,11 @@ for some analytic function $f$, then $F$ is analytic. Moreover, the function $F(
 \end{thm}
 
 %TODO: Proof. 
+
+%TODO: Add prop 5.4 from undergrad notes with definition of piecewise continuous differentiable curves.
+
+%TODO 5.7: If derivative 0, then f is constant
+
 \paragraph{Several important integrals}%
 \label{par:several_important_integrals}
 
@@ -616,4 +621,138 @@ for some analytic function $f$, then $F$ is analytic. Moreover, the function $F(
 %TODO: 1/z = 0 or 2pi i if contains origin or not. Can borrotw from old notes probably 
 
 %TODO: Our goal is to write the result that a function can be written as a Taylor-Laurent sereies -> a_{-1} 2\pi i...
+
+\paragraph{Cauchy Integral Formula}%
+\label{par:cauchy_integral_formula}
+
+
+Let $f(z)$ be analytic, then the function $\frac{f(z)}{z-\xi}$ is analytic except at $z=\xi$. Given a contour $C$ containing $\xi$ and the circle $C_1$ around $\xi$, we have that
+\begin{equation}
+  \oint_{C_1} = \oint_{C}.
+\end{equation}
+Since $C_1$ is a circle, we can write $z - \xi = \epsilon e^{i\theta}$, so that
+\begin{equation}
+  \oint_{C_1} \frac{f(z)}{z-\xi}dz = \ldots
+\end{equation}
+%TODO: Finish this proof. Possibly combine with 5.15 from UG
+
+This gives us Cauchy's Integral formula
+\begin{equation}
+  f(\xi) = \frac{1}{2\pi i} \oint_C \frac{f(z)}{z-\xi} dz
+\end{equation}
+if $\xi$ is inside $C$. This tells us that if an analytic function is known on a curve $C$, then it is completely determined inside $C$.
+%TODO: Add details from lecture 7
+
+%TODO: Derivative of an analytic function using CIT
+
+\begin{thm}
+If  function $f$ is analytic at $z_0$, then its derivatives are also analytic at $z_0$ and are given by
+\begin{equation}
+  f^{(n)}(z_0) = \frac{n!}{2\pi i} \int_{C} \frac{f(z_0)}{(z - z_0)^{n+1}}dz
+\end{equation}
+\end{thm}
+%TODO: Double check this!
+
+This tells us that analytic functions are infintely diffferentiable. We also are able to derive a bound for the derivative as
+
+\begin{equation}
+  \abs{ f^{(n)}(z_0) } \leq n!\frac{M}{R^n}
+\end{equation}
+
+%TODO: Port over notes and give context for circle C_R used in above equation.
+%TODO: Prove above 
+
+\paragraph{Liouville Theorem}%
+\label{par:liouville_theorem}
+%TODO: Use the above show that if bounded then constant i.e. bound f'
+
+\section{Series}%
+\label{sec:series}
+%TODO: Port notes on series and covergence over!
+\subsection{Series fundamentals}%
+\label{sub:series_fundamentals}
+
+\subsection{Taylor Series}%
+\label{sub:taylor_series}
+
+
+%TODO: Cauchy-Taylor Thm
+\paragraph{Cauchy-Taylor Theorem}%
+\label{par:cauchy_taylor_theorem}
+
+
+\begin{thm}
+  If $f(z)$ is analytic throughout the circular disk $\abs{z-z_0}\leq R$, it can be expanded in a series about the point $z=z_0$ as
+  \begin{equation}
+    f(z) = \sum_{n=0}^\infty A_n(z-z_0)^n,
+  \end{equation}
+  where 
+  \begin{equation}
+  A_n = \frac{f^{(n)}(z_0)}{n!} = \frac{1}{2\pi i} \oint_C \frac{f(\xi)}{(\xi - z_0)^n} d\xi.
+  \end{equation}
+  Here the radius of convergence is the radious of the largest circle on which and within within $f(z)$ is analytic.
+\end{thm}
+%TODO: Rephrase as f is equibalent to its power series on the disk if it is analytic 
+%TODO: Finish proof
+\begin{proof}
+  Take $C$ to be the largest circle centered at $z_0$ on which and inside of which $f(\xi)$ is analytic. Then
+
+  \begin{align}
+    \frac{1}{\xi - z} &= \frac{1}{(\xi - z_0) - (z - z_0)} \\
+                      &= \frac{1}{\xi - z_0} \frac{1}{1-r}\\
+                      &= \frac{1}{\xi - z_0}\sum_{n=0}^\infty r^n, \quad r = \frac{z - z_0}{\xi - z_0}
+  \end{align}
+\end{proof}
+
+
+%TODO: Finish below examples
+\begin{exmp}[Radius of convergence]
+\begin{equation}
+  \frac{1}{1-z} = 1 + z + z^2 + \cdots.
+\end{equation}
+Here the radius of convergence is one because the first singularity of the function is given by $z_* = 1$. Therefore, within the circle $\abs{z}<1$, the function is analytic.
+\end{exmp}
+
+\begin{exmp}[Radius of convergence]
+\begin{equation}
+  \frac{1}{1+z^2} = 1 - z^2 + z^4 - \cdots.
+\end{equation}
+\end{exmp}
+
+\subsection{Laurent Series}%
+\label{sub:laurent_series}
+
+%TODO: Include definition of Laurent series
+
+%TODO: Expand on examples and how we rarely use the formula for the Laurent series directly
+\begin{exmp}
+  Expand $f(z) = \frac{e^z}{z}$ around $z_0 = 0$. Then
+
+  \begin{align}
+    f(z) &= \frac{1}{z} \left( 1 + z + \frac{z^1}{2!} + \cdots \right)\\
+         &= \frac{1}{z} + 1 + \frac{z}{2!} + \cdots.
+  \end{align}
+  This is not the form of a Taylor series about $z_0 = 0$, but it is the form of a Laurent series.
+\end{exmp}
+
+%TODO: Another example. Expand $f(z) = 1/1-z$
+\begin{exmp}
+  Expand $f(z) = \frac{1}{1-z}$. There are two cases.
+
+  % TODO: If inside unit circle
+
+  %TODO: Outside unit circle
+
+  %Finish derivation
+  \begin{align}
+    f(z) = \frac{1}{1-z} &= -\frac{1}{z} \left( \frac{1}{1 - \frac{1}{z}} \right) \\
+                         &= - \frac{1}{z} \sum_{n=0}^\infty \left( \frac{1}{z} \right)^n
+  \end{align}
+\end{exmp}
+
+%TODO: Another example 
+\begin{exmp}
+  Expand $f(z) = \frac{1}{(z-1)(z-2)} = \frac{1}{z-2} - \frac{1}{z-1}$.
+%TODO: The three cases abs{z}<1, \abs{z} < 2, 1< \abs{z} <2
+\end{exmp}
 \end{document}
