@@ -629,4 +629,117 @@ which allows us to recover our matrix $\vec{U}$.
 
 %NOTE: X^TX if pics are in columns
 
+\section{QR Decomposition}%
+\label{sec:qr_decomposition}
+
+The idea of the QR decomposition is to write it as a product of matrices $\vec{QR}$, where the matrix $\vec{Q}$ is unitary and $\vec{R}$ is upper triangular. In the case of $\vec{Ax} = \vec{b}$. We can decompose $\vec{A}$ using the $\vec{QR}$ decomposition, so that 
+
+\begin{align}
+  \vec{y} =\vec{Rx} &= \vec{Q}^*\vec{b}\\
+  \vec{Qy} &= \vec{b}.
+\end{align}
+This reduces solving $\vec{Ax}=\vec{b}$ to a single matrix multiplication and back substitution.
+
+Consider a matrix $\vec{A} \in \bbC^{m\times n}$ ($m>n$) with column vectors $\vec{a}_i$ which are linearly independent. These columns then form an $n$-dimensional basis
+\begin{equation}
+  < \vec{a}_1, \vec{a}_2, \ldots, \vec{a}_n>.
+\end{equation} Therefore, given any vector of interest $\vec{x}\in \bbC^n$, we can write it as a linear combination of these basis vectors, so that 
+\begin{equation}
+  x = \sum_{j=1}^{n} \alpha_j \vec{a}_j.
+\end{equation} We then have a linear system of equations
+%TODO: Retrieve from lecture video
+
+In order to simplify this, we'll attempt to work with an orthonormal basis instead. This would greatly simpliftly the math since if we have an orthonormal basis $\{\vec{q}_1, \ldots, \vec{q}_n \}$, then $\vec{\alpha}_i = \vec{q}^*_i \vec{x}$. Therefore,
+\begin{equation}
+  \vec{x} = \sum \alpha_j \vec{q}_j = \sum (\vec{q}_j ^* \vec{x}) \vec{q}_j.
+\end{equation}
+
+%TODO: Fill out details  
+One such approach to finding these orthonormal vectors is to construct them from our original basis $<\vec{a}_1,\ldots, \vec{a}_n>$. This is the GS orthonormalization procedure.
+
+%TODO: Fill out details connecting these paragraphs.
+We have an iteration scheme $C\vec{q}_{2} = \vec{a}_{2} - (\vec{q}_{1}^* \vec{a}_{2})\vec{q}_{1}$ where $C$ is a normalization constant so that $\vec{q}_2$ has unit magnitude. This is the core idea behind Gram-Schmidt. By moving from the coordinate system of column space to an orthonormal system, we can simply the number of computations necessary for computations.
+%TODO: Rewrite and link to the QR decomposition.
+We have that
+
+\begin{align}
+  \vec{q}_1 &= \frac{\vec{a}_1}{r_{11}} \\
+  \vec{q}_2 &= \frac{1}{r_{22}}\left(\vec{a}_2 - r_{12}\vec{q}_1 \right)\\
+  \vec{q}_n &= \frac{1}{r_{nn}} \left( \vec{a}_n - \sum_{j=1}^{n-1} r_{jn}\vec{q}_j \right)\\
+\end{align}
+
+We can also work out the entries of $\vec{R}$ as
+\begin{align}
+  r_{ij} &= \vec{q}_i^*\vec{a}_j \\
+  \abs{r_{jj}} &= \norm{ \vec{a}_j - \sum_{i=1}^{j-1} r_{ij}\vec{q}_i }_2.
+\end{align}
+
+%TODO: Figure out beginingg of lecture friday 16.
+
+%TODO: Write out explicitly that $\vec{q}$ are the columns of $\vec{Q}$
+
+\paragraph{Projectors}%
+\label{par:projectors}
+
+
+With the matrix $\vec{Q}$ at hand, we can write the vectors of $\vec{x}\in\bbC^m$ as 
+\begin{equation}
+  \vec{x} = \vec{r} + \sum_{j=1}^n (\vec{q}_j ^* \vec{x}) \vec{q}_j
+\end{equation}
+where $\vec{r}$ is orthogonal to the span of $\vec{Q}$ and the relationship
+\begin{equation}
+  \vec{x} \mapsto \sum_{j=1}^n (\vec{q}_j ^* \vec{x}) \vec{q}_j
+\end{equation}
+is the projector from $\vec{x}$ to $\text{range}(\vec{Q})$ which is $n$-dimensional. We could instead write this projector as 
+\begin{equation}
+  \vec{x} \mapsto \vec{QQ}^*\vec{x}
+\end{equation}
+taking advantage of the fact that the $\vec{q}_j$ form the columns of $\vec{Q}$. This gives us the opportunity to define projectors in general.
+
+\begin{defn}
+  A projector is a linear operator which satistifes that $\vec{P}^2 = \vec{P}$
+\end{defn}
+
+%TODO: Get all properties from lecture video
+%TODO: Write out proposition statement
+\begin{proof}
+  \begin{align}
+    \vec{P}[ \vec{y} = \vec{Px} ]
+  \end{align}
+\end{proof}
+
+We define the complementary projectors as $\vec{I}- \vec{P}$. This is indeed a projecor itself
+\begin{align}
+  (\vec{I} - \vec{P})^2 &= \vec{I} -2 \vec{P} + \vec{P}^2\\
+                        &= \vec{I} - \vec{P}.
+\end{align}
+We also see that $\text{range}(\vec{I} - \vec{P}) = \text{null}(\vec{P})$. Sometimes, we'll just denote this as 
+\begin{equation}
+  \vec{P}_\perp = \vec{I}-\vec{P}
+\end{equation}
+since the complementary projector is orthogonal to the original projector. There are plenty examples of projectors. For example, take a column vector $\vec{q}$, we can define the projector by $\vec{q}$ as
+\begin{equation}
+  \vec{P}_{\vec{q}} = \vec{q}\vec{q}^*. 
+\end{equation}
+
+%TODO: Tighten this langauge and explanation.
+\paragraph{GS by projectors}%
+\label{par:gs_by_projectors}
+
+We can use this idea of projectors to implement our GS process. In short, the algorithm proceeds as follows for projectors $\vec{P}_1, \vec{P}_2, \ldots, \vec{P}_n$ and input vectors $\vec{a}_1, \ldots, \vec{a}_n$
+\begin{align}
+  \vec{q}_1 &= \frac{\vec{P}_1 \vec{a}_1}{\norm{\vec{P}_1 \vec{a}_1}} \\
+  \vec{q}_2 &= \frac{\vec{P}_2 \vec{a}_2}{\norm{\vec{P}_2 \vec{a}_2}} \\
+            &\vdots\\
+  \vec{q}_n &= \frac{\vec{P}_n \vec{a}_n}{\norm{\vec{P}_n \vec{a}_n}}
+\end{align}
+Here, we define the projectors according to the following 
+\begin{equation}
+  \vec{P}_j = \vec{I} - \vec{Q}_{j-1}\vec{Q}_{j-1}^*,
+\end{equation}
+where $\vec{Q}_{j-1}$ is just the matrix with columns $\vec{q}_i$ for $i = 1, \ldots, j-1$. Another way of writing this as 
+\begin{equation}
+  \vec{P}_j = \vec{P}_{\perp\vec{q}_{j-1}}\vec{P}_{\perp\vec{q}_{j-2}} \cdots \vec{P}_{\perp\vec{q}_{1}},
+\end{equation}
+where $\vec{P}_1 = \vec{I}$. As discussed before, the multiplication $\vec{P}_{\perp\vec{q}_i}$ ensures that the next vector $\vec{q}_j$ is orthogonal to $\vec{q}_i$. This iteration scheme is stable comparted to the one discussed initially.
 \end{document}
