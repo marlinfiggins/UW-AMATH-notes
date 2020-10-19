@@ -1,0 +1,299 @@
+%Preamble
+\documentclass[12pt]{article}
+\usepackage{fancyhdr}
+\usepackage{extramarks}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{amsrefs}
+\usepackage{amsfonts}
+\usepackage{mathrsfs}
+\usepackage{mathtools}
+\usepackage[mathcal]{eucal} %% changes meaning of \mathcal
+\usepackage{enumerate}
+\usepackage[shortlabels]{enumitem}
+\usepackage{verbatim} %% includes comment environment
+\usepackage{hyperref}
+\usepackage[capitalize]{cleveref}
+\crefformat{equation}{~(#2#1#3)}
+\usepackage{caption, subcaption}
+\usepackage{graphicx}
+\usepackage{fullpage} %%smaller margins
+\usepackage[all,arc]{xy}
+\usepackage{mathrsfs}
+
+\hypersetup{
+    linktoc=all,     % set to all if you want both sections and subsections linked
+}
+
+\topmargin=-0.45in
+\evensidemargin=0in
+\oddsidemargin=0in
+\textwidth=6.5in
+\textheight=9.0in
+\headsep=0.25in
+\setlength{\headheight}{16pt}
+
+\linespread{1.1}
+
+\pagestyle{fancy}
+\lhead{\Name}
+\chead{\hwTitle}
+\rhead{\hwClass}
+\lfoot{\lastxmark}
+\cfoot{\thepage}
+
+\renewcommand\headrulewidth{0.4pt}
+\renewcommand\footrulewidth{0.4pt}
+
+\setlength\parindent{0pt}
+
+%% Title Info
+\newcommand{\hwTitle}{HW \# 2}
+\newcommand{\hwDueDate}{October 19, 2020}
+\newcommand{\hwClass}{AMATH 561A}
+\newcommand{\hwClassTime}{}
+\newcommand{\hwClassInstructor}{}
+\newcommand{\Name}{\textbf{Marlin Figgins}}
+
+
+%% MATH MACROS
+\newcommand{\bbF}{\mathbb{F}}
+\newcommand{\bbN}{\mathbb{N}}
+\newcommand{\bbQ}{\mathbb{Q}}
+\newcommand{\bbR}{\mathbb{R}}
+\newcommand{\bbZ}{\mathbb{Z}}
+\newcommand{\bbC}{\mathbb{C}}
+\newcommand{\Prob}{\mathbb{P}}
+\newcommand{\calF}{\mathcal{F}}
+\newcommand{\abs}[1]{ \left| #1 \right| }
+\newcommand{\diff}[2]{\frac{d #1}{d #2}}
+\newcommand{\infsum}[1]{\sum_{#1}^{\infty}}
+\newcommand{\norm}[1]{ \left|\left| #1 \right|\right| }
+\newcommand{\eval}[1]{ \left. #1 \right| }
+\newcommand{\Expect}[1]{\mathbb{E}\left[#1 \right]}
+\newcommand{\Var}[1]{\mathbb{V}\left[#1 \right]}
+\renewcommand{\phi}{\varphi}
+\renewcommand{\emptyset}{\O}
+
+%--------Theorem Environments--------
+%theoremstyle{plain} --- defaultx
+\newtheorem{thm}{Theorem}[section]
+\newtheorem{cor}[thm]{Corollary}
+\newtheorem{prop}[thm]{Proposition}
+\newtheorem{lem}[thm]{Lemma}
+\newtheorem{conj}[thm]{Conjecture}
+\newtheorem{quest}[thm]{Question}
+
+\theoremstyle{definition}
+\newtheorem{defn}[thm]{Definition}
+\newtheorem{defns}[thm]{Definitions}
+\newtheorem{con}[thm]{Construction}
+\newtheorem{exmp}[thm]{Example}
+\newtheorem{exmps}[thm]{Examples}
+\newtheorem{notn}[thm]{Notation}
+\newtheorem{notns}[thm]{Notations}
+\newtheorem{addm}[thm]{Addendum}
+
+% Environments for answers and solutions
+\newtheorem{exer}{Exercise}
+\newtheorem{sol}{Solution}
+
+\theoremstyle{remark}
+\newtheorem{rem}[thm]{Remark}
+\newtheorem{rems}[thm]{Remarks}
+\newtheorem{warn}[thm]{Warning}
+\newtheorem{sch}[thm]{Scholium}
+
+\makeatletter
+\let\c@equation\c@thm
+\makeatother
+
+\begin{document}
+\begin{exer}
+    Suppose that $X$ and $Y$ are random variables on $(\Omega, \calF, \Prob)$ and pick $A\in \calF$. Define
+    \begin{equation}
+        Z(\omega) = \begin{cases}
+            X(\omega), \quad \omega\in A \\
+            Y(\omega), \quad \omega\in A^c.
+        \end{cases}
+    \end{equation}
+    Show that $Z$ is a random variable.
+\end{exer}
+\begin{sol}
+Let $B$ be a Borel set and consider the set $\{ Z \in B\}$. We can write $B = (B\cap A) \cup (B \cap A^c)$. This allows us to see that 
+\begin{equation}
+    \{ Z \in B\} = \{ Z\in  (B\cap A) \cup (B \cap A^c) \}= \{Z\in B\cap A \} \cup \{Z \in B\cap A^c \}.
+\end{equation}
+since the preimage of a set union is the union of the preimages of the sets composing it. Since $ (B\cap A)\subset A$ and $(B\cap A^c) \subset A^c$, we know that $Z = X$ on $B\cap A$ and $Z=Y$ on $B\cap A^c$. This means that
+\begin{equation}
+    \{ Z\in B\} = \{X\in B\cap A \} \cup \{Y \in B\cap A^c\}.
+\end{equation}
+Since both the events on the righthand side are in $\calF$, $\{Z\in B\}$. Therefore, $\{ Z\in B\}$ is measurable for any Borel set $B$, so $Z$ is a random variable.
+\end{sol}
+
+\newpage 
+\begin{exer}
+    Suppose that $X$ is a continuous random variable with distribution $F_X$. Let $g$ be a strictly increasing continuous function and define $Y=g(X)$. 
+
+    \begin{enumerate}[a)]
+        \item What is the distribution function of $Y$ $F_Y$?
+        \item What is $f_Y$ the density function of $Y$?
+    \end{enumerate}
+\end{exer}
+
+\begin{sol}\leavevmode
+    
+    a) We can compute the distribution function of $Y$ directy as
+    \begin{equation}
+        F_Y(x) = \Prob(Y\leq x) = \Prob(g(X)\leq x)
+    \end{equation}
+    Since $g$ is a strictly increasing continuous function it has a continuous inverse $g^{-1}$, therefore,
+    \begin{equation}
+        F_Y(x) = \Prob(g(X)\leq x) = \Prob(X \leq g^{-1}(x)) = (F_X\circ g^{-1})(x).
+    \end{equation}
+    
+    b) Here we assume that $X$ has a density function $f_X = F'_X$. We can find the density of $Y$ by taking the derivative of its distrubution function, so that
+    \begin{equation}
+        f_Y(x) = \diff{}{x}(F_Y(x)) = \diff{}{x}(F_X(g^{-1}(x))).
+    \end{equation}
+    Assuming that $g$ is additionally differentiable and using the chain rule, we can compute that
+    \begin{align}
+        f_Y(x) &= \diff{}{x} \left[g^{-1}(x)\right] \cdot F'_X(g^{-1}(x))\\
+               &= \diff{}{x} \big[ g^{-1}(x) \big]\cdot f_X(g^{-1}(x))
+    \end{align}
+    The second equality follows from the definition of the density. In this case, the derivativee of the inverse function $g^{-1}$ should always be positivesince $g$ is strictly increasing, but in general, I believe we have to use $\abs{\diff{}{x}g^{-1}(x)}$ to ensure the density is non-negative.
+\end{sol}
+
+\newpage
+\begin{exer}
+Suppose that $X$ is a continuous random variable with distribution function $F_X$. Find $F_Y$ where $Y$ is given by:
+\begin{enumerate}[a)]
+    \item $X^2$
+    \item $\sqrt{\abs{X}}$
+    \item $\sin X$
+    \item $F_X(X)$
+\end{enumerate}
+\end{exer}
+
+\begin{sol}
+    a) We'll begin by trying to compute the distribution of $Y$ directly,
+\begin{align}
+    F_Y(x) &= \Prob(Y \leq x)\\
+           &= \Prob(X^2 \leq x).
+\end{align}
+When $x\geq0$, we can see that
+\begin{align}
+    F_Y(x) &= \Prob(-\sqrt{x} \leq X \leq \sqrt{x})\\
+           &= F_X(\sqrt{x}) - F_X(-\sqrt{x}).
+\end{align}
+If $x<0$,
+\begin{align}
+    F_Y(x) &= \Prob( X^2 \leq x )\\
+           &= \Prob(X^2 \leq x < x) = 0
+\end{align}
+since the square of real-valued quantatives must be non-negative. We can put this together to show that
+\begin{equation}
+    F_Y(x) = \begin{cases}
+        F_X(\sqrt{x}) - F_X(-\sqrt{x}), \quad x \geq 0\\
+        0, \quad x < 0. 
+    \end{cases}
+\end{equation}
+
+b) Once again computing directly
+\begin{align}
+    F_Y(x) &= \Prob(Y \leq x)\\
+           &= \Prob(\sqrt{\abs{X}} \leq x)
+           &= \Prob(\abs{X} \leq x^2)
+\end{align}
+Like in the previous problem, this is 0 is zero for $x<0$, but for $x\geq0$, we can compute
+\begin{align}
+    F_Y(x) &= \Prob(Y\leq x)\\
+           &= \Prob(-x^2 \leq X \leq x^2)\\
+           &= F_X(x^2) - F_X(-x^2).
+\end{align}
+
+We can write this compactly as 
+\begin{equation}
+    F_Y(x) = \begin{cases}
+        F_X(x^2) - F_X(-x^2), \quad x \geq 0\\
+        0, \quad x < 0. 
+    \end{cases}
+\end{equation}
+
+c) Computing directly,
+\begin{align}
+    F_Y(x) &= \Prob(Y \leq x) \\
+           &= \Prob(\sin X \leq x).
+\end{align}
+Since $\sin X$ is bounded between $[0,1]$, we have that $F_Y(x) = 1$ for $x>1$ and $F_Y(x) = 0$ for $x<0$. Otherwise, if $x\in[0,1]$, we can take the inverse of $\sin X$, so that $\Prob(\sin X \leq x) = \Prob(X \leq \arcsin x)$
+\begin{align}
+    F_Y(x) = \begin{cases}
+        1, \quad x > 1\\
+        F_X(\arcsin x), \quad x\in [0,1]\\
+        0, \quad x < 1
+    \end{cases}
+\end{align}
+
+d) Computing directly, 
+\begin{align}
+    F_Y(x) &= \Prob(Y \leq x) \\
+           &= \Prob( F_X(X) \leq x ) \\ 
+           &= \Prob( X\leq \tilde{F}_X^{-1}(x)),
+\end{align}
+where $\tilde{F}_X^{-1}$ is the pseudo-inverse of the distribution $F$ defined by
+\begin{equation}
+    \tilde{F}_X^{-1} = \inf \{x \mid F(x)\geq u  \}.
+\end{equation}
+\end{sol}
+
+\newpage
+
+\begin{exer}
+    Define $X\colon [0,1]\to \bbR$ by 
+    \begin{equation}
+        X(\omega) = \begin{cases}
+            1, \quad \omega \in [0,1]\cap\bbQ^c\\
+            0, \quad \omega \in [0,1]\cap\bbQ.
+        \end{cases}
+    \end{equation}
+    As defined, $X$ is the function which takes rational numbers in $[0,1]$ to 0 and irrational numbers in $[0,1]$ to 1. Assuming that $X$ is defined on $([0,1], \mathcal{B}[0,1], \Prob)$ where $\Prob$ is the Lebesgue measure. Show that $X$ is a random variable. If it is, what are its distribution function and expectation? Does $X$ has a density function? Is $X$ discrete?
+\end{exer}
+
+\begin{sol}\leavevmode
+    
+ \textbf{X is a random variable. }% 
+    Let $A = \bbQ^c \cap [0,1]$. We will show that $A\in \mathcal{B}[0,1]$. By definition of $\mathcal{B}[0,1]$, we know that every rational number $q\in \bbQ\cap[0,1]$ has $\{ q\} \in \mathcal{B}[0,1]$ since $[0, q)$ and $(q,1]$ are Borel sets and
+    \begin{equation}
+        [0,1] \setminus ([0,q) \cup (q,1]) = \{q \}.
+    \end{equation} We also know that $\Prob(\{q\}) = 0$ under the Lebesque measure since 
+    \begin{equation}
+        \Prob([0,q) \cup (q,1]) = 1 \text{ and } \Prob( [0,q ) \cup (q,1] \cup \{q \}) = \Prob( [0,1]) = 1.
+    \end{equation}
+
+    Since there are a countable number of rationals, we have that
+    \begin{equation}
+        \Prob( \bbQ \cap [0,1] ) = \sum_{q \in \bbQ} \Prob(\{ q\}) = 0
+    \end{equation}
+    by countable additivity. This means that $A$ is a measurable set with $\Prob(A) = 1$ since $A^c = \bbQ \cap [0,1]$ is measurable with $\Prob(A^c) = 0$. Notice that with this choice of $A$, we can see that $X$ is simply the indicator function of $A$ and as it is an indicator function of a measurable event it is a random variable. 
+
+\textbf{Distribution of X. }%    
+We can compute the distribution of $X$ using the fact that it is either 1 or 0. If $\omega \in \bbQ$, then $X = 0$ which occurs with probability 0. Similarly, if $\omega\notin\bbQ$, then $X=1$ which occurs with probability 1. Therefore, our distribution is described by
+\begin{align}
+    F_X(x) = \Prob(X \leq x) = \begin{cases}
+        1, \quad x=1\\
+        0, \quad x<1.
+    \end{cases}
+\end{align}
+
+\textbf{Expectation of X.}
+Since $X$ is an indicator function, we can compute its expectation quite simply as
+\begin{equation}
+    \Expect X = \Prob(A) = 1.
+\end{equation}
+\textbf{Density of X.} 
+The random variable has no density since it is simply a point mass at $x=1$.
+
+\textbf{X is discrete.} The random variable $X$ is discrete since it can only take the values 0 and 1.
+\end{sol}
+\end{document}
