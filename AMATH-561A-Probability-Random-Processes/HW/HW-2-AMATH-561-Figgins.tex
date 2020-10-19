@@ -129,7 +129,7 @@ since the preimage of a set union is the union of the preimages of the sets comp
 \begin{equation}
     \{ Z\in B\} = \{X\in B\cap A \} \cup \{Y \in B\cap A^c\}.
 \end{equation}
-Since both the events on the righthand side are in $\calF$, $\{Z\in B\}$. Therefore, $\{ Z\in B\}$ is measurable for any Borel set $B$, so $Z$ is a random variable.
+Since both the events on the righthand side are in $\calF$ because $X$ and $Y$ are random variables, their union $\{Z\in B\}\in\calF$. This shows $\{ Z\in B\}$ is measurable for any Borel set $B$, meaning $Z$ is a random variable.
 \end{sol}
 
 \newpage 
@@ -146,7 +146,7 @@ Since both the events on the righthand side are in $\calF$, $\{Z\in B\}$. Theref
     
     a) We can compute the distribution function of $Y$ directy as
     \begin{equation}
-        F_Y(x) = \Prob(Y\leq x) = \Prob(g(X)\leq x)
+        F_Y(x) = \Prob(Y\leq x) = \Prob(g(X)\leq x).
     \end{equation}
     Since $g$ is a strictly increasing continuous function it has a continuous inverse $g^{-1}$, therefore,
     \begin{equation}
@@ -162,7 +162,7 @@ Since both the events on the righthand side are in $\calF$, $\{Z\in B\}$. Theref
         f_Y(x) &= \diff{}{x} \left[g^{-1}(x)\right] \cdot F'_X(g^{-1}(x))\\
                &= \diff{}{x} \big[ g^{-1}(x) \big]\cdot f_X(g^{-1}(x))
     \end{align}
-    The second equality follows from the definition of the density. In this case, the derivativee of the inverse function $g^{-1}$ should always be positivesince $g$ is strictly increasing, but in general, I believe we have to use $\abs{\diff{}{x}g^{-1}(x)}$ to ensure the density is non-negative.
+    The second equality follows from the definition of the density. In this case, the derivative of the inverse function $g^{-1}$ should always be positive since $g$ is strictly increasing, but in general, I believe we have to use $\abs{\diff{}{x}g^{-1}(x)}$ to ensure the density is non-negative.
 \end{sol}
 
 \newpage
@@ -192,7 +192,7 @@ If $x<0$,
     F_Y(x) &= \Prob( X^2 \leq x )\\
            &= \Prob(X^2 \leq x < x) = 0
 \end{align}
-since the square of real-valued quantatives must be non-negative. We can put this together to show that
+since the square of real-valued quantities must be non-negative. We can put this together to show that
 \begin{equation}
     F_Y(x) = \begin{cases}
         F_X(\sqrt{x}) - F_X(-\sqrt{x}), \quad x \geq 0\\
@@ -266,7 +266,7 @@ where $\tilde{F}_X^{-1}$ is the pseudo-inverse of the distribution $F$ defined b
     Let $A = \bbQ^c \cap [0,1]$. We will show that $A\in \mathcal{B}[0,1]$. By definition of $\mathcal{B}[0,1]$, we know that every rational number $q\in \bbQ\cap[0,1]$ has $\{ q\} \in \mathcal{B}[0,1]$ since $[0, q)$ and $(q,1]$ are Borel sets and
     \begin{equation}
         [0,1] \setminus ([0,q) \cup (q,1]) = \{q \}.
-    \end{equation} We also know that $\Prob(\{q\}) = 0$ under the Lebesque measure since 
+    \end{equation} We also know that $\Prob(\{q\}) = 0$ under the Lebesgue measure since 
     \begin{equation}
         \Prob([0,q) \cup (q,1]) = 1 \text{ and } \Prob( [0,q ) \cup (q,1] \cup \{q \}) = \Prob( [0,1]) = 1.
     \end{equation}
