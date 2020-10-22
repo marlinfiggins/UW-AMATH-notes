@@ -920,6 +920,94 @@ Though independent variables are uncorrelated, the converse is not true. Uncorre
 \end{thm}
 A simple corollary of this fact is that if $X$ and $Y$ are independent, then $\Expect[XY] = \Expect[X]\Expect[Y]$.
 
+\subsection{Sums of independent random variables}%
+\label{sub:sums_of_independent_random_variables}
+
+\begin{thm}
+  If $X$ and $Y$ are independent with cummulative distribution functions $F_X = F$ and $F_G = G$, then
+  \begin{equation}
+    F_{X+Y} = \Prob(X + Y \leq z) = \int_\bbR F(z-y)dG(y).
+  \end{equation}
+  The integral on the righthand side is called the \emph{convolution of $F$ and $G$} and is denoted by $F*G$.
+\end{thm}
+\begin{proof}
+  Let $h(x,y) = \ind_{ \{x+y\leq z\} }$ and $\mu$ and $\nu$ bwe the probability measures with distributions $F$ and $G$. Then using the previous theorem, we have that
+\begin{equation}
+    \Expect[ h(X,Y) ] = \int_{\bbR}\int_{\bbR} h(x,y)\mu(dx)\nu(dy).
+\end{equation}
+Subbing in our choice of $h$, we see that
+\begin{equation}
+  \Expect[ h(X,Y) ] = \Expect \ind_{ \{X+Y \leq z\} } = \Prob(X + Y \leq z).
+\end{equation}
+
+On the other hand, we can simply the integral $\int_\bbR h(x,y) \mu(dx)$ as 
+\begin{align}
+  \int_\bbR h(x,y) \mu(dx) &= \int_\bbR \ind_{\{x+y \leq z \}} \mu(dx)\\
+                           &= \int_bbR \ind_{\{x\leq z-y\}} \mu(dx)\\
+                           &= \Prob(X \leq z-y) = F(z-y).
+\end{align}
+Putting these substitutions together, we get that
+\begin{equation} 
+  F_{X+Y} = \Prob(X + Y \leq z) = \int_\bbR F(z-y)\nu(dy) = \int_\bbR F(z-y)dG(y).
+\end{equation}
+\end{proof}
+
+We'll use a special case of this theorem for when $X$ and $Y$ have density functions to give a more concrete example.
+\begin{thm}
+Suppose that we have two indepedent random variables $X$ with distribution $F$ and density $f$ and $Y$ has distribution $G$ . Then $X+Y$ has density
+\begin{equation}
+  f_{X+Y}(z)= \int_\bbR f(z-y)dG(y).
+\end{equation}
+When $Y$ additionally has density $g$, the last formula can be written as 
+\begin{equation}
+  f_{X+Y}(z)= \int_\bbR f(z-y)g(y)dy. 
+\end{equation}
+\end{thm}
+
+%TODO: Proof with change of variables and Fubini's
+
+\begin{defn}[Gamma distribution with parameters $\alpha$ and $\lambda$]
+  %TODO: Add more about this RV
+  The gamma density with parameters $\alpha$ and $\lambda$ is given by
+  \begin{equation}
+    f(x) = \begin{cases}
+      \lambda^\alpha x^{\alpha-1}e^{-\lambda x} / \Gamma(\alpha), \quad& x\geq0\\
+      0, \quad& x<0
+    \end{cases}
+  \end{equation}
+where $\Gamma(\alpha) = \int_0^\infty x^{\alpha - 1}e^{-x}dx.$ If a random variable $X$ has density as above, we say that $X$ is gamma distributed and write $X\sim\text{Gamma}(\alpha, \lambda)$
+\end{defn}
+
+
+\begin{prop}[Sum of independent Gamma-distributed random variables.]
+  If $X$ and $Y$ are two independent random variables with densities $\text{Gamma}(\alpha, \lambda)$ and $\text{Gamma}(\beta, \lambda)$, then $X+Y$ has gamma density with parameters $\alpha + \beta$ and $\lambda$.
+\end{prop}
+%TODO: Do proof which is a computation in Lecture 7.
+
+A basic corollary of this is that if $X_1, \ldots, X_n$ are independent exponential random variables with parameter $\lambda$, then $X_1 + \cdots + X_n$ has a $\text{Gamma}(n, \lambda)$ distribution. 
+%TODO: Make this a proposition
+
+\begin{proof}
+  An exponential distribution with rate parameter $\lambda$ is simply a gamma distribution with parameters $1$ and $\lambda$.
+\end{proof}
+
+\begin{defn}[Normal random variable with mean $\mu$ and variance $\sigma^2$]
+  A normal random variable with mean $\mu$ and variance $\sigma^2$ has density
+  \begin{equation}
+    f(x) = \frac{1}{\sqrt{2\pi \sigma^2}} e^{-\frac{(x-\mu)^2}{2\sigma^2}}.
+  \end{equation}
+  If $X$ has density as above, we say that $X$ is an normal with mean $\mu$ and variance $\sigma^2$ and write $X\sim \text{Normal}(\mu, \sigma^2)$.
+\end{defn}
+
+\begin{thm}
+  IF $X\sim \text{Normal}(\mu, a)$ and $Y\sim \text{Normal}(\nu, b)$ are two independent normal random variables, then $X+Y$ is normal with mean $\mu + \nu$ and variance $a+b$.
+\end{thm}
+
+%TODO: Be consistent with the ~. notation throughout
+
+\begin{proof}
+  %TODO: Proof
+\end{proof}
   \section{Characteristic Functions}%
   \label{sec:characteristic_functions}
   
