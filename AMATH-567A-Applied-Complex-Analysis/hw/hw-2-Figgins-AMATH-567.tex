@@ -169,25 +169,175 @@
         \oint_C \frac{1}{2z^2+1} dz = 2\pi i \left(  \Res(f,z_{+}) +   \Res(f,z_{-})    \right) = 0
     \end{equation}
 
-    (f)
+    (f) $\sqrt{z-4} 0\leq\arg z<2\pi.$ With the specification on the argument, this function is analytic with derivative $\frac{1}{z-4}$ except on the real line for $x>4$. Therefore, the integral of this function over the unit circle is 0 by Cauchy's Theorem since it is analytic within and on the unit circle
+    \begin{equation}
+        \oint_{\gamma} \sqrt{z-4}dz = 0.
+    \end{equation}
 \end{sol}
 
 \newpage
 
 \begin{exer}
-    A\&F 2.5.5.
+    A\&F 2.5.5. Evaluate the integral
+    \begin{equation}
+        \int_0^\infty e^{ix^2} 
+    \end{equation}
+    using the contour $C(R)$ which is the closed circular section in the upper half plane with boundary points $(0,0), (0,R),$ and $Re^{i\frac{\pi}{4}}$.
 \end{exer}
 \begin{sol}
+We begin by considering the integral
+\begin{equation}
+    I_R = \oint_{C(R)} e^{iz^2}dz.
+\end{equation}
+Since the function $f(x)=e^{iz^2}$ is analytic in the entire complex plane, we have that $I_R = 0$ by Cauchy Theorem.  Breaking the contour $C(R)$ into three parts, we see that 
+\begin{equation}
+    \label{eq:3_parts}
+    \oint_{C(R)} e^{iz^2}dz = \int_{0}^{R} e^{ix^2}dx + \int_{[Re^{i\frac{\pi}{4}},0]} e^{iz^2}dz + \int_{C_1(R)} e^{iz^2}dz. 
+\end{equation}
+Here, the first integral on the righthand side is the integral on the real line from $(0,R)$, the second is the integral on the line from $[Re^{i\frac{\pi}{4}},0]$, the third integral is the integral on the circular section between $R$ and $Re^{i\frac{\pi}{4}}$. We'll begin by trying to estimate the third integral.
 
+We'll start by working with the contour $C_1(R,\theta_0)$ which is the circular sector between $Re^{i\theta_0}$ and $Re^{i\frac{\pi}{4}}$ which we'll parameterize by the function $\gamma_{R,\theta_0}(t) = Re^{it}$ for $t\in [\theta, \frac{\pi}{4}]$. Then, we can bound the third integral by
+\begin{align}
+\abs{\int_{C_1(R,\theta_0)} e^{iz^2}dz} &\leq \text{length}(C_1(R,\theta_0)) \cdot \sup_{z\in C_1(R,\theta_0)} \abs{e^{iz^2}}\\
+                                           &= \left(\frac{\pi}{4}-\theta_0 \right)\sup_{z\in C_1(R,\theta_0)} \abs{e^{iz^2}} \\
+                                           &\leq \frac{\pi}{4}\sup_{z\in C_1(R,\theta_0)} \abs{e^{iz^2}}.
+\end{align}
+Now we'll compute $\sup_{z\in C_1(R,\theta_0)} \abs{e^{iz^2}}$. Writing $z\in C_1(R,\theta_0)$ in polar exponential form as $z=Re^{i\theta}$ for some $\theta \in [\theta_0, \frac{\pi}{4}$, we can simplify the exponent of $f(z)$ as
+\begin{align}
+    iz^2 = iR^2 e^{i 2\theta} &= iR^2(\cos2\theta + i\sin2\theta)\\
+                              &= -R^2(\sin2\theta + i\cos2\theta).
+\end{align}
+
+Exponentiating, we can compute $\abs{f(z)}$ as 
+\begin{align}
+    \abs{e^{iz^2}} = \abs{ e^{-R^2(\sin2\theta + i\cos2\theta)} } &= \abs{e^{-R^2 \sin2\theta}} \abs{e^{-iR^2\cos2\theta}}\\
+                                                                  &= \abs{e^{-R^2 \sin2\theta}},
+\end{align}
+where $\abs{e^{-iR^2\cos2\theta}} =1$ since $R^2\cos2\theta$ is real. Since $\sin(x)> \frac{2x}{\pi}$ on $x\in[0,\frac{\pi}{2}]$, we have that 
+\begin{equation}
+    \sup_{z\in  C_1(R,\theta_0)} \abs{e^{iz^2}} \leq \sup_{\theta \in [\theta_0, \frac{\pi}{4}]} \abs{e^{-R^2 \frac{4\theta}{\pi}}} = e^{-R^2 \frac{4\theta_0}{\pi}}. 
+\end{equation}
+We obtain this suprenum since the function $e^{-R^2\frac{4\theta}{\pi}}$ is positive and monotonically decreasing in $\theta$.
+
+Therefore, we can see that 
+\begin{equation}
+    \abs{\int_{C_1(R,\theta_0)} e^{iz^2}dz} \leq  \frac{\pi}{4} e^{-R^2\frac{4\theta_0}{\pi}} .
+\end{equation}
+
+We can see that since $C_1(R,\theta_0)$ becomes similar to $C_1(R)$ as $\theta_0 \to 0$ then
+
+\begin{align}
+    \lim\limits_{R\to\infty}\abs{\int_{C_1(R)} f(z)dz } = \lim\limits_{R\to\infty}\lim\limits_{\theta_0\to 0} \abs{\int_{C_1(R,\theta_0)} e^{iz^2}dz} \leq  \lim\limits_{R\to\infty}\lim\limits_{\theta_0\to 0}\frac{\pi}{4} e^{-R^2\frac{4\theta_0}{\pi}}.
+\end{align}
+    Since the righthand most function is monotonically decreasing and bounded by 0 in both $R$ and $\theta_0$, we can re-arrange the limits and show that 
+    \begin{equation}
+        \lim\limits_{R\to\infty}\abs{\int_{C_1(R)}  e^{iz^2}dz } = \lim\limits_{R\to\infty}\lim\limits_{\theta_0\to 0} \abs{\int_{C_1(R,\theta_0)} e^{iz^2}dz} = 0.
+    \end{equation}
+    This implies that $\lim\limits_{R\to\infty}\int_{C_1(R)}  e^{iz^2}dz = 0$ which we'll use a bit later.
+
+    We'll now work on simplifying the integral $\int_{[Re^{i\frac{\pi}{4}},0]} e^{iz^2}dz$. We can immediately see that we can reverse the orientation of this integral and instead parameterize this integral using the curve $\gamma_2(r) = re^{i \frac{\pi}{4}}$ for $r\in[0, R]$. We can then compute
+    \begin{align}
+        \int_{[Re^{i\frac{\pi}{4}},0]} e^{iz^2}dz = -\int_{\gamma_2} e^{iz^2}dz.
+    \end{align}
+    We can simplify the righthand side by computing that
+    \begin{align}
+        \int_{\gamma_2} e^{iz^2}dz &= \int_0^R e^{i\gamma(r)^2}\gamma'(r)dr\\
+                                    &= \int_0^R e^{i(re^{i\pi/4})^2} (e^{i \pi/4}) dr\\
+                                    &=  e^{i \pi/4} \int_0^R e^{i(r^2e^{i\pi/2}} dr \\
+                                    &= e^{i \pi/4} \int_0^R e^{i(ir^2)} dr\\
+                                    &= e^{i \pi/4} \int_0^R e^{-r^2} dr.
+    \end{align}
+
+    Therefore, taking the limit of \ref{eq:3_parts} as $R$ approaches $\infty$, we see that $\lim_{R\to\infty} I_R = 0$, and therefore
+
+\begin{align}
+    0 = \lim\limits_{R\to\infty}\Big(\int_{-R}^{R} e^{ix^2}dx -e^{i \pi/4} \int_0^R e^{-r^2} dr +  \int_{C_1(R)}  e^{iz^2}dz \Big)
+\end{align}
+
+As shown before, the third integral on the righthand side approaches 0 in the limit, so that
+\begin{align}
+  0 = \lim\limits_{R\to\infty}\Big(\int_{0}^{R} e^{ix^2}dx -e^{i \pi/4} \int_0^R e^{-r^2} dr \Big).
+\end{align}
+
+To conclude, we'll use the additive property of limits and the fact that $\int_0^\infty e^{-r^2} dr = \frac{\sqrt{\pi}}{2}$. This means that
+\begin{align}
+  \int_{0}^{\infty} e^{ix^2}dx =  \lim\limits_{R\to\infty}\int_{0}^{R} e^{ix^2}dx &=   \lim\limits_{R\to\infty} e^{i \pi/4} \int_0^R e^{-r^2} dr \\
+                                                    &= e^{i \pi/4}  \int_0^\infty e^{-r^2} dr \\
+                                                    &= e^{i \pi/4}  \frac{\sqrt{\pi}}{2}.
+\end{align}
+This allows us to conclude that 
+\begin{equation}
+    \int_{0}^{\infty} e^{ix^2}dx =  e^{i \pi/4}  \frac{\sqrt{\pi}}{2}.
+\end{equation}
 \end{sol}
 
 \newpage
 
 \begin{exer}
-    A\&F 2.5.6.
+    A\&F 2.5.6. Evaluate the integral
+    \begin{equation}
+        I = \int_\bbR \frac{dx}{x^2+1}
+    \end{equation}
+    using the contour $C(R)$ which is the closed semicircle in the upper half plane with endopoints $(-R, 0)$ and $(0,R)$.
 \end{exer}
 \begin{sol}
+Throughout, we assume that $R>1$ for simplicity. Following the outliine of the previous, we can decompose the integral of $f(z)=1/(z^2+1)$ over $C(R)$ as follows
+\begin{equation}
+    \oint_{C(R)} \frac{dz}{z^2 + 1} = \int_{-R}^{R} \frac{dx}{x^2+1} + \int_{C_1(R)}  \frac{dz}{z^2 + 1}.
+\end{equation}
+Here, $C_1(R)$ represents the rounded section of the upper half circle which we parameter as $\gamma(t) = Re^{i\theta}$ for $\theta\in[0, \pi]$. We can then bound the integral as in the the previous problem by
+\begin{equation}
+    \abs{\int_{C_1(R)} \frac{dz}{z^2 + 1}} \leq \pi R \cdot \left( \sup_{z\in C_1(R)} \abs{\frac{1}{z^2 + 1}}\right)
+\end{equation}
+since the curve $C_1(R)$ has length $\pi R$. We can compute the suprenum that noting that each $z=Re^{i\theta}$, so that
+\begin{align}
+    \abs{ \frac{1}{z^2 + 1}} &\leq \frac{1}{\abs{\abs{z^2}-\abs{1}}}\\
+    &= \frac{1}{\abs{\abs{R^2} - 1}}\\
+    &= \frac{1}{\abs{R^2 -1}}
+\end{align}
+by the reverse triagle inequality and the fact that $\abs{z} = \abs{Re^{i\theta}} = \abs{R}$. This shows that
+\begin{equation}
+       \abs{\int_{C_1(R)} \frac{dz}{z^2 + 1}} \leq \frac{\pi R}{\abs{R^2 -1}}.
+\end{equation}
+Therefore, we have that 
+\begin{equation}
+    \lim\limits_{R\to\infty} \int_{C_1(R)} \frac{dz}{z^2 + 1} = 0.
+\end{equation}
+Next, we'll compute the integral $ \oint_{C(R)} \frac{dz}{z^2 + 1}$ with the residue theorem. Since the contour $C(R)$ only contains the singularity $i$, we can write the integral as 
+\begin{equation}
+    \oint_{C(R)} \frac{dz}{z^2 + 1} = 2\pi i \Res(f, i).
+\end{equation}
 
+We can easily compute this residue as 
+\begin{equation}
+    \Res(f, i) = \lim\limits_{z\to i} (z-i)(\frac{1}{z^2+1}) = \lim\limits_{z\to i} \frac{1}{z+i} = \frac{1}{2i}.
+\end{equation}
+Therefore, we have that
+\begin{equation}
+    \oint_{C(R)} \frac{dz}{z^2 + 1} = 2\pi i \Res(f, i) = \pi.
+\end{equation}
+
+Now taking the limit as $R\to\infty$, we see that
+\begin{align}
+    \pi = \lim\limits_{R\to \infty}\Big( \int_{-R}^{R} \frac{dx}{x^2+1} + \int_{C_1(R)}  \frac{dz}{z^2 + 1} \Big).
+\end{align}
+Since the rightmost integral vanishes in the limit, we have that
+\begin{equation}
+    \int_{-\infty}^{\infty} \frac{dx}{x^2 + 1} = \pi.
+\end{equation}
+
+\paragraph{Verification by real integration}%
+\label{par:verification_by_real_integration}
+
+
+We can verify this using real integration since 
+\begin{equation}
+    \int_{-R}^{R} \frac{dx}{x^2 + 1} = \arctan(R) - \arctan(-R).
+\end{equation}
+Taking the limit as $R\to \infty$, we see that 
+\begin{equation}
+    \int_{-\infty}^{\infty} \frac{dx}{x^2 + 1} = \lim\limits_{R\to\infty}  \int_{-R}^{R} \frac{dx}{x^2 + 1} =  \lim\limits_{R\to\infty} \Big[ \arctan(R) - \arctan(-R) \Big] = \pi/2 - (-\pi/2) = \pi.
+\end{equation}
 \end{sol}
 \newpage
 
@@ -210,7 +360,7 @@
   \frac{1}{2\pi i} \int_{-\pi}^{\pi} \frac{e^{\frac{t}{2}( e^{i\theta} - e^{-i\theta} )}  }{ e^{i(n+1)\theta} } \cdot ie^{i\theta}d\theta = \frac{i}{2\pi i} \int_{-\pi}^{\pi} \frac{e^{\frac{t}{2}( 2i\sin\theta )}  }{ e^{in\theta} } d\theta  
 \end{equation}
 
-Combining the top and bottom halves of the integrad and canceling the $i$ in front, we get that
+Combining the top and bottom halves of the integrand and canceling the $i$ in front, we get that
 \begin{equation}
     a_n = \frac{1}{2\pi} \int_{-\pi}^\pi e^{-i(n\theta - t\sin\theta)}d\theta.
 \end{equation}
@@ -218,16 +368,20 @@ We can further simplify this using $e^{-ix} = \cos x - i\sin x$, which gives us
 \begin{equation}
     a_n = \frac{1}{2\pi}\int_{-\pi}^\pi \cos ( n\theta - t\sin\theta )d\theta +  \frac{i}{2\pi}\int_{-\pi}^{\pi} \sin( n\theta - t\sin\theta ) d\theta.
 \end{equation}
+The key to the next equality is that$g(\theta) = n\theta - t\sin\theta$ is odd. We show this directly as
+\begin{align}
+    g(-\theta) = -n\theta - t\sin-\theta &= - (n\theta +t\sin-\theta)\\
+                                         &= - (n\theta -t\sin\theta) \quad (\sin\theta \text{ is odd })\\
+                                         &=  - g(\theta).
+\end{align}
 
-Show that $g(\theta) = n\theta - t\sin\theta$ is odd. 
-
-Therefore, $\cos(g(\theta))$ is even and $\sin(g(\theta))$ is odd. This means that
+Therefore, $\cos(g(\theta))$ is even and $\sin(g(\theta))$ is odd due to composition rules for odd and even functions. This means that
 
 \begin{align}
     \int_{-\pi}^\pi \cos ( n\theta - t\sin\theta )d\theta &= 2 \int_{0}^\pi \cos ( n\theta - t\sin\theta )d\theta \\
-    \int_{-\pi}^{\pi} \sin( n\theta - t\sin\theta ) d\theta &= 0
+    \int_{-\pi}^{\pi} \sin( n\theta - t\sin\theta ) d\theta &=  0
 \end{align}
-Therefore,
+by integral theorems for even and odd functions. Therefore,
 \begin{equation}
     a_n = \frac{1}{2\pi} \int_{-\pi}^\pi e^{-i(n\theta - t\sin\theta)}d\theta = \frac{1}{\pi} \int_{0}^\pi \cos ( n\theta - t\sin\theta )d\theta.
 \end{equation}
