@@ -51,7 +51,7 @@
 %% Title Info
 \newcommand{\hwTitle}{HW \# 2}
 \newcommand{\hwDueDate}{\today}
-\newcommand{\hwClass}{AMATH 567A}
+\newcommand{\hwClass}{AMATH 567}
 \newcommand{\hwClassTime}{}
 \newcommand{\hwClassInstructor}{}
 \newcommand{\Name}{\textbf{Marlin Figgins}}
@@ -120,9 +120,9 @@
         \oint_\gamma e^{iz}dz = 0.
     \end{equation} 
 
-    (b) $f(z) = e^{z^2}$. Once again $f(z)$ is entire as it is the composition of two entire functions $e^{w}$ and $iz$. By Cauchy's Theorem, this means
+    (b) $f(z) = e^{z^2}$. Once again $f(z)$ is entire as it is the composition of two entire functions $e^{w}$ and $z^2$. By Cauchy's Theorem, this means
     \begin{equation}
-        \oint_\gamma e^{iz}dz = 0.
+        \oint_\gamma e^{z^2}dz = 0.
     \end{equation}
 
     (c) $f(z) = \frac{1}{z-1/2}$. The function $f(z)$ is analytic except at $z = \frac{1}{2}$ which is contained in $\gamma$, so we cannot use Cauchy's theorem. We can instead use the residue theorem. Writing $f$ as its Taylor-Laurent series about $z_0 = \frac{1}{2}$,
@@ -131,7 +131,7 @@
     \end{equation}
     Here we can see that $a_n = 0$ for all $n\neq -1$ and $a_{-1} = 1$. Therefore, by the Residue theorem, we have
     \begin{equation}
-        \oint_C f(z) dz=  2\pi i a_{-1} = 2\pi i.
+        \oint_\gamma f(z) dz=  2\pi i a_{-1} = 2\pi i.
     \end{equation}
     %TODO: Double check computation above and write out with logic
 
@@ -166,10 +166,10 @@
 
     We can then use the residue theorem to compute the integral of $f$ over $\gamma$ as follows
     \begin{equation}
-        \oint_C \frac{1}{2z^2+1} dz = 2\pi i \left(  \Res(f,z_{+}) +   \Res(f,z_{-})    \right) = 0
+        \oint_\gamma \frac{1}{2z^2+1} dz = 2\pi i \left(  \Res(f,z_{+}) +   \Res(f,z_{-})    \right) = 0
     \end{equation}
 
-    (f) $\sqrt{z-4} 0\leq\arg z<2\pi.$ With the specification on the argument, this function is analytic with derivative $\frac{1}{z-4}$ except on the real line for $x>4$. Therefore, the integral of this function over the unit circle is 0 by Cauchy's Theorem since it is analytic within and on the unit circle
+    (f) $\sqrt{z-4},\quad 0\leq\arg z<2\pi.$ With this specification on the argument, this function is analytic with derivative $\frac{1}{z-4}$ except on the real line for $x>4$. Therefore, the integral of this function over the unit circle is 0 by Cauchy's Theorem since it is analytic within and on the unit circle
     \begin{equation}
         \oint_{\gamma} \sqrt{z-4}dz = 0.
     \end{equation}
@@ -180,9 +180,9 @@
 \begin{exer}
     A\&F 2.5.5. Evaluate the integral
     \begin{equation}
-        \int_0^\infty e^{ix^2} 
+        \int_0^\infty e^{ix^2}dx
     \end{equation}
-    using the contour $C(R)$ which is the closed circular section in the upper half plane with boundary points $(0,0), (0,R),$ and $Re^{i\frac{\pi}{4}}$.
+    using the contour $C(R)$ which is the closed circular section in the upper half plane with boundary points $(0,0), (R,0),$ and $Re^{i\frac{\pi}{4}}$.
 \end{exer}
 \begin{sol}
 We begin by considering the integral
@@ -194,9 +194,9 @@ Since the function $f(x)=e^{iz^2}$ is analytic in the entire complex plane, we h
     \label{eq:3_parts}
     \oint_{C(R)} e^{iz^2}dz = \int_{0}^{R} e^{ix^2}dx + \int_{[Re^{i\frac{\pi}{4}},0]} e^{iz^2}dz + \int_{C_1(R)} e^{iz^2}dz. 
 \end{equation}
-Here, the first integral on the righthand side is the integral on the real line from $(0,R)$, the second is the integral on the line from $[Re^{i\frac{\pi}{4}},0]$, the third integral is the integral on the circular section between $R$ and $Re^{i\frac{\pi}{4}}$. We'll begin by trying to estimate the third integral.
+Here, the first integral on the righthand side is the integral on the real line from $(0,R)$, the second is the integral on the straight line from $[Re^{i\frac{\pi}{4}},0]$, the third integral is over the circular section between $(R,0)$ and $Re^{i\frac{\pi}{4}}$. We'll begin by trying to estimate the third integral.
 
-We'll start by working with the contour $C_1(R,\theta_0)$ which is the circular sector between $Re^{i\theta_0}$ and $Re^{i\frac{\pi}{4}}$ which we'll parameterize by the function $\gamma_{R,\theta_0}(t) = Re^{it}$ for $t\in [\theta, \frac{\pi}{4}]$. Then, we can bound the third integral by
+We'll start by working with the contour $C_1(R,\theta_0)$ which is the circular sector between $Re^{i\theta_0}$ and $Re^{i\frac{\pi}{4}}$ which we'll parameterize by the function $\gamma_{R,\theta_0}(t) = Re^{it}$ for $t\in [\theta_0, \frac{\pi}{4}]$. Then, we can bound the integral over $C_1(R,\theta_0)$ by
 \begin{align}
 \abs{\int_{C_1(R,\theta_0)} e^{iz^2}dz} &\leq \text{length}(C_1(R,\theta_0)) \cdot \sup_{z\in C_1(R,\theta_0)} \abs{e^{iz^2}}\\
                                            &= \left(\frac{\pi}{4}-\theta_0 \right)\sup_{z\in C_1(R,\theta_0)} \abs{e^{iz^2}} \\
@@ -217,9 +217,7 @@ where $\abs{e^{-iR^2\cos2\theta}} =1$ since $R^2\cos2\theta$ is real. Since $\si
 \begin{equation}
     \sup_{z\in  C_1(R,\theta_0)} \abs{e^{iz^2}} \leq \sup_{\theta \in [\theta_0, \frac{\pi}{4}]} \abs{e^{-R^2 \frac{4\theta}{\pi}}} = e^{-R^2 \frac{4\theta_0}{\pi}}. 
 \end{equation}
-We obtain this suprenum since the function $e^{-R^2\frac{4\theta}{\pi}}$ is positive and monotonically decreasing in $\theta$.
-
-Therefore, we can see that 
+We obtain this suprenum since the function $e^{-R^2\frac{4\theta}{\pi}}$ is positive and monotonically decreasing in $\theta$. Therefore, we can see that 
 \begin{equation}
     \abs{\int_{C_1(R,\theta_0)} e^{iz^2}dz} \leq  \frac{\pi}{4} e^{-R^2\frac{4\theta_0}{\pi}} .
 \end{equation}
@@ -235,7 +233,7 @@ We can see that since $C_1(R,\theta_0)$ becomes similar to $C_1(R)$ as $\theta_0
     \end{equation}
     This implies that $\lim\limits_{R\to\infty}\int_{C_1(R)}  e^{iz^2}dz = 0$ which we'll use a bit later.
 
-    We'll now work on simplifying the integral $\int_{[Re^{i\frac{\pi}{4}},0]} e^{iz^2}dz$. We can immediately see that we can reverse the orientation of this integral and instead parameterize this integral using the curve $\gamma_2(r) = re^{i \frac{\pi}{4}}$ for $r\in[0, R]$. We can then compute
+    We'll now work on simplifying the integral $\int_{[Re^{i\frac{\pi}{4}},0]} e^{iz^2}dz$. We can immediately see that we can reverse the orientation of this integral and instead parameterize this integral using the curve $\gamma_2(r) = re^{i \frac{\pi}{4}}$ for $r\in[0, R]$, so that 
     \begin{align}
         \int_{[Re^{i\frac{\pi}{4}},0]} e^{iz^2}dz = -\int_{\gamma_2} e^{iz^2}dz.
     \end{align}
@@ -248,7 +246,7 @@ We can see that since $C_1(R,\theta_0)$ becomes similar to $C_1(R)$ as $\theta_0
                                     &= e^{i \pi/4} \int_0^R e^{-r^2} dr.
     \end{align}
 
-    Therefore, taking the limit of \ref{eq:3_parts} as $R$ approaches $\infty$, we see that $\lim_{R\to\infty} I_R = 0$, and therefore
+Taking the limit of \ref{eq:3_parts} as $R$ approaches $\infty$, we then see $\lim_{R\to\infty} I_R = 0$, and therefore
 
 \begin{align}
     0 = \lim\limits_{R\to\infty}\Big(\int_{-R}^{R} e^{ix^2}dx -e^{i \pi/4} \int_0^R e^{-r^2} dr +  \int_{C_1(R)}  e^{iz^2}dz \Big)
@@ -259,7 +257,7 @@ As shown before, the third integral on the righthand side approaches 0 in the li
   0 = \lim\limits_{R\to\infty}\Big(\int_{0}^{R} e^{ix^2}dx -e^{i \pi/4} \int_0^R e^{-r^2} dr \Big).
 \end{align}
 
-To conclude, we'll use the additive property of limits and the fact that $\int_0^\infty e^{-r^2} dr = \frac{\sqrt{\pi}}{2}$. This means that
+To conclude, we'll use the additive property of limits and the fact that $\int_0^\infty e^{-r^2} dr = \frac{\sqrt{\pi}}{2}$ in order to show
 \begin{align}
   \int_{0}^{\infty} e^{ix^2}dx =  \lim\limits_{R\to\infty}\int_{0}^{R} e^{ix^2}dx &=   \lim\limits_{R\to\infty} e^{i \pi/4} \int_0^R e^{-r^2} dr \\
                                                     &= e^{i \pi/4}  \int_0^\infty e^{-r^2} dr \\
@@ -281,7 +279,7 @@ This allows us to conclude that
     using the contour $C(R)$ which is the closed semicircle in the upper half plane with endopoints $(-R, 0)$ and $(0,R)$.
 \end{exer}
 \begin{sol}
-Throughout, we assume that $R>1$ for simplicity. Following the outliine of the previous, we can decompose the integral of $f(z)=1/(z^2+1)$ over $C(R)$ as follows
+Throughout, we assume that $R>1$ for simplicity. Following the outline of the previous problem, we can decompose the integral of $f(z)=1/(z^2+1)$ over $C(R)$ as follows
 \begin{equation}
     \oint_{C(R)} \frac{dz}{z^2 + 1} = \int_{-R}^{R} \frac{dx}{x^2+1} + \int_{C_1(R)}  \frac{dz}{z^2 + 1}.
 \end{equation}
@@ -295,7 +293,7 @@ since the curve $C_1(R)$ has length $\pi R$. We can compute the suprenum that no
     &= \frac{1}{\abs{\abs{R^2} - 1}}\\
     &= \frac{1}{\abs{R^2 -1}}
 \end{align}
-by the reverse triagle inequality and the fact that $\abs{z} = \abs{Re^{i\theta}} = \abs{R}$. This shows that
+by the reverse triangle inequality and the fact that $\abs{z} = \abs{Re^{i\theta}} = \abs{R}$. This shows that
 \begin{equation}
        \abs{\int_{C_1(R)} \frac{dz}{z^2 + 1}} \leq \frac{\pi R}{\abs{R^2 -1}}.
 \end{equation}
@@ -303,14 +301,14 @@ Therefore, we have that
 \begin{equation}
     \lim\limits_{R\to\infty} \int_{C_1(R)} \frac{dz}{z^2 + 1} = 0.
 \end{equation}
-Next, we'll compute the integral $ \oint_{C(R)} \frac{dz}{z^2 + 1}$ with the residue theorem. Since the contour $C(R)$ only contains the singularity $i$, we can write the integral as 
+Next, we'll compute the integral $ \oint_{C(R)} \frac{dz}{z^2 + 1}$ using the residue theorem. Since the contour $C(R)$ only contains the singularity $i$, we can write the integral as 
 \begin{equation}
     \oint_{C(R)} \frac{dz}{z^2 + 1} = 2\pi i \Res(f, i).
 \end{equation}
 
 We can easily compute this residue as 
 \begin{equation}
-    \Res(f, i) = \lim\limits_{z\to i} (z-i)(\frac{1}{z^2+1}) = \lim\limits_{z\to i} \frac{1}{z+i} = \frac{1}{2i}.
+    \Res(f, i) = \lim\limits_{z\to i} (z-i)\left(\frac{1}{z^2+1}\right) = \lim\limits_{z\to i} \frac{1}{z+i} = \frac{1}{2i}.
 \end{equation}
 Therefore, we have that
 \begin{equation}
@@ -375,11 +373,11 @@ The key to the next equality is that$g(\theta) = n\theta - t\sin\theta$ is odd. 
                                          &=  - g(\theta).
 \end{align}
 
-Therefore, $\cos(g(\theta))$ is even and $\sin(g(\theta))$ is odd due to composition rules for odd and even functions. This means that
+It follows that $\cos(g(\theta))$ is even and $\sin(g(\theta))$ is odd due to composition rules for odd and even functions. This means that
 
 \begin{align}
     \int_{-\pi}^\pi \cos ( n\theta - t\sin\theta )d\theta &= 2 \int_{0}^\pi \cos ( n\theta - t\sin\theta )d\theta \\
-    \int_{-\pi}^{\pi} \sin( n\theta - t\sin\theta ) d\theta &=  0
+    \int_{-\pi}^{\pi} \sin( n\theta - t\sin\theta ) d\theta &= 0 
 \end{align}
 by integral theorems for even and odd functions. Therefore,
 \begin{equation}
