@@ -128,7 +128,7 @@ Do an SVD analysis of the images (where each image is reshaped into a column vec
     \label{fig:cropped_spectrum}
 \end{figure}
 
-I also did this same analysis on the uncropped and unaligned data but with train-test split 80-20.
+I also did this same analysis on the uncropped and unaligned data but with train-test split 80-20. 
 
 \begin{figure}[h]
     \centering
@@ -136,18 +136,17 @@ I also did this same analysis on the uncropped and unaligned data but with train
     \caption{The singular values of the SVD of the training data matrix $\vec{X}$ for the uncroppped data set.}%
     \label{fig:uncropped_spectrum}
 \end{figure}
-
 \end{sol}
 
 \begin{exer}
-    What is the interpretation of the $\vec{U}$, $\vec{\Sigma}$ and $\vec{V}$ matrices? (Plot the first few reshaped columns of $\vec{U}$)
+    What is the interpretation of the $\vec{U}$, $\vec{\Sigma}$, and $\vec{V}$ matrices? (Plot the first few reshaped columns of $\vec{U}$)
 \end{exer}
 \begin{sol}
     Personally, I like to think of the SVD in the terms of the following equation.
     \begin{equation}
         \vec{XV} = \vec{U}\vec{\Sigma}.
     \end{equation}
-    In this interpretation, $\vec{V}$ is a change of coordinates of $\vec{X}$, so that $\vec{X}$ can be reduced to rotations and scalings. This way, since each column of $\vec{X}$ corresponds to a face, we can think about the matrix $\vec{U}$ as describing a basis in a new vector space of faces. We can plot its column vectors $\vec{u}_j$ as faces as in\cref{fig:cropped_eigenfaces} and \cref{fig:uncropped_eigenfaces} since they have the same shape as our input images. The singular values $\sigma_j$ are a measure of the the weights of the corresponding column $\vec{u}_j$.
+    In this interpretation, $\vec{V}$ is a change of coordinates of $\vec{X}$, so that $\vec{X}$ can be reduced to rotations and scalings. This way, since each column of $\vec{X}$ corresponds to a face, we can think about the matrix $\vec{U}$ as describing a basis in a new vector space of faces. We can plot its column vectors $\vec{u}_j$ as faces as in \cref{fig:cropped_eigenfaces} and \cref{fig:uncropped_eigenfaces} since they have the same shape as our input images. The singular values $\sigma_j$ are a measure of the weights of the corresponding column $\vec{u}_j$. 
     \begin{figure}[h]
         \centering
         \includegraphics[width=0.8\linewidth]{../figures/hw-2-cropped-eigenfaces.pdf}
@@ -170,7 +169,7 @@ What does the singular value spectrum look like and how many modes are necessary
 reconstructions using the PCA basis? (i.e. what is the rank $r$ of the face space?)
 \end{exer}
 \begin{sol}
-    The singular value spectrum for the cropped faces is plotted in \ref{fig:cropped_spectrum} and \ref{fig:uncropped_spectrum}. With both data sets, we can use the test set to analyze how rank is need to be able to sucessfully recreate a face. We can see this tested in \cref{fig:cropped-rank-approximation} and \cref{fig:uncropped-rank-approximation}.
+    The singular value spectrum for the cropped faces is plotted in \ref{fig:cropped_spectrum} and \ref{fig:uncropped_spectrum}. With both data sets, we can use the test set to analyze how rank is need to be able to sucessfully recreate a face. We can see this tested in \cref{fig:cropped-rank-approximation} and \cref{fig:uncropped-rank-approximation}. When attempting to reconstruct new faces with the cropped data set, common features like noses and eyes quickly appear, but finer details like moles, scars, eyebrow shapes require higher rank approximations. When it comes to the uncropped data set, it's a bit of a disaster which I'll discuss more in the next problem.
 
     \begin{figure}[h]
         \centering
@@ -187,7 +186,7 @@ reconstructions using the PCA basis? (i.e. what is the rank $r$ of the face spac
 
     I also experimented with determining the cutoff necessary for a good reconstruction using percentage energy to cutoff. That is, I wanted to find the minimal rank $r$ so that
     \begin{equation}
-        \sum_{i=1}^r \sigma_i < \lambda \sum_{i=1}^{n} \sigma_i
+        \sum_{i=1}^r \sigma_i < \lambda \sum_{i=1}^{n} \sigma_i,
     \end{equation}
     for some threshold percentage $\lambda\in(0,1)$. I visualize where these thresholds fall for the cropped data in \cref{fig:cropped-percent-energy-thresholds}. This method allowed me to generate percent energy reconstructions as in \cref{fig:cropped-percent-energy-approximation} and \cref{fig:uncropped-percent-energy-approximation}.
     \begin{figure}[]
@@ -240,7 +239,7 @@ value decay and reconstruction capabilities.
         \vec{A A}^* &= \vec{U}\vec{\Sigma}\vec{\Sigma}^*\vec{U}^{-1},\\
         \vec{A}^*\vec{A}  &= \vec{V}\vec{\Sigma}\vec{\Sigma}^*\vec{V}^{-1}
     \end{align}
-    using the fact that $(\vec{AB})^* = \vec{B}^*\vec{A}^*$ and that both $\vec{U}$ and $\vec{V}$ are unitary. Notice that that both $\vec{\Sigma}\vec{\Sigma}^*$ and $\vec{\Sigma}^*\vec{\Sigma}$ are both diagonal with entries ($\sigma_1^2,\sigma_2^2, \ldots)$ which are the square of the non-zero singlar values $\sigma_i$. Looking at the above equations, we additionally see that $\vec{A}\vec{A}^*$ and $\vec{A}^*\vec{A}$ are diagonalizable. Therefore, the diagonal entries of the inner matrices $\vec{\Sigma}\vec{\Sigma}^*$ and $\vec{\Sigma}^*\vec{\Sigma}$ give their eigenvalues $\lambda_i$. This gives us that
+    using the fact that $(\vec{AB})^* = \vec{B}^*\vec{A}^*$ and that both $\vec{U}$ and $\vec{V}$ are unitary. Notice that that both $\vec{\Sigma}\vec{\Sigma}^*$ and $\vec{\Sigma}^*\vec{\Sigma}$ are both diagonal with entries ($\sigma_1^2,\sigma_2^2, \ldots)$ which are the square of the non-zero singular values $\sigma_i$. Looking at the above equations, we additionally see that $\vec{A}\vec{A}^*$ and $\vec{A}^*\vec{A}$ are diagonalizable. Therefore, the diagonal entries of the inner matrices $\vec{\Sigma}\vec{\Sigma}^*$ and $\vec{\Sigma}^*\vec{\Sigma}$ give their eigenvalues $\lambda_i$. This gives us that
     \begin{equation}
         \lambda_i = \sigma_i^2 \implies \sigma_i = \sqrt{\lambda_i}.
     \end{equation}
@@ -267,7 +266,7 @@ where $\lambda_i$ is the $i$-th eigenvalue of $\vec{A}$.
 \end{sol}
 
 \begin{exer}
-    Given that the determinant of a unitary matrix is 1, show that $\abs{\det (\vec{A})} = \prod \sigma_i$.
+    Given that the determinant of a unitary matrix is 1, show that $\abs{\det (\vec{A})} = \prod_{i=1}^n \sigma_i$.
 \end{exer}
 
 \begin{sol}
@@ -284,7 +283,7 @@ Since both $\vec{U}$ and $\vec{V}$ are unitary, this reduces to
 
 Since $\vec{\Sigma}$ is diagonal, its determinant is simply the product of its diagonal entries which are the singular values $\sigma_i$. Therefore,
 \begin{equation}
-    \abs{\det(\vec{A})} = \prod \sigma_i. 
+    \abs{\det(\vec{A})} = \prod_{i=1}^{n} \sigma_i. 
 \end{equation}
 \end{sol}
 
@@ -292,5 +291,6 @@ Since $\vec{\Sigma}$ is diagonal, its determinant is simply the product of its d
 \section*{Code used}%
 \label{sec:code_used}
 
+The code used is entirely in Julia. I find it very similar to Python and Matlab and I generally prefer it. In case you're not familiar with it, I tried to be thorough with my comments throughout. \href{https://github.com/marlinfiggins/UW-AMATH-notes/blob/master/AMATH-584A-Applied-Linear-Algebra/notebooks/HW-2-Code.ipynb}{You can find the code as a jupyter notebook on my github in case you want to see this with additional markdown text and in line plots.}
 \inputminted{julia}{HW-2-Code-Figgins.jl}
 \end{document}

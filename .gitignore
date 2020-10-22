@@ -9,6 +9,7 @@
 *.fdb*
 *.gz
 *.toc
+_minted*
 
 # Notebook checkpoints
 .ipynb_checkpoints
