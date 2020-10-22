@@ -1,3 +1,4 @@
+% !TeX options=--shell-escape
 %Preamble
 \documentclass[12pt]{article}
 \usepackage{fancyhdr}
@@ -21,6 +22,7 @@
 \usepackage{fullpage} %%smaller margins
 \usepackage[all,arc]{xy}
 \usepackage{mathrsfs}
+\usepackage{minted}
 
 \hypersetup{
     linktoc=all,     % set to all if you want both sections and subsections linked
@@ -117,28 +119,112 @@ The code used for the following questions and figures was done in Julia and is a
 \begin{exer}
 Do an SVD analysis of the images (where each image is reshaped into a column vector and each column is a new image).
 \end{exer}
+\begin{sol}
+    I separated the data into a train-test set with 70\% training and 30\% test. Each training image was flatten into a column vector $\vec{x}_j$ and then combined into the training matrix $\vec{X}$. I then did the SVD on training data matrix $\vec{X}$.
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.8\linewidth]{../figures/hw-2-cropped-singular-values.pdf}
+    \caption{The singular values of the SVD of the training data matrix $\vec{X}$ for the cropped data set.}%
+    \label{fig:cropped_spectrum}
+\end{figure}
+
+I also did this same analysis on the uncropped and unaligned data but with train-test split 80-20.
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.8\linewidth]{../figures/hw-2-uncropped-singular-values.pdf}
+    \caption{The singular values of the SVD of the training data matrix $\vec{X}$ for the uncroppped data set.}%
+    \label{fig:uncropped_spectrum}
+\end{figure}
+
+\end{sol}
 
 \begin{exer}
     What is the interpretation of the $\vec{U}$, $\vec{\Sigma}$ and $\vec{V}$ matrices? (Plot the first few reshaped columns of $\vec{U}$)
 \end{exer}
 \begin{sol}
-    We interpret the columns of the matrix $\vec{U}$. 
+    Personally, I like to think of the SVD in the terms of the following equation.
+    \begin{equation}
+        \vec{XV} = \vec{U}\vec{\Sigma}.
+    \end{equation}
+    In this interpretation, $\vec{V}$ is a change of coordinates of $\vec{X}$, so that $\vec{X}$ can be reduced to rotations and scalings. This way, since each column of $\vec{X}$ corresponds to a face, we can think about the matrix $\vec{U}$ as describing a basis in a new vector space of faces. We can plot its column vectors $\vec{u}_j$ as faces as in\cref{fig:cropped_eigenfaces} and \cref{fig:uncropped_eigenfaces} since they have the same shape as our input images. The singular values $\sigma_j$ are a measure of the the weights of the corresponding column $\vec{u}_j$.
+    \begin{figure}[h]
+        \centering
+        \includegraphics[width=0.8\linewidth]{../figures/hw-2-cropped-eigenfaces.pdf}
+        \caption{The first 20 column vectors in $\vec{U}$ corresponding the highest singular values $\sigma_j$ for the cropped faces dataset. }
+        \label{fig:cropped_eigenfaces}
+    \end{figure}
+
+    \begin{figure}[h]
+        \centering
+        \includegraphics[width=0.8\linewidth]{../figures/hw-2-uncropped-eigenfaces.pdf}
+        \caption{The first 20 column vectors in $\vec{U}$ corresponding the highest singular values $\sigma_j$ for the uncropped faces dataset. }
+        \label{fig:uncropped_eigenfaces}
+    \end{figure}
 \end{sol}
+
+\newpage
+
 \begin{exer}
 What does the singular value spectrum look like and how many modes are necessary for good image
 reconstructions using the PCA basis? (i.e. what is the rank $r$ of the face space?)
 \end{exer}
 \begin{sol}
-    
-    %TODO: Include an example reconstruction of a face.
-    %TODO: There are several ways to select the optimal rank,,,
+    The singular value spectrum for the cropped faces is plotted in \ref{fig:cropped_spectrum} and \ref{fig:uncropped_spectrum}. With both data sets, we can use the test set to analyze how rank is need to be able to sucessfully recreate a face. We can see this tested in \cref{fig:cropped-rank-approximation} and \cref{fig:uncropped-rank-approximation}.
+
+    \begin{figure}[h]
+        \centering
+        \includegraphics[width=0.8\linewidth]{../figures/hw-2-cropped-rank-approximation.pdf}
+        \caption{Various rank approximations for a test image on the cropped photos.}%
+        \label{fig:cropped-rank-approximation}
+    \end{figure}
+    \begin{figure}[h]
+        \centering
+        \includegraphics[width=0.8\linewidth]{../figures/hw-2-uncropped-rank-approximation.pdf}
+        \caption{Various rank approximations for a test image on the uncropped photos.}%
+        \label{fig:uncropped-rank-approximation}
+    \end{figure}
+
+    I also experimented with determining the cutoff necessary for a good reconstruction using percentage energy to cutoff. That is, I wanted to find the minimal rank $r$ so that
+    \begin{equation}
+        \sum_{i=1}^r \sigma_i < \lambda \sum_{i=1}^{n} \sigma_i
+    \end{equation}
+    for some threshold percentage $\lambda\in(0,1)$. I visualize where these thresholds fall for the cropped data in \cref{fig:cropped-percent-energy-thresholds}. This method allowed me to generate percent energy reconstructions as in \cref{fig:cropped-percent-energy-approximation} and \cref{fig:uncropped-percent-energy-approximation}.
+    \begin{figure}[]
+        \centering
+        \includegraphics[width=0.8\linewidth]{../figures/hw-2-cropped-percent-energy-thresholds.pdf}
+        \caption{Percent energy threshold for cropped data at various cutoffs $\lambda$. Each vertical line is at the rank at which the threshold is met.}%
+        \label{fig:cropped-percent-energy-thresholds}
+    \end{figure}
+    \begin{figure}[]
+        \centering
+        \includegraphics[width=0.8\linewidth]{../figures/hw-2-uncropped-percent-energy-thresholds.pdf}
+        \caption{Percent energy threshold for uncropped data at various cutoffs $\lambda$. Each vertical line is at the rank at which the threshold is met.}%
+        \label{fig:uncropped-percent-energy-thresholds}
+    \end{figure}
+
+    \begin{figure}[]
+        \centering
+        \includegraphics[width=0.8\linewidth]{../figures/hw-2-cropped-percent-energy-approximation.pdf}
+        \caption{Approximation based on percent energy for cropped data set}%
+        \label{fig:cropped-percent-energy-approximation}
+    \end{figure}
+    \begin{figure}[]
+        \centering
+        \includegraphics[width=0.8\linewidth]{../figures/hw-2-uncropped-percent-energy-approximation.pdf}
+        \caption{Approximation based on percent energy for uncropped data set}%
+        \label{fig:uncropped-percent-energy-approximation}
+    \end{figure}
 \end{sol}
+
+
 \begin{exer}
 Compare the difference between the cropped (and aligned) versus uncropped images in terms of singular
 value decay and reconstruction capabilities.
 \end{exer}
+
 \begin{sol}
-We see that for cropped images the spectrum is ... vs.... for the uncropped images. This is due to misalignment of the faces.
+    We can compare the rate of singular value decay by using the thresholding discussed in the previous exercise. Comparing figures \cref{fig:cropped-percent-energy-thresholds} and \cref{fig:uncropped-percent-energy-thresholds}, we see that the uncropped data has a lower increase in energy. Additionally, from our attempts at reconstruction, we can see that the unaligned data performs poorly because the variance in the pixels for each image is not attributable to differences in the faces themselves but mostly due to misalignment of the faces. This misalignment is also seen in the uncropped eigenfaces in \cref{fig:uncropped_eigenfaces}. This leads to a poor fit as the SVD cannot pick up on the underlying structure of the faces. 
 \end{sol}
 \newpage
 
@@ -201,4 +287,10 @@ Since $\vec{\Sigma}$ is diagonal, its determinant is simply the product of its d
     \abs{\det(\vec{A})} = \prod \sigma_i. 
 \end{equation}
 \end{sol}
+
+\newpage
+\section*{Code used}%
+\label{sec:code_used}
+
+\inputminted{julia}{HW-2-Code-Figgins.jl}
 \end{document}
