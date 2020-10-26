@@ -121,13 +121,13 @@
     Show that $Z$ is a random variable.
 \end{exer}
 \begin{sol}
-Let $B$ be a Borel set and consider the set $\{ Z \in B\}$. We can write $B = (B\cap A) \cup (B \cap A^c)$. This allows us to see that 
+    Let $B$ be a Borel set and consider the set $\{ Z \in B\}$. We can write $Z^{-1}B = (Z^{-1}B\cap A) \cup (Z^{-1}B \cap A^c)$. This allows us to see that 
 \begin{equation}
-    \{ Z \in B\} = \{ Z\in  (B\cap A) \cup (B \cap A^c) \}= \{Z\in B\cap A \} \cup \{Z \in B\cap A^c \}.
+    \{ Z \in B\} = \{\omega\mid \omega\in (Z^{-1}B\cap A) \cup (Z^{-1}B \cap A^c) \}= \{\omega\mid \omega\in Z^{-1}B\cap A \} \cup \{\omega \mid \omega \in Z^{-1}B\cap A^c \}.
 \end{equation}
-since the preimage of a set union is the union of the preimages of the sets composing it. Since $ (B\cap A)\subset A$ and $(B\cap A^c) \subset A^c$, we know that $Z = X$ on $B\cap A$ and $Z=Y$ on $B\cap A^c$. This means that
+since the preimage of a set union is the union of the preimages of the sets composing it. Since $ (Z^{-1}B\cap A)\subset A$ and $(Z^{-1}B\cap A^c) \subset A^c$, we know that $Z = X$ on $Z^{-1}B\cap A$ and $Z=Y$ on $Z^{-1}B\cap A^c$. This means that
 \begin{equation}
-    \{ Z\in B\} = \{X\in B\cap A \} \cup \{Y \in B\cap A^c\}.
+    \{ Z\in B\} = \{\omega\mid \omega \in X^{-1}(B)\cap A \} \cup \{\omega\mid\omega \in Y^{-1}(B)\cap A^c\}.
 \end{equation}
 Since both the events on the righthand side are in $\calF$ because $X$ and $Y$ are random variables, their union $\{Z\in B\}\in\calF$. This shows $\{ Z\in B\}$ is measurable for any Borel set $B$, meaning $Z$ is a random variable.
 \end{sol}

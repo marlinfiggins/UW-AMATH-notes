@@ -1,0 +1,236 @@
+%Preamble
+\documentclass[12pt]{article}
+\usepackage{fancyhdr}
+\usepackage{extramarks}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{amsrefs}
+\usepackage{amsfonts}
+\usepackage{mathrsfs}
+\usepackage{mathtools}
+\usepackage[mathcal]{eucal} %% changes meaning of \mathcal
+\usepackage{enumerate}
+\usepackage[shortlabels]{enumitem}
+\usepackage{verbatim} %% includes comment environment
+\usepackage{hyperref}
+\usepackage[capitalize]{cleveref}
+\crefformat{equation}{~(#2#1#3)}
+\usepackage{caption, subcaption}
+\usepackage{graphicx}
+\usepackage{fullpage} %%smaller margins
+\usepackage[all,arc]{xy}
+\usepackage{mathrsfs}
+
+\hypersetup{
+    linktoc=all,     % set to all if you want both sections and subsections linked
+}
+
+\topmargin=-0.45in
+\evensidemargin=0in
+\oddsidemargin=0in
+\textwidth=6.5in
+\textheight=9.0in
+\headsep=0.25in
+\setlength{\headheight}{16pt}
+
+\linespread{1.1}
+
+\pagestyle{fancy}
+\lhead{\Name}
+\chead{\hwTitle}
+\rhead{\hwClass}
+\lfoot{\lastxmark}
+\cfoot{\thepage}
+
+\renewcommand\headrulewidth{0.4pt}
+\renewcommand\footrulewidth{0.4pt}
+
+\setlength\parindent{0pt}
+
+%% Title Info
+\newcommand{\hwTitle}{HW \# 3}
+\newcommand{\hwDueDate}{October 26, 2020}
+\newcommand{\hwClass}{AMATH 561A}
+\newcommand{\hwClassTime}{}
+\newcommand{\hwClassInstructor}{}
+\newcommand{\Name}{\textbf{Marlin Figgins}}
+
+
+%% MATH MACROS
+\newcommand{\bbF}{\mathbb{F}}
+\newcommand{\bbN}{\mathbb{N}}
+\newcommand{\bbQ}{\mathbb{Q}}
+\newcommand{\bbR}{\mathbb{R}}
+\newcommand{\bbZ}{\mathbb{Z}}
+\newcommand{\bbC}{\mathbb{C}}
+\newcommand{\Prob}{\mathbb{P}}
+\newcommand{\calF}{\mathcal{F}}
+\newcommand{\abs}[1]{ \left| #1 \right| }
+\newcommand{\diff}[2]{\frac{d #1}{d #2}}
+\newcommand{\infsum}[1]{\sum_{#1}^{\infty}}
+\newcommand{\norm}[1]{ \left|\left| #1 \right|\right| }
+\newcommand{\eval}[1]{ \left. #1 \right| }
+\newcommand{\Expect}{\mathbb{E}}
+\newcommand{\Var}[1]{\mathbb{V}\left[#1 \right]}
+\renewcommand{\phi}{\varphi}
+\renewcommand{\emptyset}{\O}
+
+%--------Theorem Environments--------
+%theoremstyle{plain} --- defaultx
+\newtheorem{thm}{Theorem}[section]
+\newtheorem{cor}[thm]{Corollary}
+\newtheorem{prop}[thm]{Proposition}
+\newtheorem{lem}[thm]{Lemma}
+\newtheorem{conj}[thm]{Conjecture}
+\newtheorem{quest}[thm]{Question}
+
+\theoremstyle{definition}
+\newtheorem{defn}[thm]{Definition}
+\newtheorem{defns}[thm]{Definitions}
+\newtheorem{con}[thm]{Construction}
+\newtheorem{exmp}[thm]{Example}
+\newtheorem{exmps}[thm]{Examples}
+\newtheorem{notn}[thm]{Notation}
+\newtheorem{notns}[thm]{Notations}
+\newtheorem{addm}[thm]{Addendum}
+
+% Environments for answers and solutions
+\newtheorem{exer}{Exercise}
+\newtheorem{sol}{Solution}
+
+\theoremstyle{remark}
+\newtheorem{rem}[thm]{Remark}
+\newtheorem{rems}[thm]{Remarks}
+\newtheorem{warn}[thm]{Warning}
+\newtheorem{sch}[thm]{Scholium}
+
+\makeatletter
+\let\c@equation\c@thm
+\makeatother
+
+\begin{document}
+\begin{exer}
+    Give an example of a probability space $(\Omega, \calF, \Prob)$ and a random variable $X$ and function $f$ such that $\sigma(f(X))$ is strictly smaller than $\sigma(X)$ but not $\{\varnothing, \Omega \}$. Give a function $g$ such that $\sigma(g(X)) = \{ \varnothing, \Omega\}$. 
+\end{exer}
+
+\begin{sol}
+    Consider the space $\Omega = \{-1, 0, 1 \}$ with $\sigma$-algebra $\calF = 2^\Omega$ and the uniform probability measure $\Prob$ on $\Omega$, and $X(\omega) = \omega$. The $\sigma$-algebra $\sigma(X) = \calF$. We can define $f(x) = \abs{x}$. $f(X)$ takes two values $0, 1$. Therefore, our possible pre-images of $f(X)$ for a Borel set $B$ are $\varnothing$ if $0, 1 \notin B$, $\Omega$ if $0,1 \notin B$, $\{-1,1 \}$ if $1\in B, 0\not\in B$ and $\{0\}$ if $0\in B, 1\notin B$. This means that
+    \begin{equation}
+        \sigma(f(X)) = \sigma( \{ \varnothing, \Omega, \{-1, 1\}, \{0\} \}).
+    \end{equation}
+This $\sigma$-algebra does not contain the event $\{0,1\}$ and therefore it is strictly smaller than $\calF$.
+
+For $g$, we choose the function $g(x) = 0$. There are only two possible preimages of $g(X)$ in $\Omega$. One of which is the entire space $\Omega$ when $0\in B$ and the other is $\varnothing$ when $0\not\in B$. Therefore, the $\sigma$-algebra $\sigma(g(X))$ must be $\{ \varnothing, \Omega\}$.
+\end{sol}
+
+\newpage 
+
+\begin{exer}
+    Give examples of events $A, B, C$ with probability strictly between $0$ and $1$ so that 
+    \begin{align}
+        \Prob( A \cap B) &= \Prob(A)\Prob(B)\\
+        \Prob( A \cap C) &= \Prob(A)\Prob(C)\\
+        \Prob( B \cap C) &\neq \Prob(B)\Prob(C)\\
+        \Prob(A \cap B \cap C) &= \Prob(A)\Prob(B)\Prob(C).
+    \end{align}
+    Are $A$, $B$, and $C$ independent?
+\end{exer}
+
+\begin{sol}
+    Let $\Omega = \{1,2,3,4,5,6,7,8 \}$, $\calF = 2^\Omega$, and $\Prob$ be the uniform measure on $\Omega$. Consider the events
+    \begin{align}
+        A = \{3,4,5,6\}, \quad B = \{1,2,3,4 \}, \quad C=\{4,5,7,8\}.
+    \end{align}
+    Since $\Prob$ is uniform, we have that $\Prob(A) = \Prob(B) = \Prob(C) = \frac{4}{8}=\frac{1}{2}$. We can compute that
+    \begin{align}
+        \Prob(A\cap B) &= \Prob(\{3,4\}) = \frac{1}{4} = \frac{1}{2} \cdot \frac{1}{2} = \Prob(A)\Prob(C)\\
+        \Prob(A\cap C) &= \Prob(\{4,5\}) = \frac{1}{4} = \frac{1}{2} \cdot \frac{1}{2} = \Prob(A)\Prob(C)\\
+        \Prob(B\cap C) &= \Prob(\{4\}) = \frac{1}{8} \neq \frac{1}{2} \cdot\frac{1}{2} = \Prob(B)\Prob(C)\\
+        \Prob(A\cap B\cap C) &= \Prob(\{4\}) = \frac{1}{8} = \frac{1}{2} \cdot \frac{1}{2} \cdot \frac{1}{2} = \Prob(A)\Prob(B)\Prob(C).\\
+    \end{align}
+
+    From the above equations, we can see that the events $B$ and $C$ are not independent. Therefore, the collection of events $\{A, B, C\}$ is not independent as an independent collection of events must at least be pairwise independent.
+\end{sol}
+
+\newpage
+
+\begin{exer}
+Let $(\Omega, \calF, \Prob)$ be a probability space such that $\Omega$ is countably infinite, and $\calF = 2^\Omega$. Show that it is impossible for there to exist a countable collection of events $A_1, A_2, \ldots \in \calF$ which are independent such that $\Prob(A_i) = \frac{1}{2}$ for each $i$.
+\end{exer}
+
+\begin{sol}
+    Let $\omega\in\Omega$ and $n\in\bbN$. For every event $A_i$, $i\in\bbN$ in our countable collection, then we have that either $\omega\in A_i$ or $\omega\in A_i^c$. For each $i$ with $1\leq i\leq n$ , define
+    \begin{equation}
+        E_i = 
+        \begin{cases} 
+            A_i, \quad \omega\in A_i\\
+            A_i^c, \quad\omega\in A_i^c. 
+        \end{cases}
+    \end{equation}
+    Notice that each $E_i$ has probability $\Prob(E_i) = \frac{1}{2}$ since $\Prob(A_i) = \frac{1}{2} = 1 - \frac{1}{2} = \Prob(A_i^c)$. Further, the collection of events $E_i$ for $1\leq i \leq n$ is independent since any collection consisting of events $A_i^c$ and $A_j$ must be independent for $i\neq j$. Therefore, since $\omega \in E_i$ for every $i$, we have that
+    \begin{equation}
+        \Prob(\{\omega\}) \leq \Prob \left( \bigcap_{i=1}^{n} E_i \right) = \frac{1}{2^n} 
+    \end{equation}
+    for every $n\in\bbN$. Since this holds for arbitrary $n$, it follows that $\Prob(\{\omega\}) = 0$. Since the space $\Omega$ is countable and $\Prob$ is countably additive, we have that 
+    \begin{equation}
+        \Prob(\Omega) =  1 = \Prob( \bigcup_{\omega\in\Omega} \{ \omega \}) = \sum_{\omega\in\Omega} \Prob(\{ \omega\}),
+    \end{equation}
+    but this is a contradiction since 
+    \begin{equation}
+        \sum_{\omega\in\Omega} \Prob(\{ \omega\}) = \sum_{\omega\in\Omega} 0 = 0 \neq 1.
+    \end{equation}
+\end{sol}
+
+\newpage
+
+\begin{exer}
+    (a) Let $X\geq 0$ and $Y\geq 0$ be independent random variables with distribution functions $F$ and $G$. Find the distribution function of $XY$.
+
+    (b) If $X\geq 0$ and $Y\geq 0$ are independent continuous random variables with density functions $f$ and $g$, find the density function of $XY$.
+
+    (c) If $X$ and $Y$ are independent exponentially distributed random variables with parameter $\lambda$, find the density function of $XY$.
+\end{exer}
+
+\begin{sol} \leavevmode
+    
+    (a) Consider the function $h(x,y) = 1_{ \{xy \leq z \} }$ for some $z\geq 0$. This is a measurable non-negative function, we then have that
+    \begin{equation}
+        \Expect[ h(X,Y) ] = \int_{[0,\infty)} \int_{[0, \infty)} h(x,y) \mu(dx) \nu(dy),
+    \end{equation}
+    where $\mu$ is the distribution of $X$ and $\nu$ is the distribution $Y$. Note that the integrals above are taken across the non-negative reals since we know that both $X$ and $Y$ are non-negative random variables. First using our choice of an indicator function to simplify the expectation above, we compute that
+    \begin{equation}
+        \Expect[ h(X,Y) ] = \Expect[ 1_{ \{XY \leq z \} } ] = \Prob( XY \leq z). 
+    \end{equation}
+    Secondly, we focus on simplifying using our choice of distributions, so that
+    \begin{align}
+        \int_{[0, \infty)} h(x,y) \mu(dx) &=  \int_{[0, \infty)} h(x,y) \mu(dx) \\ 
+                                          &=  \int_{[0, \infty)}  1_{ \{xy \leq z \} } \mu(dx)\\ 
+                                          &=  \int_{[0, \infty)}  1_{ \{x \leq \frac{z}{y} \} } \mu(dx)\\ 
+                                          &= F \left(\frac{z}{y} \right).
+    \end{align}
+    Therefore, we can see that 
+    \begin{equation}
+        \Prob( XY \leq z) = \int_{[0,\infty)} F \left(\frac{z}{y} \right) \nu(dy) =\int_{[0,\infty)} F \left(\frac{z}{y} \right) dG(y).  
+    \end{equation}
+
+    (b) Starting from the previous part, we can simplify in terms of our density functions, so that
+    \begin{align}
+        \Prob(XY\leq z) &= \int_{[0,\infty)} F \left(\frac{z}{y} \right) dG(y) \\  
+                    &= \int_{[0,\infty)} \left( \int_{0}^{\frac{z}{y}}  f(x)dx \right) dG(y) \\   
+                    &= \int_0^\infty \left( \int_{0}^{\frac{z}{y}}  f(x)dx \right) g(y)dy\\
+                    &=  \int_{0}^{\frac{z}{y}} \int_0^\infty f(x) g(y)dy\ dx
+    \end{align}
+    where we have substituted the distribution functions for their respective densities and used Fubini's theorem in the last step. We can use compute the density of $XY$ by taking the derivative of this with respect to $z$. Using the first fundamental theorem of calculus, we see that
+    \begin{equation}
+        f_{XY}(z) =  \int_0^\infty \frac{1}{y}f(z/y) g(y) dy.
+    \end{equation}
+
+    (c) In the case both $X$ and $Y$ are exponentially distributed with parameter $\lambda$, we have that $f(x) = g(x) = \lambda e^{-\lambda x}$. Plugging this into the above equation, we have
+    \begin{align}
+        f_{XY}(z) &= \int_0^\infty \frac{1}{y} \left( \lambda e^{-\lambda \frac{z}{y}} \right)\left( \lambda e^{-\lambda y}\right)dy\\
+                  &= \lambda^2 \int_0^\infty e^{-\lambda(y + \frac{z}{y})}\frac{1}{y}dy.
+    \end{align}
+\end{sol}
+
+\end{document}
