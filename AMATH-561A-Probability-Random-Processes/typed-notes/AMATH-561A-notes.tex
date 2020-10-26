@@ -1008,6 +1008,47 @@ A basic corollary of this is that if $X_1, \ldots, X_n$ are independent exponent
 \begin{proof}
   %TODO: Proof
 \end{proof}
+
+\subsection{Conditional Expectation}%
+\label{sub:conditional_expectation}
+
+Given a probability space $(\Omega, \calF_0, \Prob)$ a sigma-algebra $\calF\subset\calF_0$ and a random variable $X\in\calF_0$ with $\Expect\abs{X}<\infty$. WE define the conditional expectation of $X$ given $\calF$ is any random variable $\Expect(X\mid\calF)$ which statisfies 
+\begin{enumerate}[(i)]
+  \item $\Expect(X\mid\calF)$ is $\calF$-measurable
+  \item for all events $A\in\calF$, $\int_A X d\Prob = \int_A Yd\Prob$.
+\end{enumerate}
+ Any random variable satisfying the above two conditions is a version of the conditional expectation. The first thing we will settle is that this always exists and is unique. 
+
+\begin{proof}[Proof of uniqueness]
+  Suppose there are two random variables which satisfy $A_\epsilon = \{\omega \mid Y(\omega)-Y'(\omega)\geq \epsilon > 0 \}$, then 
+  \begin{align}
+    0 = \int_{A_\epsilon} (X - X)d\Prob = \int_{A_\epsilon} (Y - Y')d\Prob \geq \epsilon \int_{A_\epsilon}d\Prob = \epsilon \Prob(A_\epsilon),
+  \end{align}
+  so $\Prob(A_\epsilon)$. Since this holds for $\epsilon >0$, we have $Y\leq Y'$ almost surely. Similarly, interchanging $Y$ and $Y'$, we see that $Y = Y'$ almost surely.
+
+  \paragraph{Examples of conditional expectation}%
+  \label{par:examples_of_conditional_expectation}
+ 
+  \begin{exmp}[Perfect Information]
+  \end{exmp}
+
+  \begin{exmp}[No information]
+  \end{exmp}
+
+  In the previous two examples, we've played a game of guess and check. Going forward, we'll relate this notion to conditional expectation to the one usually taught in undergrad probability.
+
+  \begin{exmp}[Partitioning $\Omega$.]
+  \end{exmp}
+
+  \paragraph{Conditional Expectation of events}%
+  \label{par:conditional_expectation_of_events}
+  
+\paragraph{Conditioning with respect to random variables}%
+\label{par:conditioning_with_respect_to_random_variables}
+
+
+  
+\end{proof}
   \section{Characteristic Functions}%
   \label{sec:characteristic_functions}
   
