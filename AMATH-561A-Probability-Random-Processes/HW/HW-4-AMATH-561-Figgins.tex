@@ -1,0 +1,252 @@
+%Preamble
+\documentclass[12pt]{article}
+\usepackage{fancyhdr}
+\usepackage{extramarks}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{amsrefs}
+\usepackage{amsfonts}
+\usepackage{mathrsfs}
+\usepackage{mathtools}
+\usepackage[mathcal]{eucal} %% changes meaning of \mathcal
+\usepackage{enumerate}
+\usepackage[shortlabels]{enumitem}
+\usepackage{verbatim} %% includes comment environment
+\usepackage{hyperref}
+\usepackage[capitalize]{cleveref}
+\crefformat{equation}{~(#2#1#3)}
+\usepackage{caption, subcaption}
+\usepackage{graphicx}
+\usepackage{fullpage} %%smaller margins
+\usepackage[all,arc]{xy}
+\usepackage{mathrsfs}
+
+\hypersetup{
+    linktoc=all,     % set to all if you want both sections and subsections linked
+}
+
+\topmargin=-0.45in
+\evensidemargin=0in
+\oddsidemargin=0in
+\textwidth=6.5in
+\textheight=9.0in
+\headsep=0.25in
+\setlength{\headheight}{16pt}
+
+\linespread{1.1}
+
+\pagestyle{fancy}
+\lhead{\Name}
+\chead{\hwTitle}
+\rhead{\hwClass}
+\lfoot{\lastxmark}
+\cfoot{\thepage}
+
+\renewcommand\headrulewidth{0.4pt}
+\renewcommand\footrulewidth{0.4pt}
+
+\setlength\parindent{0pt}
+
+%% Title Info
+\newcommand{\hwTitle}{HW \# 4}
+\newcommand{\hwDueDate}{November 4, 2020}
+\newcommand{\hwClass}{AMATH 561}
+\newcommand{\hwClassTime}{}
+\newcommand{\hwClassInstructor}{}
+\newcommand{\Name}{\textbf{Marlin Figgins}}
+
+
+%% MATH MACROS
+\newcommand{\bbF}{\mathbb{F}}
+\newcommand{\bbN}{\mathbb{N}}
+\newcommand{\bbQ}{\mathbb{Q}}
+\newcommand{\bbR}{\mathbb{R}}
+\newcommand{\bbZ}{\mathbb{Z}}
+\newcommand{\bbC}{\mathbb{C}}
+\newcommand{\Prob}{\mathbb{P}}
+\newcommand{\calF}{\mathcal{F}}
+\newcommand{\abs}[1]{ \left| #1 \right| }
+\newcommand{\diff}[2]{\frac{d #1}{d #2}}
+\newcommand{\infsum}[1]{\sum_{#1}^{\infty}}
+\newcommand{\norm}[1]{ \left|\left| #1 \right|\right| }
+\newcommand{\eval}[1]{ \left. #1 \right| }
+\newcommand{\Expect}{\mathbb{E}}
+\newcommand{\Var}{\text{Var}}
+\renewcommand{\phi}{\varphi}
+\renewcommand{\emptyset}{\O}
+
+%--------Theorem Environments--------
+%theoremstyle{plain} --- defaultx
+\newtheorem{thm}{Theorem}[section]
+\newtheorem{cor}[thm]{Corollary}
+\newtheorem{prop}[thm]{Proposition}
+\newtheorem{lem}[thm]{Lemma}
+\newtheorem{conj}[thm]{Conjecture}
+\newtheorem{quest}[thm]{Question}
+
+\theoremstyle{definition}
+\newtheorem{defn}[thm]{Definition}
+\newtheorem{defns}[thm]{Definitions}
+\newtheorem{con}[thm]{Construction}
+\newtheorem{exmp}[thm]{Example}
+\newtheorem{exmps}[thm]{Examples}
+\newtheorem{notn}[thm]{Notation}
+\newtheorem{notns}[thm]{Notations}
+\newtheorem{addm}[thm]{Addendum}
+
+% Environments for answers and solutions
+\newtheorem{exer}{Exercise}
+\newtheorem{sol}{Solution}
+
+\theoremstyle{remark}
+\newtheorem{rem}[thm]{Remark}
+\newtheorem{rems}[thm]{Remarks}
+\newtheorem{warn}[thm]{Warning}
+\newtheorem{sch}[thm]{Scholium}
+
+\makeatletter
+\let\c@equation\c@thm
+\makeatother
+
+\begin{document}
+\begin{exer}
+    Let $\Omega = \{ a, b, c, d\}$ and $\calF = 2^\Omega$. Define a probability measure $\Prob$ as follows:
+    \begin{equation}
+        \Prob(a) = 1/6, \Prob(b) = 1/3, \Prob(c) = 1/4, \Prob(d) = 1/4.
+    \end{equation}
+Next define three random variables $X, Y, Z$ by
+\begin{align}
+    X(a) = 1, X(b) = 1, X(c) = -1, X(d) = -1 \\
+    Y(a) = 1, Y(b) = -1, Y(c) = 1, Y(d) = -1
+\end{align}
+and $Z = X + Y$. 
+
+(a) List the sets in $\sigma(X)$. (b) Calculate $\Expect(Y\mid X)$. (c) Calculate $\Expect(Z\mid X)$.
+\end{exer}
+
+\begin{sol}\leavevmode
+
+    (a) We know that $\sigma(X) = \sigma(\{ \{X = -1\}, \{X = 1\} \})$. Since $\{X = -1\} = \{ c,d \}$ and $\{X = 1\} = \{a,b\}$, we can see that 
+    \begin{equation}
+        \sigma(X) = \{\varnothing, \{a,b\}, \{c,d\}, \Omega \}.
+    \end{equation}
+
+    (b) The conditional expectation of $Y$ given $X$, $\Expect(Y\mid X = X(\omega))$ has two possible values $X(\omega)=1$ and $X(\omega)=-1$. Using the definition of the random variable $X$, we know that if $x = 1$, that either $\omega = a, b$ and that if $x=-1$, $\omega = c,d$. Therefore, we have that
+    \begin{align}
+        \Expect(Y\mid X) = \begin{cases}
+            \Expect(Y\mid X = 1) &= \frac{\Prob(a)Y(a) + \Prob(b)Y(b)}{\Prob(\{a,b\})} = -1/3, \quad \omega \in \{a,b\} \\
+            \Expect(Y\mid X = -1) &=\frac{\Prob(c)Y(c) + \Prob(d)Y(d)}{\Prob(\{c,d\})} = 0, \quad \omega \in \{c,d\}\\
+        \end{cases}
+    \end{align}
+
+    (c) We can repeat this procedure on $\Expect(Z\mid X)$ to see that 
+    \begin{align}
+        \Expect(Z\mid X) = \begin{cases}
+            \Expect(Z\mid X = 1) &= \frac{\Prob(a)Z(a) + \Prob(b)Z(b)}{\Prob(\{a,b\})} = 2/3 , \quad \omega \in \{a,b\} \\
+            \Expect(Z\mid X = -1) &=\frac{\Prob(c)Z(c) + \Prob(d)Z(d)}{\Prob(\{c,d\})} = -1 , \quad \omega \in \{c,d\}\\
+        \end{cases}
+    \end{align}
+
+    %TODO: Double check
+\end{sol}
+
+\newpage 
+
+\begin{exer}
+    (a) Prove that $\Expect\left( \Expect(X\mid\calF)\right) = \Expect X$.
+    (b) Show that if $\mathcal{G}\subset \calF$ and $\Expect X^2 < \infty$, then
+\begin{align}
+    \Expect( [X - \Expect(X\mid \calF)]^2 ) + \Expect([\Expect(X\mid\calF) - \Expect(X\mid\mathcal{G})]^2) = \Expect( [X - \Expect(X\mid\mathcal{G})]^2 )
+\end{align}
+\end{exer}
+\begin{sol}\leavevmode
+
+    (a) Consider the $\sigma$-algebra  $\mathcal{G}_0 = \{\varnothing, \Omega \}$. Since $\mathcal{G}_0\subset \calF$, we have that
+\begin{equation}
+    \Expect(\Expect(X\mid \calF) \mid \mathcal{G}_0) = \Expect(X\mid \mathcal{G}_0).
+\end{equation}
+
+We can see that for all $A\in\mathcal{G}_0$ then
+
+\begin{equation}
+    \int_A \Expect(X\mid \calF) d\Prob = \int_A  X d\Prob.
+\end{equation}
+Due to our choice of the trivial $\sigma$-algebra, we have that 
+\begin{equation}
+    \Expect( \Expect(X\mid\calF) ) = \int_\Omega \Expect(X\mid \calF) d\Prob = \int_\Omega  X d\Prob = \Expect(X).
+\end{equation}
+%TODO: Tighten up the argument
+
+(b) Since $\Expect(X^2)<\infty$ and $\mathcal{G}\subset \calF$, we have $\Expect(X\mid\mathcal{G})\in L^2(\calF)$. Therefore, the random variable $Z = \Expect(X\mid \calF) - \Expect(X\mid \mathcal{G}) \in L^2(\calF)$ as well. From here, we can essentially follow the minimization proof from the lecture notes to see that
+\begin{align}
+    \Expect(X -\Expect(X\mid\mathcal{G}))^2 &= \Expect(X - \Expect(X\mid\calF) + \Expect(X\mid \calF) - \Expect(X\mid\mathcal{G}))^2\\
+                                                        &= \Expect(X - \Expect(X\mid \calF))^2 + \Expect( \Expect(X\mid \calF) - \Expect(X\mid \mathcal{G}) )^2, 
+\end{align}
+where the second to last equality follows from the fact that the cross term $\Expect( (X -\Expect(X\mid\calF)) Z ) = 0$. The full computation is as follows
+\begin{align}
+    \Expect( (X -\Expect(X\mid\calF)) Z ) &= \Expect(ZX - \Expect(ZX\mid \calF)) \\
+                                          &= \Expect(ZX) - \Expect(\Expect(ZX \mid \calF))\\
+                                          &= 0.
+\end{align}
+Here, we have used that $Z\in \mathcal{F}$ to place it within the conditional expectation and problem (2a). 
+\end{sol}
+\newpage
+
+\begin{exer}
+    An important special case of the previous result (2b) occurs when $\mathcal{G} = \{\varnothing, \Omega \}$. Let $\Var(X\mid\calF) = \Expect(X^2\mid\calF) - \Expect(X\mid\calF)^2$. Show that
+    \begin{equation}
+        \Var(X) = \Expect(\Var(X\mid\calF)) + \Var(\Expect(X\mid \calF)).
+    \end{equation}
+\end{exer}
+
+\begin{sol}\leavevmode
+
+    Taking $\mathcal{G} = \{\varnothing, \Omega \}$ in (2b), we see that 
+    \begin{align}
+        \Var(X) = \Expect( [X - \Expect(X)]^2) &= \Expect( [X - \Expect(X\mid \calF)]^2 ) + \Expect([\Expect(X\mid\calF) - \Expect(X)]^2)\\
+            &=  \Expect( [X - \Expect(X\mid \calF)]^2 ) + \Var(\Expect(X\mid\calF)  ), 
+    \end{align}
+    by the definition of variance and the fact that $\Expect(X) = \Expect(\Expect(X\mid\mathcal{G}))$. This leaves us with
+    \begin{align}
+        \Var(X) &=    \Expect( [X - \Expect(X\mid \calF)]^2 ) + \Var(\Expect(X\mid\calF)  ) \\
+                &=    \Expect( \Expect([X - \Expect(X\mid\calF)]^2 \mid \calF )) + \Var(\Expect(X\mid\calF))\\
+                &= \Expect(\Var(X\mid \calF)) + \Var(\Expect(X\mid\calF)),
+    \end{align}
+    where in the last line we have used problem (2a) and the fact that $\Var(X\mid \calF) = \Expect[(X - \Expect(X\mid \calF))^2]$
+
+    %TODO: Explain last line. Is it because the expectations are the same as in 2a?
+\end{sol}
+
+\newpage
+ 
+\begin{exer}
+    Let $Y_1, Y_2, \ldots$ be independent and identically distributed random variables with mean $\mu$ and variance $\sigma^2$ and let $N$ be an independent positive integer value random variable with $\Expect N^2 < \infty$ and $X = Y_1 + \cdots + Y_N$. Show that
+    \begin{equation}
+        \Var(X) = \sigma^2 \Expect N + \mu^2 \Var(N).
+    \end{equation}
+\end{exer}
+
+\begin{sol} \leavevmode
+    Using the result of Exercise 3, we have that 
+    \begin{equation}
+        \Var(X) = \Expect( \Var(X\mid N) ) + \Var(\Expect(X\mid N)).
+    \end{equation}
+    Conditioning on $N$, we have that 
+
+    \begin{equation}
+        \Expect(X\mid N) = \Expect\left( \sum_{i=1}^{N}Y_i \mid N\right) = \sum_{i=1}^{N}\Expect\left( Y_i \mid N\right) = \sum_{i=1}^{N} \Expect(Y_i) = \mu N, 
+   \end{equation}
+  by linearity and the fact that each $Y_i$ has mean $\mu$. Similarly, we can compute that 
+   \begin{equation}
+       \Var(X\mid N) = \Var\left(  \sum_{i=1}^{N}Y_i \mid N\right) = \sum_{i=1}^{N}\Var\left( Y_i \mid N\right) = \sum_{i=1}^{N} \Var(Y_i) = \sigma^2 N, 
+   \end{equation}
+where we are able to take the sum of the variances since all the random variables $Y_i$ are independent and therefore uncorrelated. This then shows that
+\begin{align}
+    \Var(X) &= \Expect(\sigma^2 N) + \Var( \mu N)\\
+            &= \sigma^2 \Expect N + \mu^2 \Var N.
+\end{align}
+   %Check math on summations to see if conditioning used properly
+\end{sol}
+
+\end{document}
