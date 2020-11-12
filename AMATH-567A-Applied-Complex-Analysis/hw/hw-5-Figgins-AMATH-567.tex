@@ -1,0 +1,326 @@
+%Preamble
+\documentclass[12pt]{article}
+\usepackage{fancyhdr}
+\usepackage{extramarks}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{amsrefs}
+\usepackage{amsfonts}
+\usepackage{mathrsfs}
+\usepackage{mathtools}
+\usepackage[mathcal]{eucal} %% changes meaning of \mathcal
+\usepackage{enumerate}
+\usepackage[shortlabels]{enumitem}
+\usepackage{verbatim} %% includes comment environment
+\usepackage{hyperref}
+\usepackage[capitalize]{cleveref}
+\crefformat{equation}{~(#2#1#3)}
+\usepackage{caption, subcaption}
+\usepackage{graphicx}
+\usepackage{fullpage} %%smaller margins
+\usepackage[all,arc]{xy}
+\usepackage{mathrsfs}
+
+\hypersetup{
+    linktoc=all,     % set to all if you want both sections and subsections linked
+}
+
+\topmargin=-0.45in
+\evensidemargin=0in
+\oddsidemargin=0in
+\textwidth=6.5in
+\textheight=9.0in
+\headsep=0.25in
+\setlength{\headheight}{16pt}
+
+\linespread{1.1}
+
+\pagestyle{fancy}
+\lhead{\Name}
+\chead{\hwTitle}
+\rhead{\hwClass}
+\lfoot{\lastxmark}
+\cfoot{\thepage}
+
+\renewcommand\headrulewidth{0.4pt}
+\renewcommand\footrulewidth{0.4pt}
+
+\setlength\parindent{0pt}
+
+%% Title Info
+\newcommand{\hwTitle}{HW \# 5}
+\newcommand{\hwDueDate}{Novemeber 11, 2020}
+\newcommand{\hwClass}{AMATH 567}
+\newcommand{\hwClassTime}{}
+\newcommand{\hwClassInstructor}{}
+\newcommand{\Name}{\textbf{Marlin Figgins}}
+
+
+%% MATH MACROS
+\newcommand{\bbF}{\mathbb{F}}
+\newcommand{\bbN}{\mathbb{N}}
+\newcommand{\bbQ}{\mathbb{Q}}
+\newcommand{\bbR}{\mathbb{R}}
+\newcommand{\bbZ}{\mathbb{Z}}
+\newcommand{\bbC}{\mathbb{C}}
+\newcommand{\abs}[1]{ \left| #1 \right| }
+\newcommand{\diff}[2]{\frac{d #1}{d #2}}
+\newcommand{\infsum}[1]{\sum_{#1}^{\infty}}
+\newcommand{\norm}[1]{ \left|\left| #1 \right|\right| }
+\newcommand{\eval}[1]{ \left. #1 \right| }
+\newcommand{\Expect}[1]{\mathbb{E}\left[#1 \right]}
+\newcommand{\Var}[1]{\mathbb{V}\left[#1 \right]}
+\newcommand{\Res}{\text{Res}}
+
+\renewcommand{\phi}{\varphi}
+\renewcommand{\emptyset}{\O}
+\renewcommand{\Im}{\text{Im}}
+\renewcommand{\Re}{\text{Re}}
+
+%--------Theorem Environments--------
+%theoremstyle{plain} --- defaultx
+\newtheorem{thm}{Theorem}[section]
+\newtheorem{cor}[thm]{Corollary}
+\newtheorem{prop}[thm]{Proposition}
+\newtheorem{lem}[thm]{Lemma}
+\newtheorem{conj}[thm]{Conjecture}
+\newtheorem{quest}[thm]{Question}
+
+\theoremstyle{definition}
+\newtheorem{defn}[thm]{Definition}
+\newtheorem{defns}[thm]{Definitions}
+\newtheorem{con}[thm]{Construction}
+\newtheorem{exmp}[thm]{Example}
+\newtheorem{exmps}[thm]{Examples}
+\newtheorem{notn}[thm]{Notation}
+\newtheorem{notns}[thm]{Notations}
+\newtheorem{addm}[thm]{Addendum}
+
+% Environments for answers and solutions
+\newtheorem{exer}{Exercise}
+\newtheorem{sol}{Solution}
+
+\theoremstyle{remark}
+\newtheorem{rem}[thm]{Remark}
+\newtheorem{rems}[thm]{Remarks}
+\newtheorem{warn}[thm]{Warning}
+\newtheorem{sch}[thm]{Scholium}
+
+\makeatletter
+\let\c@equation\c@thm
+\makeatother
+
+\begin{document}
+
+\begin{exer}
+    Evaluate the integrals 
+    \begin{equation}
+        \frac{1}{2\pi i} \oint_C f(z)dz,
+    \end{equation}
+    where $C$ is the unit circle centered at the origin with $f(z)$ given below. Do these problems by both
+    \begin{enumerate}[(i)]
+        \item enclosing the singular points in side $C$
+        \item enclosing the singular points outside $C$ (by including the point at infinity)
+    \end{enumerate}
+    Show that you obtain the same result in both cases.
+    \begin{enumerate}[(a)]
+        \item  $ \frac{z^2+1}{z^2-a^2}, \quad a^2 <1$.
+        \item $ \frac{z^2 + 1}{z^3} $.
+        \item $ z^2e^{-1/z}$.
+    \end{enumerate}
+    Hint: the point at infinity is defined as $t = 1/z$ as $z\to 0$.
+\end{exer}
+ 
+\begin{sol}\leavevmode
+
+    (a) We'll begin by computing the integral of $f(z) = \frac{z^2+1}{z^2-a^2} = \frac{(z-i)(z-i)}{(z-a)(z+a)}$. Notice that both $\pm a$ are in the unit circle $C$ since $a^2$ is less than 1 and are the only singularities in $C$. Therefore, the integral
+    \begin{equation}
+        \frac{1}{2\pi i} \oint_{C} f(z)dz = \Res(f; a) + \Res(f;-a).
+    \end{equation}
+Since both of these residues are taken at simple poles, we can compute them easily as
+\begin{align}
+    \Res(f;a) &=\lim_{z\to a} (z-a)f(z) = \lim_{z\to a} \frac{z^2+1}{z+a} = \frac{a^2 +1}{2a}\\
+    \Res(f;-a) &=\lim_{z\to -a} (z+a)f(z) = \lim_{z\to -a} \frac{z^2 + 1}{z-a} = -\frac{a^2+1}{2a}.  
+\end{align}
+We then conclude that 
+\begin{equation}
+     \frac{1}{2\pi i} \oint_{C}  \frac{z^2+1}{z^2-a^2} dz = 0.
+\end{equation}
+
+Since the function $f(z)$ has no singularities outside the unit circle (other than at $\infty$), we can alternatively compute that 
+\begin{align}
+        \frac{1}{2\pi i} \oint_{C} f(z)dz = -\Res(f; \infty).
+\end{align}
+Using that the point at infinity is defined by $t = 1/z$ as $z\to 0$, we have that 
+\begin{equation}
+    \Res(f;\infty) = - \Res(f(z^{-1})z^{-2};0)
+\end{equation}
+as shown in class. Therefore, we compute the residue of 
+\begin{equation}
+    f(z^{-1})z^{-2} = \frac{z^{-2} + 1}{z^{-2} + a^2} \cdot z^{-2} = \frac{z^{-2}}{1+a^2z^2} + \frac{1}{1+a^2z^2}.   
+\end{equation}
+This is the sum of a function which is analytic at 0 ($\frac{1}{1+a^2z^2}$) and another which has a double pole at 0. Since the coefficients of the Taylor-Laurent series are additive, we can ignore the contribution of the analytic function, so that 
+\begin{align}
+    \Res(f(z^{-1})z^{-2};0) = \Res \left(\frac{z^{-2}}{1+a^2z^2};0\right) &= \lim_{z\to 0} \frac{d}{dz} \left( z^2 \cdot \frac{z^{-2}}{1+a^2z^2} \right)\\
+                                                                          &= \lim_{z\to 0} \frac{d}{dz} \left( \frac{1}{1+a^2z^2} \right)\\
+                                                                          &= \lim_{z\to 0}\frac{-2a^2z}{1 + a^2z^2} = 0.
+\end{align}
+Once again, this allows us to conclude that
+\begin{equation}
+     \frac{1}{2\pi i} \oint_{C}  \frac{z^2+1}{z^2-a^2} dz = 0.
+\end{equation}
+
+\newpage 
+
+(b) We'll now repeat this procedure but with the function $f(z) = \frac{z^2+1}{z^3} = z^{-3} + z^{-1}$. The only singularities of this function in $C$ occur at the point 0 and since this is already written in form of its Taylor-Laurent series about 0, we have that 
+\begin{equation}
+    \frac{1}{2\pi i} \oint_C  \frac{z^2+1}{z^3} = \Res\left(\frac{z^2+1}{z^3}; 0\right) = a_{-1} = 1.
+\end{equation}
+
+We can now compute this same integral using the singularity at 0 by noting that 
+\begin{align}
+    \frac{1}{2\pi i} \oint_{C} \frac{z^2+1}{z^3} dz = \Res(f(z^{-1})z^{-2};0).
+\end{align}
+In this case,
+\begin{equation}
+    f(z^{-1})z^{-2} = (z^{3} + z^{1}) z^{-2} = z + z^{-1}.
+\end{equation}
+Computing the residue of this function at 0 is simple since it is in terms of its Taylor-Laurent series, we see that 
+\begin{equation}
+    \frac{1}{2\pi i} \oint_{C} \frac{z^2+1}{z^3} dz = \Res(f(z^{-1})z^{-2};0)= 1.
+\end{equation}
+
+\newpage
+
+(c) We now switch to the function 
+\begin{equation}
+    f(z) = z^2 e^{-1/z} = z^2 \left(1 - z^{-1} + \frac{z^{-2}}{2!} - \frac{z^{-3}}{3!} + \cdots   \right) = z^2 - z + \frac{1}{2} - \frac{z^{-1}}{3!} + \cdots,
+\end{equation}
+where we have expanded $e^{-1/z}$ in terms of its Taylor-Laurent series about 0. Using the fact the only singularity of $f(z)$ in $C$ is 0, we can compute that
+\begin{equation}   
+    \frac{1}{2\pi i} \oint_{C} z^2 e^{-1/z} dz = \Res( z^2 e^{-1/z} ;0) = - \frac{1}{3!} = -1/6 .
+\end{equation}
+
+We can now solve this problem by instead using the singularity at $\infty$. We see that
+\begin{align}
+    f(1/z) 1/z^2 &= (z^{-2} e^{-z} )\cdot z^{-2} = z^{-4}e^{-z}\\
+                 &= z^{-4}\left(1 - z + \frac{z^2}{2!} - \frac{z^3}{3!} + \cdots \right)\\
+                 &= z^{-4} - z^{-3} + \frac{z^{-2}}{2!} - \frac{z^{-1}}{3!} + \cdots,
+\end{align}
+where we have expanded $e^{-z}$ in terms of its Taylor-Laurent series about 0. With this expansion, we can clearly see $\Res(f(z)z^{-2};0) = -1/6$ and conclude
+\begin{equation}
+    \frac{1}{2\pi i} \oint_{C}  z^2 e^{-1/z}dz = \Res(f(z^{-1})z^{-2};0) = - 1/6.
+\end{equation}
+\end{sol}
+
+\newpage
+
+\begin{exer}
+    Find the Fourier transform of 
+    \begin{equation}
+        f(t) = \begin{cases}
+            1, \quad t\in(-a,a)\\
+            0, \quad \text{ otherwise}.
+        \end{cases}
+    \end{equation}
+    Then, do the inverse transform using techniques of contour integration, e.g. Jordan's lemma, principal values, etc.
+\end{exer}
+
+\begin{sol}
+    We begin by doing the Fourier transform of $f$, so that
+    \begin{equation}
+        F(\lambda) = \int_{-\infty}^{\infty} e^{-i\lambda t} f(t) dt = \int_{-a}^{a} e^{-i\lambda t}dt,
+    \end{equation}
+    since the integrand is 0 for $t$ such that $\abs{t} \geq a$ and just $e^{i\lambda t}$ for $\abs{t}<a$. We can now evaluate this integral using the anti-derivative of an exponential, so that
+    \begin{align}
+        F(\lambda) &= \int_{-a}^{a} e^{-i\lambda t}dt\\
+                   &= -\frac{e^{-i\lambda t}}{i\lambda} \vert_{-a}^{a}\\
+                   &= -\frac{1}{i\lambda} \left(e^{-i\lambda a} - e^{i\lambda a} \right ) \\
+                   &= \frac{2}{\lambda}\sin(\lambda a). 
+    \end{align}
+
+    We'll now take the inverse Fourier transform of this function as 
+    \begin{equation}
+        \hat f(t) = \frac{1}{2\pi} \int_{-\infty}^{\infty} e^{i\lambda t} F(\lambda) d\lambda. 
+    \end{equation}
+
+    We'll start by writing this integral in terms of exponentials 
+    \begin{align}
+        \hat f(t) &= \frac{1}{2\pi i}  \int_{-\infty}^{\infty} e^{i\lambda t} \frac{(e^{i\lambda a} - e^{-i\lambda a} )}{\lambda} d\lambda\\
+                  &= \frac{1}{2\pi i}  \int_{-\infty}^{\infty} \frac{e^{i\lambda (t+a)} - e^{i\lambda (t - a)}}{\lambda} d\lambda \\
+                  &= 
+                  \frac{1}{2\pi i} \left( \int_{-\infty}^{\infty} \frac{e^{i z (t+a)}}{z} dz -  \int_{-\infty}^{\infty} \frac{e^{iz (t-a)}}{z} dz \right)  \\
+    \end{align}
+
+    \paragraph{Case 1: $t\in(-a, a)$}
+    
+    We'll begin by integrating the first integral. Since $ t > -a$, we have that the first integral disappears on $C_R$ the upper semicircle centered at $0$ with radius $R\to \infty$. That is,
+    \begin{equation}
+        \int_\Gamma \frac{e^{i z (t+a)}}{z} dz = \left(\int_{-R}^{-\epsilon} + \int_{C_\epsilon} + \int_{\epsilon}^{R} + \int_{C_R}\right) \frac{e^{i z (t+a)}}{z} dz, 
+    \end{equation}
+    where $C_\epsilon$ is the upper half circle centered at 0 with radius $\epsilon$ and oriented clockwise and $\Gamma$ the contour consisting of the contours on the right hand side of the integral. By Cauchy's theorem, we have that $\int_\Gamma = 0$. We can compute the integral over $C_\epsilon$ using 
+    \begin{equation}
+        \int_{C_\epsilon}\frac{e^{i z (t+a)}}{z} dz = -\pi i \Res\left(\frac{e^{i z (t+a)}}{z},0\right) = -\pi i\text{ as  } \epsilon \to 0.
+    \end{equation}
+    We can compute this residue by simply using the simple pole formula from Prof. Tung's notes. Therefore, in the limit, we have 
+    \begin{equation}
+        \int_{-\infty}^{\infty}\frac{e^{i z (t+a)}}{z} dz = \pi i
+    \end{equation}
+
+    For the second integral, we cannot use Jordan's lemma since $t-a < 0$. We can instead do the same kind of integration after flipping the contour we use to integrate about the real axis. Therefore, using the mirrored contours, we have that 
+    \begin{equation}
+    0 = \int_\Gamma \frac{e^{i z (t-a)}}{z} dz  = \left(\int_{-R}^{-\epsilon} + \int_{C_\epsilon} + \int_{\epsilon}^{R} + \int_{C_R}\right) \frac{e^{i z (t-a)}}{z} dz,
+    \end{equation}
+    where once again the integral over $C_R$ disappears since we now use the lower half semi-circle. This leaves us to compute the integral as 
+    \begin{equation}
+        \int_{-\infty}^{\infty} \frac{e^{i z (t-a)}}{z} dz = -\pi i,
+    \end{equation}
+    where we have used the same methods for calculating the residue. The only difference is the sign of the integral over $C_\epsilon$ which is reversed due to the reversal of orientation of $C_\epsilon$ we get from reflecting about the real axis. That is, $C_\epsilon$ has become the lower half circle about 0 with radius $\epsilon$, but is now oriented counterclockwise, which gives us the flipped sign of our integral. The other integrals are left unchanged by this reflection. Therefore, we can compute that for $t\in (-a,a )$
+
+    \begin{equation}
+       \hat f(t) = \frac{1}{2\pi i}  \int_{-\infty}^{\infty} e^{i\lambda t} \frac{(e^{i\lambda a} - e^{-i\lambda a} )}{\lambda} d\lambda = \frac{1}{2\pi i} (\pi i - (-\pi i)) = 1. 
+    \end{equation}
+
+    \paragraph{Case 2: $\abs{t} > a$}%
+    \label{par:case_2_t_a_}
+   In this case, there are two sub-cases $t < -a < a$ and $-a < a < t$. In either cases, we can repeat the analysis done above but with both integrals having the same contour $\Gamma$. Due to both integrands having the same residue at $0$, this then means that 
+   \begin{equation}
+      I =  \int_{-\infty}^{\infty} \frac{e^{i z (t-a)}}{z} dz = \int_{-\infty}^{\infty} \frac{e^{i z (t-a)}}{z} dz .
+   \end{equation}
+   Therefore, for $t$ with $\abs{t} > a$,
+    \begin{equation}
+       \hat f(t) = \frac{1}{2\pi i}  \int_{-\infty}^{\infty} e^{i\lambda t} \frac{(e^{i\lambda a} - e^{-i\lambda a} )}{\lambda} d\lambda = \frac{1}{2\pi i} (I - I) = 0. 
+    \end{equation}
+
+    \paragraph{Case 3: $t = \pm a$}%
+    In the case that $t = a$, we have to compute the integral
+    \begin{align}
+        \hat f(a) &= \frac{1}{2\pi i} \int_{-\infty}^{\infty} \frac{e^{i2az}-1}{z} dz \\
+             &= \frac{1}{\pi} \int_{-\infty}^{\infty} e^{aiz}\frac{e^{iaz}-e^{-iaz}}{2iz}dz \\
+             & = \frac{1}{\pi} \int_{-\infty}^{\infty} e^{aiz} \frac{\sin (ax)}{x}\\
+             &= \frac{1}{\pi}  \left(\int_{-\infty}^{\infty} \frac{\cos(ax)\sin(ax)}{x}dx +  i\int_{-\infty}^{\infty} \frac{\sin^2(ax)}{x}dx \right)\\
+             &=  \frac{1}{\pi} \int_{-\infty}^{\infty} \frac{\cos(ax)\sin(ax)}{x}dx
+    \end{align}
+    The function $\frac{\sin^2(ax)}{x}dx$ is odd, so its integral goes to 0. Translating back to complex exponentials, we see that $\cos(ax)\sin(ax) = (1/4i) (e^{i2ax} - e^{-i2ax}) = \sin(2ax)/2$. Therefore, we have that
+    \begin{equation}
+    \hat f(a) = \frac{1}{2\pi} \int_{-\infty}^{\infty} \frac{\sin 2ax}{x} dx = 1/2,  
+    \end{equation}
+    where we have used that $\int_{-\infty}^{\infty} \sin tx / x dx = \pi$ for $t>0$ as shown in Prof. Tung's book.
+
+  Now we let $t=-a$, we solve the integral
+\begin{equation}
+   \hat f(-a) = \frac{1}{2\pi i} \int_{-\infty}^{\infty} \frac{1 - e^{-i2az}}{z} dz.    
+\end{equation}
+We can follow essentially the same arithmetic to see that
+\begin{align}
+   \hat f(-a) &= \frac{1}{2\pi i} \int_{-\infty}^{\infty} e^{-iaz}\frac{e^{iaz} - e^{-iaz}}{z} dz\\
+          &= \frac{1}{\pi}  \left(\int_{-\infty}^{\infty} \frac{\cos(ax)\sin(ax)}{x}dx - i \int_{-\infty}^{\infty} \frac{\sin^2(ax)}{x}dx \right)\\
+          &= \frac{1}{\pi} \int_{-\infty}^{\infty} \frac{\cos(ax)\sin(ax)}{x}dx.
+\end{align}
+Therefore, $\hat f(a) = \hat f(-a) = 1/2$. We can see that this is the same as our original function $f(t)$ for all $t\neq \pm a$.
+\end{sol}
+
+%TODO: Mention that the a_{-1} coefficient of the TL expansion is the Residue 
+
+\end{document}
