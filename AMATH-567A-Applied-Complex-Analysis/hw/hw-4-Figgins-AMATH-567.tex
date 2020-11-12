@@ -1,0 +1,317 @@
+%Preamble
+\documentclass[12pt]{article}
+\usepackage{fancyhdr}
+\usepackage{extramarks}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{amsrefs}
+\usepackage{amsfonts}
+\usepackage{mathrsfs}
+\usepackage{mathtools}
+\usepackage[mathcal]{eucal} %% changes meaning of \mathcal
+\usepackage{enumerate}
+\usepackage[shortlabels]{enumitem}
+\usepackage{verbatim} %% includes comment environment
+\usepackage{hyperref}
+\usepackage[capitalize]{cleveref}
+\crefformat{equation}{~(#2#1#3)}
+\usepackage{caption, subcaption}
+\usepackage{graphicx}
+\usepackage{fullpage} %%smaller margins
+\usepackage[all,arc]{xy}
+\usepackage{mathrsfs}
+
+\hypersetup{
+    linktoc=all,     % set to all if you want both sections and subsections linked
+}
+
+\topmargin=-0.45in
+\evensidemargin=0in
+\oddsidemargin=0in
+\textwidth=6.5in
+\textheight=9.0in
+\headsep=0.25in
+\setlength{\headheight}{16pt}
+
+\linespread{1.1}
+
+\pagestyle{fancy}
+\lhead{\Name}
+\chead{\hwTitle}
+\rhead{\hwClass}
+\lfoot{\lastxmark}
+\cfoot{\thepage}
+
+\renewcommand\headrulewidth{0.4pt}
+\renewcommand\footrulewidth{0.4pt}
+
+\setlength\parindent{0pt}
+
+%% Title Info
+\newcommand{\hwTitle}{HW \# 3}
+\newcommand{\hwDueDate}{\today}
+\newcommand{\hwClass}{AMATH 567}
+\newcommand{\hwClassTime}{}
+\newcommand{\hwClassInstructor}{}
+\newcommand{\Name}{\textbf{Marlin Figgins}}
+
+
+%% MATH MACROS
+\newcommand{\bbF}{\mathbb{F}}
+\newcommand{\bbN}{\mathbb{N}}
+\newcommand{\bbQ}{\mathbb{Q}}
+\newcommand{\bbR}{\mathbb{R}}
+\newcommand{\bbZ}{\mathbb{Z}}
+\newcommand{\bbC}{\mathbb{C}}
+\newcommand{\abs}[1]{ \left| #1 \right| }
+\newcommand{\diff}[2]{\frac{d #1}{d #2}}
+\newcommand{\infsum}[1]{\sum_{#1}^{\infty}}
+\newcommand{\norm}[1]{ \left|\left| #1 \right|\right| }
+\newcommand{\eval}[1]{ \left. #1 \right| }
+\newcommand{\Expect}[1]{\mathbb{E}\left[#1 \right]}
+\newcommand{\Var}[1]{\mathbb{V}\left[#1 \right]}
+\newcommand{\Res}{\text{Res}}
+
+\renewcommand{\phi}{\varphi}
+\renewcommand{\emptyset}{\O}
+\renewcommand{\Im}{\text{Im}}
+\renewcommand{\Re}{\text{Re}}
+
+%--------Theorem Environments--------
+%theoremstyle{plain} --- defaultx
+\newtheorem{thm}{Theorem}[section]
+\newtheorem{cor}[thm]{Corollary}
+\newtheorem{prop}[thm]{Proposition}
+\newtheorem{lem}[thm]{Lemma}
+\newtheorem{conj}[thm]{Conjecture}
+\newtheorem{quest}[thm]{Question}
+
+\theoremstyle{definition}
+\newtheorem{defn}[thm]{Definition}
+\newtheorem{defns}[thm]{Definitions}
+\newtheorem{con}[thm]{Construction}
+\newtheorem{exmp}[thm]{Example}
+\newtheorem{exmps}[thm]{Examples}
+\newtheorem{notn}[thm]{Notation}
+\newtheorem{notns}[thm]{Notations}
+\newtheorem{addm}[thm]{Addendum}
+
+% Environments for answers and solutions
+\newtheorem{exer}{Exercise}
+\newtheorem{sol}{Solution}
+
+\theoremstyle{remark}
+\newtheorem{rem}[thm]{Remark}
+\newtheorem{rems}[thm]{Remarks}
+\newtheorem{warn}[thm]{Warning}
+\newtheorem{sch}[thm]{Scholium}
+
+\makeatletter
+\let\c@equation\c@thm
+\makeatother
+
+\begin{document}
+
+\begin{exer}
+Using Residue Calculus, calculate
+\begin{equation}
+    I = \int_{-\infty}^{\infty} \frac{\sin x}{\sinh x}. 
+\end{equation}
+\end{exer}
+ 
+\begin{sol}
+    We see that the function $f(z) = \sin z / \sinh z$ has singularities at $\pi i k$ for $k\in\bbZ$. In order to avoid these singularities and evaluate the integral we will use a rectangular contour $\Gamma$ similar to A\&F Fig. 4.3.5. Here, we let $C_{\epsilon_1}$ represent the top half of the circle centered at 0 with radius $\epsilon>0$ and $C_{\epsilon_2}$ be centered at $\pi i$ with radius $\epsilon>0$. Let $C_{SR}$ be contour going from $R$ to $R+i\pi$, $C_{SL}$ be the contour from $-R + i\pi$ to $-R$. Filling in the additional line segments, we have that
+\begin{equation}
+    \oint_{\Gamma} f(z) dz = \left( \int_{C_{\epsilon_1}} + \int_{\epsilon}^{R} + \int_{C_{SR}} + \int_{R+i\pi}^{i\pi+\epsilon} +  \int_{C_{\epsilon_2}} + \int_{i\pi - \epsilon}^{-R + i\pi} + \int_{C_{SL}} + \int_{-R}^{-\epsilon} \right) f(z)dz = 0
+    \end{equation}
+    by Cauchy's theorem since $\Gamma$ encloses no singularities. We begin by noting that 
+    \begin{equation}
+        \int_{C_{\epsilon_1}} f(z) \to 0 \text{ as } \epsilon \to 0 
+    \end{equation}
+    by A\&F Theorem 4.3.1. since $f(z)\cdot z$ approaches $0$ as $\abs{z} \to 0$. This follows from the fact the limit of $f(z)$ approaches 1 and $z$ approaches 0 individually as $\epsilon \to 0$. Similarly, we can use Theorem 4.3.1. to compute that 
+    \begin{equation}
+        \int_{C_{\epsilon_2}} f(z) \to -\pi i \Res(f, i\pi) \text{ as } \epsilon \to 0 
+    \end{equation}
+    There is an additional $-1$ in front due to the orientation of $C_{\epsilon_2}$.
+    We can compute this residue using the fact that $i\pi$ is a simple pole, taking the limit
+    \begin{align}
+    \Res(f, i\pi) = \frac{\sin z_0}{\cosh z_0} =  - \sin(i\pi)  
+    \end{align}
+
+    Therefore, we have that 
+    \begin{equation}
+        \int_{C_{\epsilon_2}} f(z) \to \pi i \sin(i\pi) \text{ as } \epsilon \to 0 
+    \end{equation}
+
+    We next will simplify the integral over the parts of $\Gamma_\epsilon$ with $y=i\pi$ as
+\begin{align}
+    \left( \int_{R+i\pi}^{\epsilon + i\pi} + \int_{- \epsilon + i\pi}^{-R + i\pi} \right) f(z)dz =     \left( \int_{R}^{\epsilon} + \int_{- \epsilon}^{-R } \right)  \frac{\sin(x + i\pi)}{\sinh(x+i\pi)} dx.
+\end{align}
+We now use the sum of angles formula to show that 
+\begin{align}
+    \left( \int_{R+i\pi}^{\epsilon + i\pi} + \int_{- \epsilon + i\pi}^{-R + i\pi} \right) f(z)dz &=     \left( \int_{R}^{\epsilon} + \int_{- \epsilon}^{-R } \right) \left(\frac{\sin x\cos i\pi}{\sinh(x+i\pi)} + \frac{\cos x\sin i\pi}{\sinh(x+i\pi)}    \right)dx\\
+                                                                                                &=-     \left( \int_{R}^{\epsilon} + \int_{- \epsilon}^{-R } \right) \left(\frac{\sin x\cos i\pi}{\sinh(x)} + \frac{\cos x\sin i\pi}{\sinh(x)}    \right)dx \\
+                                                                                                &=-     \left( \int_{R}^{\epsilon} + \int_{- \epsilon}^{-R } \right) \left(\frac{\sin x\cos i\pi}{\sinh(x)}   \right)dx \\
+                                                                                                &=\cos i\pi   \left( \int_{\epsilon}^{R} + \int_{-R }^{-\epsilon} \right) \frac{\sin x}{\sinh(x)} dx
+\end{align} 
+
+where we have used that $\sinh(x) = -\sinh(x+i\pi)$ and the fact that $\cos x / \sinh x$ is even and that the bounds of our integral are symmetric. Next, we show that $\int_{C_{SL}}$ and $\int_{C_{SR}} \to 0$ as $R\to \infty$. This follows from the fact that 
+\begin{align}
+    \abs{\int_{0}^{\pi} f(R + i\theta)d\theta } &\leq \pi \cdot \sup_{\theta\in [0,\pi]}( f(R+i\theta))\\
+                                                &= \pi \sup_{\theta\in [0,\pi]}\frac{\abs{\sin(R + i\theta)}}{\abs{\sinh(R+i\theta)}}
+                                                \to 0 \text{ as } R\to \infty,
+\end{align}
+since $\abs{\sin(R+i\theta)} = \abs{(e^{-\theta +iR} - e^{\theta + iR})/2i}$ which is bounded by a constant not depending on $R$ and $\abs{\sinh(R + i\theta)} = \abs{(e^{R +i\theta} - e^{-R - i\theta}) / 2 }$ which goes to infinity as $R\to\infty$. This same argument holds for the integral over $C_{SL}$.
+%TODO: Fix this line below after computing C_SL and C_SR
+Reducing what remains of our integral, we see that 
+
+\begin{equation}
+    (1+\cos i\pi)    \left( \int_{\epsilon}^{R} + \int_{-R }^{-\epsilon} \right) f(x)dx + \int_{C_{\epsilon_1}}f(z)dz +    \int_{C_{\epsilon_2}}f(z)dz = 0
+\end{equation}
+Taking the limits as $R\to\infty$ and $\epsilon\to 0$, we see that 
+\begin{equation}
+    (1+\cos i\pi) \int_{-\infty}^{\infty}f(x)dx = -\pi i \sin i\pi.
+\end{equation}
+
+We can then simplify this to solve for the desired integral
+
+\begin{align}
+    \int_{-\infty}^{\infty}f(x)dx &=  -\pi i \frac{\sin(i\pi)}{1+\cos i\pi}\\
+                                  &= -\pi i \tan\left( \frac{i\pi}{2}  \right)\\
+                                  &= \pi \tanh\left( \frac{\pi}{2}  \right),
+\end{align}
+where we have used the half angle formula for $\tan x$ and the fact that $\tanh x = -i \tan i x$.
+\end{sol}
+
+\newpage
+
+\begin{exer}
+    Using residue calculus, calculate
+    \begin{equation}
+        I = \int_{-\infty}^{\infty} \frac{1 + \cos x}{(x-\pi)^2}. 
+    \end{equation}
+\end{exer}
+
+\begin{sol}
+%TODO: Circular upper half plane
+    We'll begin by noting 
+   \begin{equation}
+       I = \int_{-\infty}^{\infty} \frac{1+\cos(x)}{(x-\pi)^2} dx =  \int_{-\infty}^{\infty} \frac{1+\cos(x+\pi)}{( (x+\pi)-\pi)^2} dx =  \int_{-\infty}^{\infty} \frac{1-\cos(x)}{x^2} dx, 
+   \end{equation} 
+   where we have just shifted the integral and noted that we are integrating over the entire real line. We'll now shift our focus to the function $f(z) = \frac{1 - e^{iz}}{z^2}$ since 
+   \begin{equation}
+       \Re \left(  \int_{-\infty}^{\infty} \frac{1-e^{iz}}{z^2} dz
+\right) = \int_{-\infty}^{\infty} \frac{1-\cos(x)}{x^2} dx
+   \end{equation}
+   We'll now consider the integral of $f(z)$ over the contour $\Gamma$ which is comprised of the following segments
+   \begin{equation}
+       \oint_\Gamma = \int_{-R}^{-\epsilon} - \int_{C_{\epsilon}} + \int_{\epsilon}^{R} + \int_{C_{R}}= 0,
+   \end{equation}
+   here $C_\epsilon$ is the circle centered at 0 with radius $\epsilon$ and oriented counter-clockwise, and $C_R$ is the circle centered at 0 with radius $R$ and also oriented counter-clockwise. We have also used Cauchy's Theorem, since the function $f(z)$ is analytic within and on the contour $\Gamma$. We can see that the integral $\int_{C_{R}} f(z)dz \to 0$ as $R\to\infty$ since
+   \begin{equation}  
+       \abs{ \int_{C_{R}} f(z)dz } \leq \abs{ \frac{1-e^{iz}}{z^2}  } \cdot \pi R \leq \frac{2\pi R}{R^2}.
+   \end{equation}
+We can then write that in the limit as $R\to\infty$
+\begin{equation}
+ \int_{-\infty}^{-\epsilon} f(z)dz + \int_{\epsilon}^{\infty} f(z)dz = \int_{C_{\epsilon}} f(z)dz
+\end{equation}
+In the limit as $\epsilon\to0$, we can evaluate the right hand side using Theorem 4.3.1., so that
+\begin{equation}
+    \int_{C_{\epsilon}} f(z)dz \to i \pi \Res(f, 0)
+\end{equation}
+We can compute this residue by looking directly at the Taylor-Laurent series of $f(z)$
+\begin{align}
+    \frac{1}{z^2} \cdot \left( 1-e^{iz}\right) &= \frac{1}{z^2} \left( -iz + \frac{(iz)^2}{2!} - \cdots  \right)\\
+                                               &= \frac{-i}{z} - \frac{1}{2} - \cdots  
+\end{align}
+Looking at this series, we see that $\Res(f, 0) = -i$. This means that taking the limit as $\epsilon = 0$, we see
+\begin{equation}
+    \int_{-\infty}^{\infty} f(z)dz = \pi.
+\end{equation}
+Since this is real and the integral exists, we see that our desired integral is $I = \pi$
+\end{sol}
+
+
+\newpage
+
+\begin{exer}
+    Evaluate the following integral using residue calculus
+    \begin{equation}
+        I = \int_{0}^{\infty} \frac{x^a}{1 + 2x\cos(b) + x^2}dx 
+    \end{equation}
+where $-1<a<1$,$a\neq 0$ and $-\pi < b < \pi$, $b\neq 0$. Justify all key steps. Do not use the general formula for this integral
+\end{exer}
+
+\begin{sol}
+    We'll consider the same contour as in page 64 of Prof. Tung's notes. We begin by showing that $\abs{\int_{C_R} f(z)} \to 0$ as $R\to \infty$ where $C_R$ is the circle centered at 0 with radius $R$ for angles $\theta\in[0,2\pi)$. This follows from the fact that
+    \begin{equation}
+        \abs{\int_{C_R} f(z)} \leq 2\pi R \cdot \abs{ \frac{R^a e^{ia\theta}}{R^2e^{i\theta} + 2R e^{i\theta} + 1} } = O \left( \frac{R^{1+a}}{R^2} \right) = O(R^{a-1}).
+    \end{equation}
+    Since $a\in (-1, 1)$, this means the power $a-1<0$ and the integral goes to 0 in the limit as $R\to\infty$. Now looking at $C_2$ which is the circle centered at 0 and with radius $\rho$ and oriented counter-clockwise, we see that 
+    \begin{align}
+        \abs{\int_{C_2} f(z) dz} &= \abs{\int_{2\pi}^{0} f(\rho e^{i\theta}) \rho i e^{i\theta} d\theta} \\
+                                 &= \abs{\int_{2\pi}^{0} \frac{\rho^{a+1} e^{i (a+1) \theta}}{1 + 2\cos(b)\rho e^{i\theta} + \rho^2 e^{2i\theta}} i d\theta }\\
+                                 &\leq \int_{2\pi}^{0} \abs{ \frac{\rho^{a+1} e^{i (a+1) \theta}}{1 + 2\cos(b)\rho e^{i\theta} + \rho^2 e^{2i\theta}} i  } d\theta\\
+                                 &\leq \int_{2\pi}^{0} \frac{\abs{\rho^{a+1}}}{\abs{1} + \abs{2\cos(b)\rho} +\abs{\rho^{2}}} d\theta \to 0 \text{ as } \rho \to 0.
+    \end{align}
+    We have used that the $a+1>0$ to make the final limit argument and the triangle inequality in the computations above. Next, we consider the integral over $C_1$ where $z = re^{2\pi i}$ along the real axis from $R$ to 0, so that
+    \begin{align}
+        \int_{C_1} f(z) dz &= \int_{R}^{0} f(re^{2\pi i}) e^{2\pi i} dr\\
+                           &= \int_{R}^{0} \frac{r^ae^{2\pi i (a+1)}}{1 + 2r\cos(b)e^{2\pi i} + r^2e^{4\pi i}} dr\\
+                           &= e^{2\pi i (a+1)}\int_{R}^{0} \frac{r^a}{1 + 2r\cos(b) + r^2}dr\\
+                           &= -e^{2\pi i (a+1)} \int_{0}^{R} \frac{r^a}{1 + 2r\cos(b) + r^2}dr\\
+                           &= -e^{2\pi i(a+1)} \int_{C_0} f(z) dz,
+    \end{align}
+    where $C_0$ is the curve where $z = r$ from $0$ to $R$. Due to our choice of contour $C = C_0 + C_1 + C_2 + C_R$, we have that in the limit as $R\to\infty$ and $\rho\to0$
+    \begin{equation}
+        \oint_C f(z) = (1- e^{2\pi i (a+1)}) \int_{0}^{\infty} \frac{x^a}{1 + 2x\cos(b) + x^2}dx.
+    \end{equation}
+    This is great as we can now use the residue theorem to address the integral 
+    \begin{align}
+        \oint_C f(z)dz = 2\pi i \sum \Res(f, z_j).
+    \end{align}
+    Therefore, all that remains is to compute the residues of $f$ at its singularities. We begin by factoring the denominator of the integrand of $I$ using the quadratic formula
+    \begin{equation}
+        z_{\pm} = \frac{-2\cos b \pm \sqrt{ 4\cos^2 b - 4 }}{2} = -\cos b \pm \sqrt{\cos^2 b - 1} = -\cos b \pm i \abs{\sin b},
+    \end{equation}
+    where we have used that $1 - \cos^2 x = \abs{\sin x}$. In the case that $b > 0$, we have that $\sin b = \abs{\sin b}$, so
+    \begin{equation}
+        z_{+} = - e^{-ib} \quad z_{-} = -e^{ib}.
+    \end{equation}
+    Otherwise, we have that these are switched since $b<0$, $-\sin b = \abs{\sin b}$. In what follows, we just assume that $b\in(0,\pi)$. Now that we have shown our singularities are given by $z_+$ and $z_-$. We can then factor the integrand as 
+    \begin{equation}
+        f(z) =  \frac{z^a}{1 + 2z\cos(b) + z^2} = \frac{z^a}{(z-z_+)(z-z_-)}.
+    \end{equation}
+    We can compute the residues as 
+
+    \begin{align}
+        \Res(f, z_+) &= \lim_{z\to z_+} (z-z_+)\left(\frac{z^a}{(z-z_+)(z-z_-)} \right) = \frac{z_+^a}{z_+ - z_-} = \frac{(-1)^a e^{-iab}}{2i \sin b} \\
+        \Res(f, z_-) &= \lim_{z\to z_-} (z-z_-)\left(\frac{z^a}{(z-z_+)(z-z_-)} \right) = \frac{z_-^a}{z_- - z_+} = -\frac{(-1)^a e^{iab}}{2i\sin b}. 
+    \end{align}
+  To be thorough, we can also compute residues and integral for the case $b<0$, so that
+    \begin{align}
+        \Res(f, z_+) &= \lim_{z\to z_+} (z-z_+)\left(\frac{z^a}{(z-z_+)(z-z_-)} \right) = \frac{z_+^a}{z_+ - z_-} = -\frac{(-1)^a e^{iab}}{2i \sin b} \\
+        \Res(f, z_-) &= \lim_{z\to z_-} (z-z_-)\left(\frac{z^a}{(z-z_+)(z-z_-)} \right) = \frac{z_-^a}{z_- - z_+} = \frac{(-1)^a e^{-iab}}{2i\sin b},
+    \end{align}
+    which shows that our integral will be unchanged as the sum of the residues is unchanged.
+
+    We can then compute that 
+\begin{align}  
+    \oint_C f(z)dz &= \frac{(-1)^a\pi}{\sin b}\left( e^{-iab} - e^{iab}\right)\\
+  \end{align}
+  We can take this to compute our desired integral as
+  \begin{align}
+      \int_{0}^{\infty} \frac{x^a}{1+2x\cos(b)+x^2}dx  &= (-1)^a \frac{\pi}{\sin b} \left( \frac{e^{-iab} - e^{iab}}{1-e^{2\pi i (a+1)}}\right)\\
+                                                       &=  (-1)^a \frac{\pi}{\sin b} \left( \frac{e^{-iab} - e^{iab}}{1-e^{2\pi i (a+1)}}\right) \left( \frac{e^{-\pi i a}}{e^{-\pi i a}} \right)\\
+                                                       &=  (-1)^a \frac{\pi e^{-\pi i a}}{\sin b} \left( \frac{e^{-iab} - e^{iab}}{e^{-\pi i a}-e^{\pi ia}}\right)\\
+                                                       &= (-1)^a \frac{\pi e^{-\pi a i}}{\sin b} \left( \frac{\sin(ab)}{\sin(a\pi )} \right)\\
+                                                       &= e^{\pi \alpha i} \frac{\pi e^{-\pi a i}}{\sin b} \left( \frac{\sin(ab)}{\sin(a\pi )} \right)\\
+                                                       &= \frac{\pi}{\sin b} \left( \frac{\sin(ab)}{\sin(a\pi )} \right),
+  \end{align}
+where we have used the definition of sine in terms of complex exponentials and in the last line we have used that $(-1)^\alpha = e^{\pi \alpha i}$.
+%TODO: I know this can be simplified further using some complex exponential magic, but I think this is far enough for now. I'm really tired.
+%TODO: Are there really multiple cases here?
+\end{sol}
+
+\end{document}
