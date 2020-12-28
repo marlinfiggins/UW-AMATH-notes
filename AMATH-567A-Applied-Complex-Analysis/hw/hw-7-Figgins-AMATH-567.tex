@@ -1,0 +1,285 @@
+%Preamble
+\documentclass[12pt]{article}
+\usepackage{fancyhdr}
+\usepackage{extramarks}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{amsrefs}
+\usepackage{amsfonts}
+\usepackage{mathrsfs}
+\usepackage{mathtools}
+\usepackage[mathcal]{eucal} %% changes meaning of \mathcal
+\usepackage{enumerate}
+\usepackage[shortlabels]{enumitem}
+\usepackage{verbatim} %% includes comment environment
+\usepackage{hyperref}
+\usepackage[capitalize]{cleveref}
+\crefformat{equation}{~(#2#1#3)}
+\usepackage{caption, subcaption}
+\usepackage{graphicx}
+\usepackage{fullpage} %%smaller margins
+\usepackage[all,arc]{xy}
+\usepackage{mathrsfs}
+
+\hypersetup{
+    linktoc=all,     % set to all if you want both sections and subsections linked
+}
+
+\topmargin=-0.45in
+\evensidemargin=0in
+\oddsidemargin=0in
+\textwidth=6.5in
+\textheight=9.0in
+\headsep=0.25in
+\setlength{\headheight}{16pt}
+
+\linespread{1.1}
+
+\pagestyle{fancy}
+\lhead{\Name}
+\chead{\hwTitle}
+\rhead{\hwClass}
+\lfoot{\lastxmark}
+\cfoot{\thepage}
+
+\renewcommand\headrulewidth{0.4pt}
+\renewcommand\footrulewidth{0.4pt}
+
+\setlength\parindent{0pt}
+
+%% Title Info
+\newcommand{\hwTitle}{HW \# 7}
+\newcommand{\hwDueDate}{November 24, 2020}
+\newcommand{\hwClass}{AMATH 567}
+\newcommand{\hwClassTime}{}
+\newcommand{\hwClassInstructor}{}
+\newcommand{\Name}{\textbf{Marlin Figgins}}
+
+
+%% MATH MACROS
+\newcommand{\bbF}{\mathbb{F}}
+\newcommand{\bbN}{\mathbb{N}}
+\newcommand{\bbQ}{\mathbb{Q}}
+\newcommand{\bbR}{\mathbb{R}}
+\newcommand{\bbZ}{\mathbb{Z}}
+\newcommand{\bbC}{\mathbb{C}}
+\newcommand{\abs}[1]{ \left| #1 \right| }
+\newcommand{\diff}[2]{\frac{d #1}{d #2}}
+\newcommand{\infsum}[1]{\sum_{#1}^{\infty}}
+\newcommand{\norm}[1]{ \left|\left| #1 \right|\right| }
+\newcommand{\eval}[1]{ \left. #1 \right| }
+\newcommand{\Expect}[1]{\mathbb{E}\left[#1 \right]}
+\newcommand{\Var}[1]{\mathbb{V}\left[#1 \right]}
+\newcommand{\Res}{\text{Res}}
+
+\renewcommand{\phi}{\varphi}
+\renewcommand{\emptyset}{\O}
+\renewcommand{\Im}{\text{Im}}
+\renewcommand{\Re}{\text{Re}}
+
+%--------Theorem Environments--------
+%theoremstyle{plain} --- defaultx
+\newtheorem{thm}{Theorem}[section]
+\newtheorem{cor}[thm]{Corollary}
+\newtheorem{prop}[thm]{Proposition}
+\newtheorem{lem}[thm]{Lemma}
+\newtheorem{conj}[thm]{Conjecture}
+\newtheorem{quest}[thm]{Question}
+
+\theoremstyle{definition}
+\newtheorem{defn}[thm]{Definition}
+\newtheorem{defns}[thm]{Definitions}
+\newtheorem{con}[thm]{Construction}
+\newtheorem{exmp}[thm]{Example}
+\newtheorem{exmps}[thm]{Examples}
+\newtheorem{notn}[thm]{Notation}
+\newtheorem{notns}[thm]{Notations}
+\newtheorem{addm}[thm]{Addendum}
+
+% Environments for answers and solutions
+\newtheorem{exer}{Exercise}
+\newtheorem{sol}{Solution}
+
+\theoremstyle{remark}
+\newtheorem{rem}[thm]{Remark}
+\newtheorem{rems}[thm]{Remarks}
+\newtheorem{warn}[thm]{Warning}
+\newtheorem{sch}[thm]{Scholium}
+
+\makeatletter
+\let\c@equation\c@thm
+\makeatother
+
+\begin{document}
+
+\begin{exer}
+    (a) Let $\hat{f}(s)$ and $\hat{g}(s)$ be the Laplace transforms of one-sided function $f(t)$ and $g(t)$ respectively. Show that the inverse Laplace transform of $\hat{f}(s)\hat{g}(s)$ is
+\begin{equation*}
+    \int_{0}^{t} f(t-\tau) g(\tau) d\tau.
+\end{equation*}
+
+(b) Use Laplace transform and the result in (a) to solve the following ordinary differential equation
+\begin{equation*}
+    \frac{d^{2}}{dt^{2}} y + 4y = f(t),
+\end{equation*}
+subject to the initial conditions: $y(0)=0$,  $\frac{dy}{dt}(0) = y'(0) = 0$.
+\end{exer}
+ 
+\begin{sol}\leavevmode
+    (a) We write the definition of the inverse Laplace transform as 
+    \begin{align*}
+        \mathcal{L}^{-1}([ \hat{f}(s)\hat{g}(s)] &= \frac{1}{2\pi i} \int_{L} e^{st}   \hat{f}(s)\hat{g}(s) ds,
+    \end{align*}
+    where $L$ is chosen to be to the right of any singularities of $\hat{f}$ and $\hat{g}$ as discussed in class. Writing the definition of $\hat{g}$ we see that 
+    \begin{align*}
+        \mathcal{L}^{-1}[  \hat{f}(s)\hat{g}(s)] &= \frac{1}{2\pi i} \int_{L} e^{st}   \hat{f}(s)\hat{g}(s) ds\\
+                                              &= \frac{1}{2\pi i} \int_{L} e^{st}   \hat{f}(s) \left(  \int_{0}^{\infty} e^{-s\tau } g(\tau) d\tau \right)ds.
+    \end{align*}
+
+    Re-arranging the integrals and using the definition of the inverse Laplace transform, we have that
+    \begin{align*}
+        \mathcal{L}^{-1}[  \hat{f}(s)\hat{g}(s)]  &= \frac{1}{2\pi i} \int_{0}^{\infty} g(\tau) \int_{L} e^{ s(t-\tau)} \hat{f}(s)ds d\tau\\
+                                                  &= \frac{1}{2\pi i} \int_{0}^{\infty} g(\tau) \int_{L} e^{ s(t-\tau)} \hat{f}(s)ds d\tau\\
+                                                  &= \int_{0}^{\infty} g(\tau) \mathcal{L}^{-1}[\hat{f}(s)](t-\tau)\\
+                                                  &=  \int_{0}^{\infty} g(\tau) f(t-\tau) d\tau\\
+    \end{align*}
+    Since the $f$ and $g$ are one sided, we have that $f(t-\tau) = 0$ when $\tau > t$ and $g(\tau) = 0$ for $\tau < 0$. Therefore,
+    \begin{equation*}
+    \mathcal{L}^{-1}[  \hat{f}(s)\hat{g}(s)] = \int_{0}^{t} g(\tau) f(t-\tau) d\tau
+    \end{equation*}
+
+    \newpage 
+
+    (b) We begin by taking the Laplace transform of both sides of the equation
+
+    \begin{align*}
+        \mathcal{L}[ y'' + 4y  ] = \mathcal{L}[ y'' ] +  4\mathcal{L}[y]  =\mathcal{L}[f(t)].
+    \end{align*}
+
+    Using the transform formulas for derivatives and initial conditions, we have that
+    \begin{equation*}
+        \mathcal{L}[ y'' ] = s^{2} \hat{y} - s y(0) - y'(0) = s^{2} \hat{y}.
+    \end{equation*}
+    Therefore, we have that 
+    \begin{align*}
+    (s^{2} + 4) \hat{y} = \hat{f}(s) \implies \hat{y} = \frac{\hat{f}(s)}{s^{2} + 4}.
+    \end{align*}
+
+    This means our desired solution $y(t)$ is given by
+    \begin{equation*}
+        y(t) = \mathcal{L}^{-1}\left[ \hat{f}(s) \cdot \frac{1}{s^{2}+4} \right]
+    \end{equation*}
+    We can solve this using the formula derived in part (a). Setting $\hat{g}(s) = \frac{1}{s^{2}+4}$, we solve first for this function's inverse transform. Looking at pg. 90 of Prof. Tung's book, we can see that 
+    \begin{equation*}
+        \mathcal{L}\left[\frac{\sin(2t)}{2}\right] = \frac{1}{s^{2} + 4} \implies g(t) = \frac{\sin(2t)}{2}.
+    \end{equation*}
+
+    Using the formula derived in (a), we have that
+      \begin{align*}
+        y(t) &= \mathcal{L}^{-1}\left[ \hat{f}(s) \cdot \frac{1}{s^{2}+4} \right]\\
+             &= \frac{1}{2}\int_{0}^{t} f(t-\tau) \sin(2\tau) d\tau.
+    \end{align*}
+
+
+\end{sol}
+
+\newpage
+
+\begin{exer}
+    Solve the following Laplace equation
+    \begin{equation*}
+    \frac{\partial^{2}}{\partial x^{2}} \phi + \frac{\partial^{2}}{\partial y^{2}} \phi = 0 
+    \end{equation*}
+    in the upper half plane subject to the boundary conditions: $\phi\to 0$ as $y\to \infty$ and $\phi\to 0$ as $x\to \pm \infty$ and 
+    \begin{equation*}
+        \phi(x,0) = \frac{x}{x^{2} + a^{2}}.
+    \end{equation*}
+  \end{exer}
+
+\begin{sol}
+    Assuming a solution $\phi(x,y)$ to this equation exists, we take its Fourier transform in $x$, so that our differential equation satisfies
+\begin{align*}
+    -\mathcal{F}\left[ \frac{\partial^{2}}{\partial x^{2}} \phi \right] =  \mathcal{F} \left[\frac{\partial^{2}}{\partial y^{2}} \phi\right]  
+\end{align*}
+
+By the differentiation rules of Fourier series, we have that
+\begin{equation*}
+  \mathcal{F}\left[\frac{\partial^{2}}{\partial x^{2}}  \phi \right]  = - \lambda^{2} \mathcal{F}[ \phi ].
+\end{equation*}
+
+Therefore, our transformed differential equation satisfies
+\begin{equation*}
+    \lambda^{2} \mathcal{F}[ \phi ] = \mathcal{F} \left[\frac{\partial^{2}}{\partial y^{2}} \phi\right] = \frac{\partial^{2}}{\partial y^{2}} \mathcal{F} \left[\phi\right], 
+\end{equation*}
+where we've interchanged the $y$ derivative and our integration in the Fourier transform. For simplicity, we'll set $\mathcal{F}[\phi] = \hat{\phi}$, so that we see
+\begin{align*}
+    \lambda^{2} \hat{\phi} =  \frac{\partial^{2}}{\partial y^{2}}  \hat{\phi} \implies 
+    \hat{\phi}(\lambda, y) = A(\lambda) e^{\lambda y} + B(\lambda) e^{- \lambda y}
+\end{align*}
+for functions $A$ and $B$ which depend on $\lambda$. Since we require that $\phi \to 0$ as $y\to \infty$ and $\phi$ is bounded for $y>0$, this means that $A = 0$ for $\lambda > 0$ and $B = 0$ for $\lambda < 0$, so we write
+\begin{equation*}
+    \hat{\phi}(\lambda, y) = C(\lambda) e^{- \abs{\lambda}y},
+ \end{equation*}
+ for some function $C(\lambda)$. Using that $\phi(x, 0) = \frac{x}{x^{2} + a^{2}} = f(x)$, we have that 
+ \begin{equation*}
+     \hat{\phi}(\lambda, 0) = \hat{f}(\lambda) = C(\lambda) e^{-\abs{\lambda}\cdot 0}.
+ \end{equation*}
+ This shows that our transformed solution satisfies $C(\lambda) = \hat{f}(\lambda)$, so that
+ \begin{equation*}
+  \hat{\phi}(\lambda, y) = \hat{f}(\lambda) e^{- \abs{\lambda}y}.
+ \end{equation*}
+ To return our solution to the desired $(x,y)$ coordinates, we'll use the convolution theorem for Fourier transforms. As shown on page 286 of A\& F, we have that the inverse transform of $e^{-\abs{\lambda}y}$ is given by $g(x,y) = \frac{1}{\pi} \frac{y}{x^{2}+ y^{2}}$. Therefore, our solution is given by the convolution theorem for Fourier transforms as
+
+ \begin{align*}
+     \phi(x,y) &= \int_{-\infty }^{\infty } f(t) g(x-t, y) dt\\
+               &= \frac{1}{\pi} \int_{-\infty }^{\infty }  f(t) \cdot \frac{y}{(x-t)^{2}+ y^{2}} dt\\
+               &= \frac{1}{\pi} \int_{-\infty }^{\infty }  \frac{t}{t^{2} + a^{2}} \cdot \frac{y}{(x-t)^{2}+ y^{2}} dt\\
+               &= \frac{y}{\pi} \int_{-\infty }^{\infty } \frac{t}{(t^{2} + a^{2})((x-t)^{2}+ y^{2})}dt. 
+ \end{align*}
+ We can solve this integral with contour integration. Let $\Gamma$ be the contour for the upper half circle, and for $h(t) = \frac{t}{(t^{2} + a^{2})((x-t)^{2}+ y^{2})}$ we have that
+ \begin{equation*}
+     \int_{\Gamma} h(t) dt = \int_{C_{R}} h(t) dt + \int_{-R}^{R} h(t) dt.
+ \end{equation*}
+ As $h(t)$ is a rational function with denominator degree at least 2 greater than the numerator degree, we have that the integral over $C_{R}$ goes to 0 in the limit as $R\to \infty$. This means that
+ \begin{equation*}
+     \int_{\Gamma} h(t) dt = \int_{-\infty }^{\infty } h(t) \text{ as  } R\to \infty .
+ \end{equation*}
+ We can solve for this integral using the residue theorem. In the upper half plane where $\Gamma$ is defined, $h(t)$ has singularities at $ia$ and $iy + x$ in the upper half plane as $a>0$ and $y > 0$. Therefore, this shows that
+
+ \begin{equation*}
+     \int_{-\infty }^{\infty } h(t)dt = 2\pi i( \Res(h; ia)  + \Res(h; iy + x)).
+ \end{equation*}
+ Since each of the singularities are simple poles, we can write a formula for the Residues using the derivative of the denominator, so that
+
+ \begin{equation*}
+     \Res(h; t_{0}) = \frac{t}{2t( (x-t)^{2} + y^{2} ) - 2(t^{2} + a^{2})(x-t)}.
+ \end{equation*}
+
+ Plugging in the singularity $t_{0} = ia$, we have that
+ \begin{align*}
+     \Res(h; ia) &= \frac{ia}{2ia((x-ia)^{2} + y^{2}) - 2((ia)^{2} + a^{2})(x-ia)}\\
+                    &= \frac{ia}{2ia((x-ia)^{2} + y^{2})}\\ 
+                    &= \frac{1}{2((x-ia)^{2} + y^{2})}. 
+ \end{align*}
+ Next, for $t_{0} = iy + x$, we have that
+ \begin{align*}
+     \Res(h; iy + x) &= \frac{iy + x}{2(iy + x) ( [x - (iy+x)]^{2} + y^{2} ) - 2((iy + x)^{2} + a^{2})( x - (iy + x) )}\\
+                     &=- \frac{iy + x}{2((iy + x)^{2} + a^{2})(-iy)}\\
+                     &= \frac{x}{2iy((iy + x)^{2} + a^{2})} + \frac{1}{2 ((iy+x)^{2} + a^{2})}
+ \end{align*}
+
+ We have that 
+ \begin{align*}
+     \int_{-\infty }^{\infty } h(t)dt &= 2\pi i(\frac{1}{2((x-ia)^{2} + y^{2})} +  \frac{x}{2iy((iy + x)^{2} + a^{2})} + \frac{1}{2 ((iy+x)^{2} + a^{2})})\\
+                                      &= \pi ( \frac{i}{(x-ia)^{2} + y^{2}}  + \frac{x}{y((iy + x)^{2} + a^{2})} + \frac{i}{(iy+x)^{2} + a^{2}}) 
+ \end{align*}
+Plugging this into the integral solution for $\phi$, we have
+\begin{align*}
+  \phi(x,y) &= \frac{yi}{(x-ia)^{2} + y^{2}}  + \frac{x}{(iy + x)^{2} + a^{2}} + \frac{yi}{(iy+x)^{2} + a^{2}}.
+\end{align*}
+As a simple check, we can see that this solution satisfies our initial condition when $y=0$.
+\end{sol}
+
+Happy Thanksgiving! Thank you for your thorough grading.
+\end{document}

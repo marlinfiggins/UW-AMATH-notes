@@ -1,0 +1,211 @@
+%Preamble
+\documentclass[12pt]{article}
+\usepackage{fancyhdr}
+\usepackage{extramarks}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{amsrefs}
+\usepackage{amsfonts}
+\usepackage{mathrsfs}
+\usepackage{mathtools}
+\usepackage[mathcal]{eucal} %% changes meaning of \mathcal
+\usepackage{enumerate}
+\usepackage[shortlabels]{enumitem}
+\usepackage{verbatim} %% includes comment environment
+\usepackage{hyperref}
+\usepackage[capitalize]{cleveref}
+\crefformat{equation}{~(#2#1#3)}
+\usepackage{caption, subcaption}
+\usepackage{graphicx}
+\usepackage{fullpage} %%smaller margins
+\usepackage[all,arc]{xy}
+\usepackage{mathrsfs}
+
+\hypersetup{
+    linktoc=all,     % set to all if you want both sections and subsections linked
+}
+
+\topmargin=-0.45in
+\evensidemargin=0in
+\oddsidemargin=0in
+\textwidth=6.5in
+\textheight=9.0in
+\headsep=0.25in
+\setlength{\headheight}{16pt}
+
+\linespread{1.1}
+
+\pagestyle{fancy}
+\lhead{\Name}
+\chead{\hwTitle}
+\rhead{\hwClass}
+\lfoot{\lastxmark}
+\cfoot{\thepage}
+
+\renewcommand\headrulewidth{0.4pt}
+\renewcommand\footrulewidth{0.4pt}
+
+\setlength\parindent{0pt}
+
+%% Title Info
+\newcommand{\hwTitle}{HW \# 5}
+\newcommand{\hwDueDate}{November 13, 2020}
+\newcommand{\hwClass}{AMATH 561}
+\newcommand{\hwClassTime}{}
+\newcommand{\hwClassInstructor}{}
+\newcommand{\Name}{\textbf{Marlin Figgins}}
+
+
+%% MATH MACROS
+\newcommand{\bbF}{\mathbb{F}}
+\newcommand{\bbN}{\mathbb{N}}
+\newcommand{\bbQ}{\mathbb{Q}}
+\newcommand{\bbR}{\mathbb{R}}
+\newcommand{\bbZ}{\mathbb{Z}}
+\newcommand{\bbC}{\mathbb{C}}
+\newcommand{\Prob}{\mathbb{P}}
+\newcommand{\calF}{\mathcal{F}}
+\newcommand{\abs}[1]{ \left| #1 \right| }
+\newcommand{\diff}[2]{\frac{d #1}{d #2}}
+\newcommand{\infsum}[1]{\sum_{#1}^{\infty}}
+\newcommand{\norm}[1]{ \left|\left| #1 \right|\right| }
+\newcommand{\eval}[1]{ \left. #1 \right| }
+\newcommand{\Expect}{\mathbb{E}}
+\newcommand{\Var}{\text{Var}}
+\renewcommand{\phi}{\varphi}
+\renewcommand{\emptyset}{\O}
+
+%--------Theorem Environments--------
+%theoremstyle{plain} --- defaultx
+\newtheorem{thm}{Theorem}[section]
+\newtheorem{cor}[thm]{Corollary}
+\newtheorem{prop}[thm]{Proposition}
+\newtheorem{lem}[thm]{Lemma}
+\newtheorem{conj}[thm]{Conjecture}
+\newtheorem{quest}[thm]{Question}
+
+\theoremstyle{definition}
+\newtheorem{defn}[thm]{Definition}
+\newtheorem{defns}[thm]{Definitions}
+\newtheorem{con}[thm]{Construction}
+\newtheorem{exmp}[thm]{Example}
+\newtheorem{exmps}[thm]{Examples}
+\newtheorem{notn}[thm]{Notation}
+\newtheorem{notns}[thm]{Notations}
+\newtheorem{addm}[thm]{Addendum}
+
+% Environments for answers and solutions
+\newtheorem{exer}{Exercise}
+\newtheorem{sol}{Solution}
+
+\theoremstyle{remark}
+\newtheorem{rem}[thm]{Remark}
+\newtheorem{rems}[thm]{Remarks}
+\newtheorem{warn}[thm]{Warning}
+\newtheorem{sch}[thm]{Scholium}
+
+\makeatletter
+\let\c@equation\c@thm
+\makeatother
+
+\begin{document}
+\begin{exer}
+    Let $X$ and $Y_0$, $Y_1$, $Y_2, \ldots$ be random variables on a probability space $(\Omega, \calF, \Prob)$ and suppose that $\Expect\abs{X} < \infty$. Define $\calF_n = \sigma(Y_0, Y_1, \ldots, Y_n)$ and $X_n = \Expect(X\mid \calF_n)$. Show that the sequence $X_0, X_1, \ldots$ is a martingale with respect to the filtration $(\calF)_{n\geq 0}$
+  \end{exer}
+
+  \begin{sol}
+      The random variables $X_n$ are satisfy $\Expect\abs{X_n} < \infty$ as they are the conditional expectation of $X$ with respect to $\calF_n$ and $\Expect\abs{X} < \infty$. We can compute the conditional expectation of $X_{n+1}$ with respect to $\calF_n$ as 
+
+      \begin{align}
+          \Expect(X_{n+1} \mid \calF_n) &= \Expect(\Expect(X \mid \calF_{n+1}) \mid \calF_n)\\
+                                        &= \Expect(X\mid \calF_n) \\
+                                        &= X_n,
+      \end{align}
+      where we have used the tower property and the definition of $X_n$.
+  \end{sol}
+  \newpage
+
+\begin{exer}
+    Let $X_0, X_1, \ldots$ be i.i.d. Bernoulli random variables with parameter $p$. Define $S_n = \sum_{i=1}^{n} X_i$ with $S_0 = 0$. Define 
+    \begin{equation}
+        Z_n = \left( \frac{1-p}{p} \right)^{2S_n - n}, \quad n = 0, 1, 2, \ldots
+    \end{equation}
+    Let $\calF_n = \sigma(X_0, X_1, \ldots, X_n)$. Show that $Z_n$ is a martingale with respect to this filtration.
+\end{exer}
+
+\begin{sol}
+We begin by noting that 
+\begin{align}
+    Z_{n+1} = \left(\frac{1-p}{p}\right)^{2 S_{n+1} - (n+1)} &= \left(\frac{1-p}{p}\right)^{(2 S_{n} - n) + (2X_{n+1}-1)} \\
+                                                             &=  \left(\frac{1-p}{p}\right)^{ 2X_{n+1}-1}Z_n. 
+\end{align}
+We can then compute the conditional expectation of $Z_{n+1}$ with respect to $\calF_n$ as 
+\begin{align}
+    \Expect(Z_{n+1}\mid \calF_n) &= \Expect\left(  \left(\frac{1-p}{p}\right)^{ 2X_{n+1}-1}Z_n\mid \calF_n \right)\\
+                                 &= Z_n \Expect\left( \left(\frac{1-p}{p}\right)^{ 2X_{n+1}-1} \mid \calF_n \right)\\
+                                 &= Z_n \Expect\left( \left(\frac{1-p}{p}\right)^{ 2X_{n+1}-1} \right),
+\end{align}
+where we have used that $Z_n\in\calF_n$ and that any function of only $X_{n+1}$ is independent from $\calF_n$. All that remains is to compute that final expectation. We do this by noting that $2X_{n+1} - 1$ is 1 with probability $p$ and -1 with probability $1-p$. Therefore,
+\begin{equation}
+    \Expect\left( \left(\frac{1-p}{p}\right)^{ 2X_{n+1}-1} \right) = p  \left(\frac{1-p}{p}\right) + (1-p) \left(\frac{p}{1-p}\right) = p + 1 - p = 1.
+\end{equation}
+Therefore, we conclude that 
+\begin{equation}
+   \Expect(Z_{n+1}\mid \calF_n) = Z_n.
+\end{equation}
+
+What remains to be shown is that $\abs{Z_n} < \infty$. This follows from the fact that $\abs{Z_n} < \max \{ \left( \frac{1-p}{p}  \right)^n,  \left( \frac{1-p}{p}  \right)^{-n}\}$. Either $ \frac{1-p}{p}$ or $\frac{p}{1-p}$ is greater than one. In the case the first is greater than one, the random variable is bounded by $\left( \frac{1-p}{p}  \right)^n$ since the maximum and minimum values that $2S_n - n$ can obtain are $n$ and $-n$. Otherwise, if $\frac{p}{1-p} > 1$, then the random variable is bounded by $\left( \frac{1-p}{p}  \right)^{-n}$. Therefore, $Z_{n}$ is a martingale.
+\end{sol}
+\newpage 
+
+\begin{exer}
+    Let $\xi_i$ be a sequence of random variables such that the partial sums
+    \begin{equation}
+        X_n= \xi_0 + \xi_1 + \cdots + \xi_n, \quad n\geq 1,
+    \end{equation}
+    determine a martingale. Show that the summands are mutually uncorrelated i.e. that $\Expect(\xi_i\xi_j) = \Expect(\xi_i)\Expect(\xi_j)$ for $i\neq j$.
+ \end{exer}
+\begin{sol}\leavevmode
+    For any $j$, we must have $\Expect[\xi_j] = 0$. Otherwise, for $\calF_n = \sigma(X_0, \ldots, X_n)$, 
+\begin{equation} 
+        \Expect[\xi_j] = \Expect[X_j - X_{j-1}] = \Expect[ \Expect(X_j - X_{j-1} \mid \calF_{j-1}) ] = 0.
+\end{equation}
+  Now, we fix $i<j$ consider
+    \begin{align}
+      \Expect[\xi_i \xi_j] = \Expect[ \Expect( (X_i - X_{i-1})(X_j - X_{j-1})\mid \calF_i)]\\
+    \end{align}
+We can continue by taking the conditional expectation within the expectation
+  \begin{align}
+      \Expect[\xi_i \xi_j] &= \Expect[ \Expect( (X_i - X_{i-1})(X_j - X_{j-1})\mid \calF_i)]\\
+                           & \Expect[ (X_i - X_{i-1}) \Expect(X_j - X_{j-1}) \mid \calF_i ],
+  \end{align}
+  where we have used that $(X_i - X_{i-1}) \in \calF_i$. Next, we can show that
+  \begin{equation}
+      \Expect(\xi_j \mid \calF_i) = \Expect(X_{j}-X_{j-1}\mid \calF_i) = \Expect(X_j\mid \calF_i) -  \Expect(X_{j-1}\mid \calF_i) = X_i - X_i = 0 
+  \end{equation}
+  where we have used the martigale property $X_n$. Therefore,
+  \begin{equation}
+      \Expect[\xi_i \xi_j] = \Expect[ (X_i - X_{i-1}) \cdot 0 ] = 0. 
+  \end{equation}
+\end{sol}
+\newpage
+
+\begin{exer}
+Galton and Watson who invented the process that bears their names were interested in the survival of family names. Suppose each family has exactly 3 children but coin flips determine their sex. In the 1800s, only male children kept the family name so following the male offspring leads to a branching process with $p_0 = 1/8$, $p_1 = 3/8$, $p2 = 3/8$, $p3 = 1/8$. Compute the probability $\rho$ that the family name will die out when $Z_0 = 1$. What is $\rho$ if we assume that each family has exactly 2 children?
+\end{exer}
+
+\begin{sol}\leavevmode
+    Above, we can see that the offspring distribution is given by $\xi \sim \text{Binom(3, 1/2)}$ with mean $\Expect[\xi] = \mu = 1.5$. Since $\mu > 1$ and $Z_0 = 0$, we can use theorem 4.3.12 from Durrett to compute the extinction probably as the solution to $\phi(\rho) = \rho$ in $[0,1)$, where $\phi$ is the generating function for the offspring distribution. We look for solutions to the equation
+\begin{align}
+    \phi(s) - s &= 1/8 + 3/8s + 3/8 s^2 + 1/8 s^3 -s \\
+                &= 1/8 - 5/8 s + 3/8 s^2 + 1/8 s^3 = 0.
+\end{align}
+Plotting the zeroes of this polynomial should give us our answer as 0.236. I also implemented this in Julia to get a rough approximation of this probability with repeated sampling.
+%TODO: Include note on what I did to solve this.
+
+In the case that each family has only two children, we have $\xi \sim \text{Binom(2, 1/2)}$ with mean $\Expect[\xi] = \mu = 1$. This means that we have $p_0 = 1/4, p_1 = 1/2, p_2 = 1/4$. In this case, we can use theorem 4.3.11, so we see that extinction is inevitable, so $\rho = 1$. I also approximated this probability in Julia as well.
+\end{sol}
+
+%TODO: Double check answers and run this through
+\end{document}

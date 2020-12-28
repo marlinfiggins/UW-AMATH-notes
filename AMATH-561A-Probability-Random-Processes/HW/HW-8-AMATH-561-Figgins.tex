@@ -1,0 +1,368 @@
+%Preamble
+\documentclass[12pt]{article}
+\usepackage{fancyhdr}
+\usepackage{extramarks}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{amsrefs}
+\usepackage{amsfonts}
+\usepackage{mathrsfs}
+\usepackage{mathtools}
+\usepackage[mathcal]{eucal} %% changes meaning of \mathcal
+\usepackage{enumerate}
+\usepackage[shortlabels]{enumitem}
+\usepackage{verbatim} %% includes comment environment
+\usepackage{hyperref}
+\usepackage[capitalize]{cleveref}
+\crefformat{equation}{~(#2#1#3)}
+\usepackage{caption, subcaption}
+\usepackage{graphicx}
+\usepackage{fullpage} %%smaller margins
+\usepackage[all,arc]{xy}
+\usepackage{mathrsfs}
+
+\hypersetup{
+    linktoc=all,     % set to all if you want both sections and subsections linked
+}
+
+\topmargin=-0.45in
+\evensidemargin=0in
+\oddsidemargin=0in
+\textwidth=6.5in
+\textheight=9.0in
+\headsep=0.25in
+\setlength{\headheight}{16pt}
+
+\linespread{1.1}
+
+\pagestyle{fancy}
+\lhead{\Name}
+\chead{\hwTitle}
+\rhead{\hwClass}
+\lfoot{\lastxmark}
+\cfoot{\thepage}
+
+\renewcommand\headrulewidth{0.4pt}
+\renewcommand\footrulewidth{0.4pt}
+
+\setlength\parindent{0pt}
+
+%% Title Info
+\newcommand{\hwTitle}{HW \# 8}
+\newcommand{\hwDueDate}{December 2, 2020}
+\newcommand{\hwClass}{AMATH 561}
+\newcommand{\hwClassTime}{}
+\newcommand{\hwClassInstructor}{}
+\newcommand{\Name}{\textbf{Marlin Figgins}}
+
+
+%% MATH MACROS
+\newcommand{\bbF}{\mathbb{F}}
+\newcommand{\bbN}{\mathbb{N}}
+\newcommand{\bbQ}{\mathbb{Q}}
+\newcommand{\bbR}{\mathbb{R}}
+\newcommand{\bbZ}{\mathbb{Z}}
+\newcommand{\bbC}{\mathbb{C}}
+\newcommand{\Prob}{\mathbb{P}}
+\newcommand{\calF}{\mathcal{F}}
+\newcommand{\abs}[1]{ \left| #1 \right| }
+\newcommand{\diff}[2]{\frac{d #1}{d #2}}
+\newcommand{\infsum}[1]{\sum_{#1}^{\infty}}
+\newcommand{\norm}[1]{ \left|\left| #1 \right|\right| }
+\newcommand{\eval}[1]{ \left. #1 \right| }
+\newcommand{\Expect}{\mathbb{E}}
+\newcommand{\Var}{\text{Var}}
+\renewcommand{\phi}{\varphi}
+\renewcommand{\emptyset}{\O}
+\let\vec\mathbf
+
+%--------Theorem Environments--------
+%theoremstyle{plain} --- defaultx
+\newtheorem{thm}{Theorem}[section]
+\newtheorem{cor}[thm]{Corollary}
+\newtheorem{prop}[thm]{Proposition}
+\newtheorem{lem}[thm]{Lemma}
+\newtheorem{conj}[thm]{Conjecture}
+\newtheorem{quest}[thm]{Question}
+
+\theoremstyle{definition}
+\newtheorem{defn}[thm]{Definition}
+\newtheorem{defns}[thm]{Definitions}
+\newtheorem{con}[thm]{Construction}
+\newtheorem{exmp}[thm]{Example}
+\newtheorem{exmps}[thm]{Examples}
+\newtheorem{notn}[thm]{Notation}
+\newtheorem{notns}[thm]{Notations}
+\newtheorem{addm}[thm]{Addendum}
+
+% Environments for answers and solutions
+\newtheorem{exer}{Exercise}
+\newtheorem{sol}{Solution}
+
+\theoremstyle{remark}
+\newtheorem{rem}[thm]{Remark}
+\newtheorem{rems}[thm]{Remarks}
+\newtheorem{warn}[thm]{Warning}
+\newtheorem{sch}[thm]{Scholium}
+
+\makeatletter
+\let\c@equation\c@thm
+\makeatother
+
+\begin{document}
+\begin{exer}[Exercise 5.1.]
+
+    Patients arrive at an emergency room as a Poisson process with intensity $\lambda$. The time to treat each patient is an independent exponential random variable with parameter $\mu$. Let $X = (X_{t})_{t\geq 0}$ be the number of patients in the system (either being treated or waiting). Write down the generator of $X$.
+Show that $X$ has an invariant distribution $\pi$ if and only if $\lambda < \mu$. Find $\pi$. What is the total expected time (waiting + treatment) a patient waits when the system is in its invariant distribution?
+
+Hint: You can use Little's law which states that the expected number of people in the hospital at steady-state is equal to the expected rate of arrivals times the expected rate of processing time.
+  \end{exer}
+
+\begin{sol}
+    If we have individuals arrive at rate $\lambda$ and leave with rate $\mu$, we can write that in the limit as $s\to 0$,
+    \begin{equation*}
+        \Prob( X_{t+s} = j \mid X_{t} = i ) = \delta_{ij} + g(i,j)s + O(s^{2}).
+        \end{equation*}
+In this case, we have that $g(i,i+1) = \lambda$ since patients arrive at rate $\lambda$. Additionally, when there are patients to be treated, we have that the probability of someone being treated in a small time interval as $\mu$, so $g(i, i-1) = \mu$ for all $i > 0$. We can use this to write the generator of $X$ as
+ \begin{equation*}
+\vec{G} 
+=
+\begin{pmatrix}
+    -\lambda & \lambda & 0 & 0 & 0 & \ldots\\
+    \mu      & -(\lambda + \mu) & \lambda & 0 & 0 & \ldots\\
+    0        &\mu               & -(\lambda + \mu) & \lambda & 0 & 0 & \ldots\\
+    0        & 0        &\mu               & -(\lambda + \mu) & \lambda & 0 &  \ldots\\
+    \vdots & \vdots             & \vdots            & \vdots & \ddots
+\end{pmatrix}
+\end{equation*}
+If there is a stationary distribution $\pi$, then it must satisfy $\pi \vec{G} = 0$, so that
+\begin{align*}
+    0 &= -\lambda \pi_{0} + \mu \pi_{1}\\
+    0 &= \lambda \pi_{n-1} - (\lambda + \mu)\pi_{n} + \mu_{n} \pi_{n+1}
+\end{align*}
+for $n\geq 1$. This shows immediately that $\pi_{0} = \frac{\lambda}{\mu}$ and by continued substitution, we see that 
+\begin{equation*}
+    \pi_{n} = \left(\frac{\lambda}{\mu}\right)^{n} \pi_{0}.
+\end{equation*}
+Due to the fact that $\pi$ is a distribution, we must have that
+\begin{equation*}
+    1 = \sum_{n=0}^{\infty } \pi_{n} =  \pi_{0} \sum_{n=0}^{\infty }\left(\frac{\lambda}{\mu}\right)^{n} 
+\end{equation*}
+but this can only hold in the regime where $\lambda < \mu$. In which case, we have a stationary distribution given by
+\begin{align*}
+    \pi_{0} = \left(\frac{1}{1- \lambda / \mu}\right)^{-1} = 1 - \lambda / \mu\\
+    \pi_{n} = \left(\frac{\lambda}{\mu}\right)^{n} \pi_{0}, \quad n\geq 1,
+\end{align*}
+where we've used the geometric series to simplify $\pi_{0}$. As we can see, this is geometrically distributed with $p = 1 - \lambda / \mu$. We can then compute the expected total waiting time for a patient in the invariant distribution using Little's law. As the expected number of people in the hospital at steady-state is equal to the expected rate of arrivals times the expected processing time. From this it follows,
+\begin{equation*}
+    \Expect[\pi] = \frac{\lambda / \mu}{1 - \lambda / \mu} = \frac{\lambda}{ \mu - \lambda },
+\end{equation*}
+where we've computed this expectation using the fact that the distribution on $\pi$ is geometric. Since $\lambda$ is the rate of expected arrivals, we have that  $1 / (\mu - \lambda)$ is the expected processing time.
+\end{sol}
+
+  \newpage
+
+\begin{exer}[Exercise 5.3]
+    Let $X = (X_{t})_{t\geq 0}$be a Markov chain with state space $S = \{0, 1, 2, \ldots \}$ and with a generator $G$ whose $i$th row has entries
+    \begin{equation*}
+   g_{i,i-1} = i\mu, \quad g_{i,i} = -i\mu - \lambda,\quad  g_{i,i+1} = \lambda, 
+    \end{equation*}
+with all other entries being zero (the zeroth row has only two entries: $g_{0,0}$ and $g_{0,1}$. Assume $X_{0} = k$ .
+Find $G_{X_{t}}(s)$. What is the distribution of $X_{t}$ as $t \to \infty$?
+\end{exer}
+
+\begin{sol}
+    We begin by writing the Kolmogorov forward equation for $X$ which is
+    \begin{align*}
+        \frac{dp_{t}(k, 0)}{dt} &= \mu p_{t}(k,1) - \lambda p_{t}(k,0) \\
+        \frac{dp_{t}(k, j)}{dt} &= \mu(j+1) p_{t}(k,j+1) -(\lambda + j\mu) p_{t}(k,j) + \lambda p_{t}(k,j-1)
+    \end{align*}
+    Multiplying through by $s^{j}$ and summing across $j$, we have that
+
+    \begin{equation*}
+        \frac{\partial G_{X_{t}}}{\partial t}(s) 
+        = 
+        \mu \sum_{j=0}^{\infty} (j+1) s^{j} p_{t}(k,j+1) 
+        - \sum_{j=0}^{\infty} (\lambda + j\mu)s^{j} p_{t}(k,j) 
+        + \lambda \sum_{j=1}^{\infty} s^{j} p_{t}(k,j-1)
+    \end{equation*}
+    Using that $\partial_{s} G_{X} = \sum_{j=1}^{\infty} j s^{j-1} p_{t}(i,j)$, we have that
+    \begin{align*}
+            \frac{\partial G_{X_{t}}}{\partial t}(s) 
+            &= \mu \sum_{j=1}^{\infty} j s^{j-1} p_{t}(k, j)
+            - \lambda \sum_{j=0}^{\infty} s^{j} p_{t}(k,j)
+            - \mu s \sum_{j=1}^{\infty} j s^{j-1} p_{t}(k,j)
+            + \lambda s \sum_{j=0}^{\infty} s^{j} p_{t}(k,j)\\
+            &= \mu \frac{\partial G_{X_{t}}}{\partial s}
+            - \lambda G_{X_{t}}(s)
+            - \mu s \frac{\partial G_{X_{t}}}{\partial s}
+            + \lambda s G_{X_{t}}(s)\\
+            &= \mu(1-s) \frac{\partial G_{X_{t}}}{\partial s} - \lambda(1-s) G_{X_{t}}(s)
+    \end{align*}
+    I used Mathematica to solve this, which gives that
+    \begin{equation*}
+        G_{X_{t}}(s) = c_{1} e^{\frac{\lambda}{\mu} s}(t-  \frac{\log\abs{s-1}}{\mu}) 
+    \end{equation*}
+    for some constant $c_{1}$. This doesn't seem to be the correct solution to me because it's undefined in the limit as $t\to \infty$. But in case I got something wrong earlier, my approach from here would be to get the generating function $G_{X_{t}}(s)$ and take the limit as $t\to \infty$. From there, I would look at the resulting generating function and compare it to the PGF of a known random variable to figure out the distribution of $X_{t}$ as $t\to \infty$. 
+\end{sol}
+
+\newpage 
+
+\begin{exer}[Exercise 5.4]
+    Let $N$ be a time-inhomogeneous Poisson process with intensity function $\lambda(t)$. That is, the probability of a jump of size one in the time interval $(t,t+dt)$ is $\lambda(t)dt$ and the probability of two jumps in that interval of time is $O(dt^{2})$. Write down the Kolmogorov forward and backward equations of $N$ and solve them. Let $N_{0}$ and let $\tau_{1}$ be the time of the first jump of $N$, If  $\lambda(t) = c / (1 + t)$ show that  $\Expect \tau_{1} < \infty$ if and only if $c>1$.
+\end{exer}
+
+\begin{sol}
+    Since $N$ is a poisson process with intensity function $\lambda(t)$, we have that
+\begin{equation*}
+    \Prob(X_{t+s} = i + 1 \mid X_{t} = i) = \lambda(t)s + O(s^{2}).
+\end{equation*}
+This allows us to write the generator of $N$ as 
+\begin{equation*}
+G_{t} 
+=
+\begin{pmatrix}
+    - \lambda(t) & \lambda(t) & 0 & 0 & \ldots\\
+    0            & -\lambda(t)& \lambda(t) & 0 &  \ldots\\
+    0            & 0          & -\lambda(t) & \lambda(t) & \ldots\\
+    \vdots       & \vdots     & \vdots      & \vdots & \ddots
+\end{pmatrix}.
+\end{equation*}
+\end{sol}
+
+With this generator, we can write the forward and backward Kolmogorov equations. 
+\paragraph{Solving the forward equation.}
+\label{par:solving_the_forward_equation_}
+We begin with the forward so that
+\begin{align*}
+    \frac{d \vec{P}_{t}}{dt} = \vec{P}_{t} G_{t} .
+\end{align*}
+Writing out the matrix multiplication, we have the following forward equations
+\begin{align*}
+    \frac{dp_{t}}{dt}(0, 0) &= -\lambda(t) p_{t}(0,0)\\
+    \frac{dp_{t}}{dt}(0, j) &= \lambda(t) p_{t}(0, j - 1) - \lambda(t) p_{t}(0,j), 
+\end{align*}
+where we have assumed that $N_{0} = 0$ and $j>0$. Using the generating function of $N_{t}$, we can transform this equation since
+\begin{equation*}
+    G_{N_{t}}(s) = \sum_{j=0}^{\infty} s^{j} p_{t}(0, j), 
+    \quad 
+    \frac{\partial G_{N_{t}}}{\partial t}(s)  = \sum_{j=0}^{\infty} s^{j} \frac{dp_{t}(0, j)}{dt}.
+\end{equation*}
+This way, we can write that
+\begin{align*}
+    \frac{\partial G_{N_{t}}}{\partial t}(s)  
+    &= \sum_{j=0}^{\infty} s^{j} \frac{dp_{t}(0, j)}{dt}\\
+    &= \lambda(t) \left( \sum_{j=1}^{\infty} s^{j} p_{t}(0, j - 1) - \sum_{j=0}^{\infty} s^{j} p_{t}(0, j)\right)\\
+    &= \lambda(t) \left( s\sum_{j=0}^{\infty} s^{j} p_{t}(0, j) - \sum_{j=0}^{\infty} s^{j} p_{t}(0, j)\right)\\
+    &= \lambda(t) (s - 1) \sum_{j=0}^{\infty} s^{j} p_{t}(0, j) \\
+    &= \lambda(t) (s - 1) G_{N_{t}}(s),
+\end{align*}
+where we've used the Kolomogorov forward equation and the definition of the generating function. We can see that this differential equation is solved pretty simply as an exponential function, so that
+\begin{equation*}
+    G_{N_{t}}(s) = \exp \left( (s-1)\int_{0}^{t} \lambda(\tau) d\tau  \right).
+\end{equation*}
+We can double check this solution is sufficient by taking the partial derivative with respect to $t$. Notice that this is the  generating function for a Poisson random variable which shows that
+\begin{equation*}
+    N_{t} \sim \text{Poisson}\left( \int_{0}^{t} \lambda(\tau) d\tau \right).
+\end{equation*}
+
+\paragraph{Writing the Backward equation}%
+\label{par:writing_the_backward_equation}
+We write the backward equation as
+\begin{equation*}
+\frac{d \vec{P}_{t}}{dt} = G_{t}\vec{P}_{t}.
+\end{equation*}
+
+Completing the matrix multiplication, we write
+\begin{align*}
+    \frac{dp_{t}}{dt}(i, 0) &=   - \lambda(t) p_{t}(i,0)\\
+    \frac{dp_{t}}{dt}(i, j) &=  \lambda(t) p_{t}(i,j+1) - \lambda(t) p_{t}(i,j)
+\end{align*}
+\paragraph{First jump time $\tau_{1}$}%
+\label{par:first_jump_time_1_}
+
+If we define the first jump time of $N_{t}$ to be $\tau_{1}$, we have that if $\tau_{1} < t$, then $N_{t} > 0$ since $N$ is non-decreasing. Using this fact, we can write the CDF of $\tau_{1}$ as
+\begin{align*}
+    \Prob(  \tau_{1} < t) &= \Prob( N_{t} > 0 )\\\
+                          &= 1 - \Prob(N_{t} = 0)\\
+                          &= 1 - \exp\left( - \int_{0}^{t} \lambda(\tau)dt \right)
+\end{align*}
+
+With this in mind, we can compute that $\tau_{1}$ has density
+\begin{equation*}
+    f_{\tau_{1}}(t) = \lambda(t) \exp\left( - \int_{0}^{t} \lambda(\tau)dt \right)
+\end{equation*}
+In the case that $\lambda(t) = c / (1 + t)$, we can compute the exponent as 
+\begin{equation*}
+    \int_{0}^{t} \lambda(\tau)dt  = \int_{0}^{t} \frac{c}{1+x} dx = c \ln(1 + t).
+\end{equation*}
+Therefore, our simplified density is 
+\begin{equation*}
+    f_{\tau_{1}}(t) = \frac{c}{1+t} \exp(-c \ln(1 + t)) = \frac{c}{(1+t)^{c+1}}.
+\end{equation*}
+This allows us to compute the expectation of $\tau_{1}$ as 
+\begin{equation*}
+    \Expect[\tau_{1}] = \int_{0}^{\infty} \frac{ct}{(1+t)^{c+1}}.
+\end{equation*}
+Using integration by parts and assuming that $c\neq 0, c\neq 1$, we have that
+\begin{align*}
+    \Expect[\tau_{1}] &= \int_{0}^{\infty} \frac{ct}{(1+t)^{c+1}}\\
+                      &= \frac{t}{(1+t)^{c}}  \mid_{t=0}^{\infty } 
+                      + \int_{0}^{\infty} \frac{1}{(1+t)^{c}}dt\\
+                      &=  \left[ \frac{t}{(1+t)^{c}} - \frac{1}{(c+1)} \frac{1}{(1+t)^{c+1}} \right] \mid_{t=0}^{\infty } 
+\end{align*}
+notice that the first term of this only exists if and only if $c > 1$, elsewhere this expectation is not defined.
+\newpage 
+
+\begin{exer}[Exercise 5.5]
+    Let $N$ be a Poisson process with a random intensity  $\Lambda$ which is equal to  $\lambda_{1}$ with probability $p$ and $\lambda_{2}$ with probability $1-p$. Find $G_{N_{t}}(s) = \Expect s^{N_{t}}$. What is the mean and variance of $N_{t}$?
+\end{exer}
+
+\begin{sol}
+    To solve this, we begin by noting that
+    \begin{align*}
+        p_{t}(i,j)  &= \Prob(N_{t} = j \mid N_{0} = i)\\
+                    &= \Prob(N_{t} = j \mid N_{0} = i, \Lambda = \lambda_{1}) \Prob( \Lambda = \lambda_{1}) +  \Prob(N_{t} = j \mid N_{0} = i, \Lambda = \lambda_{2}) \Prob( \Lambda = \lambda_{2})\\
+                    &= p \cdot p_{1,t}(i,j)+ (1-p) \cdot p_{2,t}(i,j)
+    \end{align*}
+    Writing the gneerating function of $N_{t}$, we have that
+    \begin{equation*}
+        G_{N_{t}}(s) = \sum_{j=0}^{\infty } p_{t}(i,j)s^{j} = p \sum_{j=0}^{\infty } p_{1,t}(i,j)s^{j} + (1-p)\sum_{j=0}^{\infty } p_{2.t}(i,j)s^{j}. 
+    \end{equation*}
+    Therefore, 
+    \begin{equation*}
+        G_{N_{t}}(s) = p G_{N_{1,t}}(s) + (1-p) G_{N_{2,t}}(s),
+    \end{equation*}
+    where $G_{N_{1,t}}(s)$ is the generating function of a Poisson process with intensity  $\lambda_{1}$ and $G_{N_{2,t}}(s)$ is the generating function of a Poisson process with intensity  $\lambda_{2}$. We can compute the expectation of $N_{t}$ as 
+    \begin{align*}
+        \Expect[N_{t}] = G_{N_{t}}(s)^{\prime}(1) 
+        &= p G_{N_{1,t}}^{\prime}(s) + (1-p) G_{N_{2,t}}^{\prime}(1)\\
+        &= p \Expect[N_{1,t}] + (1-p) \Expect[N_{2,t}] \\
+        &= p \lambda_{1} t + (1-p) \lambda_{2}t\\
+        &= (p\lambda_{1} + (1-p) \lambda_{2})t
+    \end{align*}
+    We can use a similar technique to compute the variance as
+    \begin{equation*}
+        \Var[N_{t}] = G_{N_{t}}^{\prime \prime}(1) + G_{N_{t}}^{\prime}(1) - ( G_{N_{t}}^{\prime}(1) )^{2}
+    \end{equation*}
+    We begin by computing
+    \begin{align*}
+    G_{N_{t}}^{\prime \prime}(1) = p G_{N_{1,t}}^{\prime\prime}(s) + (1-p) G_{N_{2,t}}^{\prime\prime}(1).
+    \end{align*}
+    Using that $G_{N_{1,t}}(s) = \exp(\lambda_{1}t (s-1))$, $G_{N_{2,t}}(s) = \exp(\lambda_{2}t(s-1))$, we have that
+    \begin{equation*}
+        G_{N_{t}}^{\prime \prime}(1) = p (\lambda_{1} t)^{2} + (1-p) (\lambda_{2} t)^{2}.
+    \end{equation*}
+    Putting this all together, we have that
+    \begin{align*}
+        \Var[N_{t}] &= p (\lambda_{1} t)^{2} + (1-p) (\lambda_{2} t)^{2} + p \lambda_{1} t + (1-p) \lambda_{2}t - (p \lambda_{1} t + (1-p) \lambda_{2}t)^{2}\\
+                    &= p \lambda_{1}^{2} t^{2} + (1-p)\lambda_{2}^{2}t^{2}\\
+                    &+ p \lambda_{1} t + (1-p) \lambda_{2}t\\ 
+                    &- p^{2} \lambda_{1}^{2}t^{2} - 2p(1-p) \lambda_{1}\lambda_{2} t^{2}  - (1-p)^{2}\lambda_{2}^{2} t^{2}.
+    \end{align*}
+    This is probably able to be simplified, but I don't really want to do more algebra. 
+\end{sol}
+
+
+\end{document}

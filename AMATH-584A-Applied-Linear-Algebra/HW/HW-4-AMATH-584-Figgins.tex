@@ -1,0 +1,235 @@
+%Preamble
+\documentclass[12pt]{article}
+\usepackage{fancyhdr}
+\usepackage{extramarks}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{amsrefs}
+\usepackage{amsfonts}
+\usepackage{mathrsfs}
+\usepackage{mathtools}
+\usepackage[mathcal]{eucal} %% changes meaning of \mathcal
+\usepackage{enumerate}
+\usepackage[shortlabels]{enumitem}
+\usepackage{verbatim} %% includes comment environment
+\usepackage{hyperref}
+\usepackage[capitalize]{cleveref}
+\crefformat{equation}{~(#2#1#3)}
+\usepackage{caption, subcaption}
+\usepackage{graphicx}
+\usepackage{fullpage} %%smaller margins
+\usepackage[all,arc]{xy}
+\usepackage{mathrsfs}
+
+\hypersetup{
+    linktoc=all,     % set to all if you want both sections and subsections linked
+}
+
+\topmargin=-0.45in
+\evensidemargin=0in
+\oddsidemargin=0in
+\textwidth=6.5in
+\textheight=9.0in
+\headsep=0.25in
+\setlength{\headheight}{16pt}
+
+\linespread{1.0}
+
+\pagestyle{fancy}
+\lhead{\Name}
+\chead{\hwClass: \hwTitle}
+\rhead{\hwDueDate}
+\lfoot{\lastxmark}
+\cfoot{\thepage}
+
+\renewcommand\headrulewidth{0.4pt}
+\renewcommand\footrulewidth{0.4pt}
+
+\setlength\parindent{0pt}
+
+%% Title Info
+\newcommand{\hwTitle}{HW \# 4}
+\newcommand{\hwDueDate}{November 16, 2020}
+\newcommand{\hwClass}{AMATH 584}
+\newcommand{\hwClassTime}{}
+\newcommand{\hwClassInstructor}{}
+\newcommand{\Name}{\textbf{Marlin Figgins}}
+
+
+%% MATH MACROS
+\newcommand{\bbF}{\mathbb{F}}
+\newcommand{\bbN}{\mathbb{N}}
+\newcommand{\bbQ}{\mathbb{Q}}
+\newcommand{\bbR}{\mathbb{R}}
+\newcommand{\bbZ}{\mathbb{Z}}
+\newcommand{\bbC}{\mathbb{C}}
+\newcommand{\abs}[1]{ \left| #1 \right| }
+\newcommand{\diff}[2]{\frac{d #1}{d #2}}
+\newcommand{\infsum}[1]{\sum_{#1}^{\infty}}
+\newcommand{\norm}[1]{ \left|\left| #1 \right|\right| }
+\newcommand{\eval}[1]{ \left. #1 \right| }
+\newcommand{\Expect}[1]{\mathbb{E}\left[#1 \right]}
+\newcommand{\Var}[1]{\mathbb{V}\left[#1 \right]}
+\renewcommand{\vec}[1]{\mathbf{#1}}
+
+\renewcommand{\phi}{\varphi}
+\renewcommand{\emptyset}{\O}
+
+%--------Theorem Environments--------
+%theoremstyle{plain} --- defaultx
+\newtheorem{thm}{Theorem}[section]
+\newtheorem{cor}[thm]{Corollary}
+\newtheorem{prop}[thm]{Proposition}
+\newtheorem{lem}[thm]{Lemma}
+\newtheorem{conj}[thm]{Conjecture}
+\newtheorem{quest}[thm]{Question}
+
+\theoremstyle{definition}
+\newtheorem{defn}[thm]{Definition}
+\newtheorem{defns}[thm]{Definitions}
+\newtheorem{con}[thm]{Construction}
+\newtheorem{exmp}[thm]{Example}
+\newtheorem{exmps}[thm]{Examples}
+\newtheorem{notn}[thm]{Notation}
+\newtheorem{notns}[thm]{Notations}
+\newtheorem{addm}[thm]{Addendum}
+
+% Environments for answers and solutions
+\newtheorem{exer}{Exercise}
+\newtheorem{sol}{Solution}
+
+\theoremstyle{remark}
+\newtheorem{rem}[thm]{Remark}
+\newtheorem{rems}[thm]{Remarks}
+\newtheorem{warn}[thm]{Warning}
+\newtheorem{sch}[thm]{Scholium}
+
+\makeatletter
+\let\c@equation\c@thm
+\makeatother
+
+\begin{document}
+\begin{exer}
+    (a) Consider the matrix 
+
+    \begin{equation*} 
+    \vec{A} = \begin{pmatrix}
+        2 & 0 & 0 \\
+        0 & 2 & 0 \\
+        0 & 0 & 2
+    \end{pmatrix}.
+    \end{equation*}
+
+Determine its eigenvalues and eigenvectors and the algebraic and geometric multiplicity of each.
+
+    (b) Consider the matrix 
+
+    \begin{equation*} 
+    \vec{B} = \begin{pmatrix}
+        2 & 1 & 0 \\
+        0 & 2 & 1 \\
+        0 & 0 & 2
+    \end{pmatrix}.
+    \end{equation*}
+Determine its eigenvalues and eigenvectors and the algebraic and geometric multiplicity of each.
+\end{exer}
+
+\begin{sol}\leavevmode
+
+    (a) We can compute that the characteristic polynomial is given by $p(\lambda) = (2 - \lambda)^3$ since  $\vec{A}-\lambda \vec{I}$ is a diagonal matrix and its determinant is the product of its diagonal entries. Therefore, its eigenvalues are simply $\lambda_1 = \lambda_2 = \lambda_3 = 2$ and the algebraic multiplicity of this eigenvalue is 3. We can see that the corresponding eigenvectors are given by the euclidean basis vectors $\vec{e}_1, \vec{e}_2, \vec{e}_3$ since the matrix $\vec{A} = 2\vec{I}$. Using the fact that $\vec{A} - 2 \vec{I} = 0$, we see that the nullspace has dimension 3, so the eigenvalue $\lambda=2$ has geometric multiplicity 3.
+
+        (b) Similarly, we can compute the characteristic polynomial as $p(\lambda) = (2-\lambda)^3$ since  $\vec{B}-\lambda \vec{I}$ is an upper triangular matrix and its determinant is the product of its diagonal entries. Therefore, its eigenvalues are simply $\lambda_1 = \lambda_2 = \lambda_3 = 2$ and the algebraic multiplicity is 3. We can compute the eigenvector as $\vec{v}_1 = \vec{e}_1$. Further, we can compute the geometric multiplicity by looking at 
+\begin{equation*}
+    \vec{B} - 2 \vec{I} = 
+    \begin{pmatrix}
+        0 & 1 & 0 \\
+        0 & 0 & 1 \\
+        0 & 0 & 0
+    \end{pmatrix}.
+\end{equation*}
+We can see that this matrix has rank 2, so the geometric multiplicity of the eigenvalue $\lambda = 2$ is $3-2 = 1$.
+\end{sol}
+
+\newpage
+
+\begin{exer}
+    For each of the following statements, prove that it is true or give a counter example to show it is false. Here each matrix $A\in \bbC^{m\times m}$ unless otherwise indicated.
+
+    \begin{enumerate}[(a)]
+        \item If $\lambda$ is an eigenvalue of $\vec{A}$ and $\mu\in\bbC$, then  $\lambda-\mu$ is an eigenvalue of $ \vec{A}- \mu \vec{I}$.
+        \item If $\vec{A}$ is real and $\lambda$ is an eigenvalue of  $\vec{A}$, then so is $-\lambda$.
+        \item If $\vec{A}$ is real and $\lambda$ is an eigenvalue of $\vec{A}$, then so is $\overline{\lambda}$.
+        \item If $\lambda$ is an eigenvalue of $\vec{A}$ and $\vec{A}$ is nonsingular, then $\lambda^{-1}$ is an eigenvalue of $\vec{A}^{-1}$.
+        \item If all the eigenvalues of $\vec{A}$ are zero, then $\vec{A}=0$.
+        \item If $\vec{A}$ is Hermitian and $\lambda$ is an eigenvalue of  $\vec{A}$, then $\abs{\lambda}$ is a singular value of $\vec{A}$.
+        \item If $\vec{A}$ is diagonalizable and all its eigenvalues are equal, then $\vec{A}$ is diagonal.
+\end{enumerate}
+\end{exer}
+
+\begin{sol}\leavevmode
+
+(a) Suppose that $\vec{v}$ is the eigenvector corresponding to $\lambda$, then we have that 
+    \begin{align*}
+        (\vec{A}-\mu \vec{I}) \vec{v} &= \vec{A}\vec{v} - \mu \vec{v}\\
+                                      &= \lambda \vec{v} - \mu \vec{v} \\
+                                      &= (\lambda-\mu) \vec{v}.
+    \end{align*}
+    Therefore, $\lambda-\mu$ is an eigenvalue of $\vec{A}-\mu \vec{I}$.
+
+(b) This is false. Consider the matrix $\vec{A} = 2 \vec{I}$. This matrix's eigenvalue is 2 as can be seen by its diagonal entries, but -2 is not an eigenvalue.
+
+(c)  Suppose that $\vec{v}$ is the eigenvector corresponding to $\lambda$, then we have that $\vec{A} \vec{v} = \lambda \vec{v}$. Taking the complex conjugate of this equation, we see that
+\begin{equation*}
+\overline{ \vec{A} \vec{v} } = \vec{A} \overline{ \vec{v} } = \overline{\lambda} \overline{\vec{v}},
+\end{equation*}
+where we have used that $\vec{A}$ is real. This shows that $\overline{\lambda}$ is an eigenvalue of $\vec{A}$.
+%TODO: Do I need to massage this to use the adjoint instead?
+
+(d)  Suppose that $\vec{v}$ is the eigenvector corresponding to $\lambda$, then we have that $\vec{A} \vec{v} = \lambda \vec{v}$. Multiplying by $\vec{A}^{-1}$, we see that
+\begin{equation*}
+    \vec{A}^{-1} \vec{A} \vec{v} = \lambda \vec{A}^{-1} \vec{v} \implies \vec{A}^{-1} \vec{v} = \lambda^{-1}\vec{v}.
+\end{equation*}
+Notice, we assume that the eigenvalue $\lambda\neq 0$. This is because the matrix $\vec{A}$ is non-singular and has non-zero determinant and therefore, cannot have 0 eigenvalues.
+
+(e) This is not true. Consider the matrix 
+\begin{equation*}
+    \vec{W} = \begin{pmatrix}
+        0 & 27 \\
+        0 & 0
+    \end{pmatrix}.
+\end{equation*}
+This matrix is upper triangular and therefore, its eigenvalues are its diagonals which are 0.
+
+(f) We know that the non-zero singular values are given by the square roots of the eigenvalues of $\vec{A}^* \vec{A} = \vec{A}^2$ where we've used that $\vec{A}$ is Hermitian. Therefore, the singular values are simply the square roots of the eigenvalues of $\vec{A}^2$ as shown in HW 2. Using the fact that $\vec{A} \vec{v} = \lambda \vec{v}$ for eigenvalue $\lambda$ and corresponding eigenvector $\vec{v}$, we have that 
+\begin{equation}
+    \vec{A}^2 \vec{v} = \lambda \vec{A} \vec{v} = \lambda^2 \vec{v},
+\end{equation}
+so $\lambda^2$ is an eigenvalue of $\vec{A}^2$. We see then that the singular values of $\vec{A}$ are just $\sigma = \sqrt{\lambda^2} = \abs{\lambda}$. 
+
+(g) Suppose that the matrix is diagonalizable so that $\vec{A} = \vec{P} \vec{\Lambda} \vec{P}^{-1}$. In the case that the all the eigenvalues are the same, we have that $\vec{\Lambda} = \lambda \vec{I}$. Therefore, we have that 
+\begin{equation*}
+\vec{A} = \lambda \vec{P} \vec{I} \vec{P}^{-1} = \lambda \vec{I},
+\end{equation*}
+so that $\vec{A}$ is diagonal.
+
+\end{sol}
+\newpage
+
+\begin{exer}
+    Let $\vec{A}\in \bbC^{m\times m}$ be tridiagonal and Hermitian, with all its sub and super diagonal entries non-zero. Prove that the eigenvalues of $\vec{A}$ are distinct. (Hint: Show that for any $\lambda\in\bbC$,  $\vec{A} -\lambda \vec{I}$ has rank at least $m-1$)
+\end{exer}
+
+\begin{sol}
+We begin by writing the matrix $\vec{A}$ in terms of a block diagonal matrix
+\begin{equation*}
+\vec{A} 
+= 
+\begin{pmatrix}
+    \vec{a} & 0 \\
+    \vec{C} & \vec{d},
+\end{pmatrix}
+\end{equation*}
+where $\vec{a}, \vec{d}$ are vectors in $\bbC^{m-1}$ and  $\vec{C}$ is an upper triangular matrix of size $(m-1)\times (m-1)$. Notice that the matrix $\vec{C}$ must be upper triangular and its diagonal entries are all non-zero under our assumption that all sub-diagonal entries of $\vec{A}$ must be non-zero. It follows then that the matrix $\vec{C}$ is non-singular. From this, we know that $\text{rank}(\vec{A} - \lambda \vec{I}) \geq m-1$ for all $\lambda\in\bbC$. In the case that $\lambda$ is an eigenvalue of $\vec{A}$, this means that the geometric multiplicity of $\lambda$ must be exactly one. Since $\vec{A}$ is Hermitian, we know that it is diagonalizable, and therefore, non-defective i.e. the geometric multiplicity of its eigenvalues must be equal to their algebraic multiplicity. Since these multiplicities are 1, each of the eigenvalues of $\vec{A}$ must be distinct.
+\end{sol}
+\end{document}

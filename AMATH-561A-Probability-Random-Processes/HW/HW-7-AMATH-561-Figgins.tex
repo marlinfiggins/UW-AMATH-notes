@@ -1,0 +1,353 @@
+%Preamble
+\documentclass[12pt]{article}
+\usepackage{fancyhdr}
+\usepackage{extramarks}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{amsrefs}
+\usepackage{amsfonts}
+\usepackage{mathrsfs}
+\usepackage{mathtools}
+\usepackage[mathcal]{eucal} %% changes meaning of \mathcal
+\usepackage{enumerate}
+\usepackage[shortlabels]{enumitem}
+\usepackage{verbatim} %% includes comment environment
+\usepackage{hyperref}
+\usepackage[capitalize]{cleveref}
+\crefformat{equation}{~(#2#1#3)}
+\usepackage{caption, subcaption}
+\usepackage{graphicx}
+\usepackage{fullpage} %%smaller margins
+\usepackage[all,arc]{xy}
+\usepackage{mathrsfs}
+
+\hypersetup{
+    linktoc=all,     % set to all if you want both sections and subsections linked
+}
+
+\topmargin=-0.45in
+\evensidemargin=0in
+\oddsidemargin=0in
+\textwidth=6.5in
+\textheight=9.0in
+\headsep=0.25in
+\setlength{\headheight}{16pt}
+
+\linespread{1.1}
+
+\pagestyle{fancy}
+\lhead{\Name}
+\chead{\hwTitle}
+\rhead{\hwClass}
+\lfoot{\lastxmark}
+\cfoot{\thepage}
+
+\renewcommand\headrulewidth{0.4pt}
+\renewcommand\footrulewidth{0.4pt}
+
+\setlength\parindent{0pt}
+
+%% Title Info
+\newcommand{\hwTitle}{HW \# 7}
+\newcommand{\hwDueDate}{December 2, 2020}
+\newcommand{\hwClass}{AMATH 561}
+\newcommand{\hwClassTime}{}
+\newcommand{\hwClassInstructor}{}
+\newcommand{\Name}{\textbf{Marlin Figgins}}
+
+
+%% MATH MACROS
+\newcommand{\bbF}{\mathbb{F}}
+\newcommand{\bbN}{\mathbb{N}}
+\newcommand{\bbQ}{\mathbb{Q}}
+\newcommand{\bbR}{\mathbb{R}}
+\newcommand{\bbZ}{\mathbb{Z}}
+\newcommand{\bbC}{\mathbb{C}}
+\newcommand{\Prob}{\mathbb{P}}
+\newcommand{\calF}{\mathcal{F}}
+\newcommand{\abs}[1]{ \left| #1 \right| }
+\newcommand{\diff}[2]{\frac{d #1}{d #2}}
+\newcommand{\infsum}[1]{\sum_{#1}^{\infty}}
+\newcommand{\norm}[1]{ \left|\left| #1 \right|\right| }
+\newcommand{\eval}[1]{ \left. #1 \right| }
+\newcommand{\Expect}{\mathbb{E}}
+\newcommand{\Var}{\text{Var}}
+\renewcommand{\phi}{\varphi}
+\renewcommand{\emptyset}{\O}
+\let\vec\mathbf
+
+%--------Theorem Environments--------
+%theoremstyle{plain} --- defaultx
+\newtheorem{thm}{Theorem}[section]
+\newtheorem{cor}[thm]{Corollary}
+\newtheorem{prop}[thm]{Proposition}
+\newtheorem{lem}[thm]{Lemma}
+\newtheorem{conj}[thm]{Conjecture}
+\newtheorem{quest}[thm]{Question}
+
+\theoremstyle{definition}
+\newtheorem{defn}[thm]{Definition}
+\newtheorem{defns}[thm]{Definitions}
+\newtheorem{con}[thm]{Construction}
+\newtheorem{exmp}[thm]{Example}
+\newtheorem{exmps}[thm]{Examples}
+\newtheorem{notn}[thm]{Notation}
+\newtheorem{notns}[thm]{Notations}
+\newtheorem{addm}[thm]{Addendum}
+
+% Environments for answers and solutions
+\newtheorem{exer}{Exercise}
+\newtheorem{sol}{Solution}
+
+\theoremstyle{remark}
+\newtheorem{rem}[thm]{Remark}
+\newtheorem{rems}[thm]{Remarks}
+\newtheorem{warn}[thm]{Warning}
+\newtheorem{sch}[thm]{Scholium}
+
+\makeatletter
+\let\c@equation\c@thm
+\makeatother
+
+\begin{document}
+\begin{exer}[Exercise 4.1.]
+    A six-sided die is rolled repeatedly. Which of the following a Markov chains? For those that are, find the one-step transition matrix. (a) $X_{n}$ is the largest number rolled up to the $n$th roll. (b) $X_{n}$ is the number of sixes rolled in the first $n$ rolls. (c) At time $n$, $X_{n}$ is the time since the last six was rolled. (d) At time $n$, $X_{n}$ is the time until the next six is rolled.
+\end{exer}
+
+\begin{sol}
+
+    (a) Since $X_{n}$ is the largest number rolled up to the $n$-th roll, we have that 
+    \begin{equation*}
+        X_{n+1} = \max\{ X_{n}, Y_{n+1} \},
+    \end{equation*}
+    where $Y_{n+1}$ is the $(n+1)$-th roll. As this only depends on the most recent value of $X$, this is a Markov chain. Since each roll of the six-sided die is independent, we have that $Y_{n+1}$ has uniform distribution on $\{1,2,3,4,5,6 \}$. It follows that the probability that $X_{n+1} = X_{n}$ is given by
+\begin{equation*}
+    \Prob(X_{n+1} = X_{n} \mid X_{n} = i) = \Prob(Y_{n+1} \geq i) = \frac{i}{6}.
+\end{equation*}
+    and for each $ 6\geq j > i \geq 1$, we have 
+\begin{equation*}
+    \Prob(X_{n+1} = j \mid X_{n} = i) =  \frac{1}{6}.
+\end{equation*}
+For any $i < X_{n}$, we have additionally that $    \Prob(X_{n+1} = i \mid X_{n}) =  0$ as the maximum is non-decreasing. We can write these probabilities in the one step transition matrix as 
+\begin{equation*}
+\vec{P} = \begin{pmatrix}
+    1 / 6 & 1 / 6 & 1 / 6 & 1 / 6 & 1 / 6 & 1 / 6 \\
+    0 & 2 / 6  & 1 / 6 & 1 / 6 & 1 / 6 & 1 / 6 \\
+    0 & 0      & 3 / 6 & 1 / 6 & 1 / 6 & 1 / 6 \\
+    0 & 0      & 0     & 4 / 6 & 1 / 6 & 1 / 6 \\
+    0 & 0      & 0     & 0     & 5 / 6 & 1 / 6 \\
+    0 & 0      & 0     & 0     & 0     & 1 
+\end{pmatrix}
+\end{equation*}
+or more compactly as 
+\begin{equation*}
+    p_{ij} = \Prob(X_{n+1} = j \mid X_{n} = i) 
+    =
+    \begin{cases}
+        1 / 6 \text{ if } j > i \\
+        i / 6 \text { if } j = i \\
+        0 \text{ if } j < i.
+    \end{cases}
+\end{equation*}
+\newpage
+
+(b) Setting $X_{n}$ to be the number of sixes in the first $n$ rolls, we have that
+\begin{equation*}
+X_{n+1} = X_{n} + 1 + Y_{n+1},
+\end{equation*}
+where $Y_{n+1}$ is the indicator variable for whether the $n+1$-th roll was a six or not. This follows because 
+\begin{equation*}
+    X_{n+1} = X_{n} + Y_{n+1}
+\end{equation*}
+
+For $i,j\in\bbN_{0}$, we have that 
+\begin{equation*}
+    p_{ij} = \Prob(X_{n+1} = j \mid X_{n} = i) 
+    = 
+    \begin{cases}
+        5 / 6 \text{ if } j = i\\
+        1 / 6 \text{ if } j = i + 1\\
+        0 \text{ otherwise },
+    \end{cases}
+\end{equation*}
+since $Y_{n+1}$ is 1 with probability $ 1 / 6$ and 0 otherwise. This shows that $X$ is a Markov chain with transition matrix $\vec{P} = (p_{ij})_{i,j \in \bbN_{0}}$ 
+
+
+\newpage 
+
+(c) If we define $X_{n}$ to be the number of rolls since the last six, we see that
+
+\begin{equation*}
+    X_{n+1} = X_{n}(1 - Y_{n+1}) + 1,
+\end{equation*}
+where $Y_{n+1}$ is 1 if the $(n+1)$th roll is a six and 0 otherwise. It follows that for $i,j \in \bbN$, we have
+\begin{equation*}
+    p_{ij} = \Prob(X_{n+1} = j \mid X_{n} = i) 
+    =
+    \begin{cases}
+        5 / 6 \text{ if } j = i + 1\\
+        1  / 6 \text{ if } j = 1 \\
+        0 \text{ otherwise },
+    \end{cases}
+\end{equation*}
+since the count will reset to $1$ if $Y_{n+1}$ is a six which occurs with probability 1 and will increase by one otherwise.
+
+\newpage
+
+(d) If the time to the next roll of a six is known as $X_{n}$, then there are two options either $X_{n} > 1$, in which case $X_{n+1} = X_{n} - 1$ as the countdown simply ticks down once. Otherwise, we have $X_{n} = 1$, in which case the next roll is certainly a six and the time to the next six is not deterministic. Assuming that each roll is independent, we can calculate the probability of the time to the next six for $X_{n+1}$ given $X_{n} = 1$ as being geometrically distributed with rate $1 / 6$ since this is the probability that one rolls a six, so that
+\begin{equation*}
+    p_{ij} = \Prob(X_{n+1} = j \mid X_{n} = i) 
+    =
+    \begin{cases}
+        1 \text{ if } j = i - 1 \text{ and } i\geq 2\\
+        \frac{1}{6} \left(1 - \frac{1}{6}\right)^{j-1} \text{ if } i = 1 \text{ and } j\geq 1 \\
+        0 \text{ otherwise }.
+    \end{cases}
+\end{equation*}
+\end{sol}
+
+  \newpage
+
+\begin{exer}[Exercise 4.2]
+    Let $Y_{n} = X_{2n}$. Compute the transition matrix for $Y$ when (a) $X$ is a simple random walk and (b) $X$ is a branching process with generating function $G$ for its offspring distribution.
+\end{exer}
+
+\begin{sol}
+
+    (a) Notice that each step of our random walk $X$ is given by $X_{n+1} = X_{n} + \xi_{n+1}$, where
+    \begin{equation*}
+    \xi_{n}
+    =    
+    \begin{cases}
+        1 \text{ with prob } p \\
+        -1 \text{ with prob } q
+    \end{cases}
+    \end{equation*}
+This shows that for 
+\begin{align*}
+    Y_{n+1} - Y_{n} = X_{2n+2} - X_{2n} = \xi_{2n+1} + \xi_{2n+2}
+\end{align*}
+From this, we see that $Y_{n+1} = Y_{n} + \xi_{2n+1} + \xi_{2n+2}$ where
+\begin{equation*}
+   \xi_{2n+1} + \xi_{2n+2}
+   =    
+   \begin{cases}
+        2 \text{ with prob } p^{2} \\
+        0 \text{ with prob } 2pq \\
+        -2 \text{ with prob } q^{2}
+    \end{cases}
+\end{equation*}
+This means that for integers $i$ and $j$
+\begin{equation*}
+    p_{ij} =  \Prob(Y_{n+1} = j \mid Y_{n} = i) = 
+    \begin{cases}
+    p^{2}    \text{ if } j = i + 2\\
+    2pq \text{ if } j = i \\
+    q^{2} \text{ if } j = i - 2 \\
+    0 \text{ otherwise. }
+\end{cases}
+\end{equation*}
+
+\newpage
+
+(b) Fixing $Y_{n} = X_{2n} = i$, we see that for 
+\begin{equation*}
+X_{2n+1} = \sum_{k=1}^{i} \xi_{k},
+\end{equation*}
+where $\xi_{k}$ are i.i.d draws with common generating function $G$. Since $i$ is fixed, we can compute the generating function at the next time step as 
+\begin{equation}
+    G_{X_{2n+1}}(s) = G(s)^{i}.
+\end{equation}
+For the next time step, we have that
+\begin{equation*}
+Y_{n+1} = X_{2n+2} = \sum_{k=0}^{X_{2n+1}} \xi_{k}.
+\end{equation*}
+Since $X_{2n+1}$ is independent of the $\xi_{k}$, we have that 
+\begin{equation*}
+    G_{Y_{n+1}}(s) = G_{X_{2n+1}}(G(s)) = G(G(s))^{i}.
+\end{equation*}
+With this generating function, we can compute the probability of having $j$ offspring given $Y_{n} = i$ as 
+\begin{equation*}
+    p_{ij} = \Prob(Y_{n+1} = j \mid Y_{n} = i) =  \frac{1}{j!}  \Big[ \frac{d^{j}}{dt^{j}}  G_{Y_{n+1}}(t)\Big]_{t=0} = \frac{1}{j!} \Big[ \frac{d^{j}}{dt^{j}}  G(G(t))^{i}\Big]_{t=0}, 
+\end{equation*}
+where we have used that for a random variable $X$ with generating function $G_{X}(s)$ 
+\begin{equation*}
+    \Prob(X = j) = \frac{1}{j!} \Big[\frac{d^{j}}{dt^{j}} G_{X}(t)\Big]_{t=0}
+\end{equation*}
+
+
+%TODO: Higher order derivatives of the generating function. Derivatives 
+\end{sol}
+
+\newpage 
+
+\begin{exer}[Exercise 4.3]
+    Let $X$ be a Markov chain with state space $S$ and absorbing state $k$. Suppose that $j\rightarrow k$ for all $k\in S$. Show that all states other than $k$ are transient.
+\end{exer}
+
+\begin{sol}
+Fix a state $j\neq k$. Since $j\rightarrow k$, we know there exists an integer $n$ so that $p_{n}(j,k) > 0$. As $k$ is an absorbing state, we have that $p(k, i) = 0$ for any state $i$. This means that for all $m\geq 1$, $p_{m}(k,j) = 0$. Therefore, if $X_{0} = j$ and $X_{n} = k$ with probability $p_{n}(j,k) > 0$, then $X$ cannot return to state $j$ as $p_{m}(k,j) = 0$ for all $m\geq 1$. This means that the state $j\neq k$ cannot be recurrent and is therefore transient. \end{sol}
+
+\newpage 
+
+\begin{exer}[Exercise 4.4]
+      Suppose that two distinct states $i,j$ satisfy
+    \begin{align*}
+    \Prob(\tau_{j} < \tau_{i} \mid X_{0} = i) = \Prob(\tau_{i} < \tau_{j} \mid X_{0 } = j),
+    \end{align*}
+    where $\tau_{j} = \inf\{ n\geq 1  \mid  X_{n} = j\}$. Show that if $X_{0}= i$, the expected number of visits to $j$ prior to re-visiting $i$ is one.
+\end{exer}
+
+\begin{sol}
+Let $Z$ be the random variable describing the number of visits to state $j$ before re-visiting $i$. To start, we define 
+    \begin{align*}
+    p = \Prob(\tau_{j} < \tau_{i} \mid X_{0} = i) = \Prob(\tau_{i} < \tau_{j} \mid X_{0 } = j) \\
+    1 - p = \Prob(\tau_{i} \leq \tau_{j}  \mid X_{0} = i) = \Prob(\tau_{j} \leq \tau_{i} \mid X_{0}=j)
+    \end{align*}
+
+In this way, we can define the probability that we start at $X_{0} = i$ and reach state $j$ without first returning to $i$ as $p$. Once we are at $j$, the probability of returning to $j$ without first reaching state $i$ is then $1-p$. Starting at $X_{0} = i$, we see that the probability of returning to $i$ only after $k$ visits is
+\begin{equation*}
+    \Prob(Z = 0) = 1-p, \quad \Prob(Z = k) = p^{2}(1-p)^{k-1}, k > 0.
+\end{equation*}
+We can compute this expectation directly as 
+\begin{align*}
+    \Expect[Z] &= \sum_{k=0}^{\infty } k \Prob(Z = k)\\
+               &= p\sum_{k=1}^{\infty } k p (1-p)^{k-1}\\
+               &= p \Expect[ \text{Geom}(p) ]\\
+               &= 1
+\end{align*}
+\end{sol}
+
+\newpage 
+
+\begin{exer}[Exercise 4.5]
+    Let $X$ be a Markov chain with transition matrix
+    \begin{equation*}
+    \vec{P} 
+    = 
+    \begin{pmatrix}
+        1 - 2p & 2p & 0 \\
+        p & 1 - 2p & p \\
+        0 & 2p & 1-2p
+    \end{pmatrix}
+    \end{equation*}
+    Find the invariant distribution $\pi$, and the mean-recurrence times $\overline{\tau}_{j}$ for $j = 1,2,3$.
+\end{exer}
+
+\begin{sol}
+    Supposing the invariant distribution exists, we have that
+
+    \begin{align*}
+        \pi_{1} &= (1-2p)\pi_{1} + p\pi_{2}\\ 
+        \pi_{2} &= 2p \pi_{1} + (1-2p)\pi_{2} + 2p \pi_{3} \\
+        \pi_{3} &= p \pi_{2} + (1-2p)\pi_{3}
+    \end{align*}
+\end{sol}
+The first equation implies that $2\pi_{1} = \pi_{2}$. The second implies $2\pi_{3} = \pi_{2}$. Using that $1 = \pi_{1} + \pi_{2} + \pi_{3}$, this shows that
+\begin{equation*}
+    \pi = (1 /4 , 1 / 2, 1 /4), \quad \overline{\tau} = (4, 2 ,4)
+\end{equation*}
+since $\vec{P}$ is irreducible and $\pi_{i} = 1 / \overline{\tau}_{i}$.
+
+\end{document}

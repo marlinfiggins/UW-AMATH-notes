@@ -1,0 +1,341 @@
+%Preamble
+\documentclass[12pt]{article}
+\usepackage{fancyhdr}
+\usepackage{extramarks}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{amsrefs}
+\usepackage{amsfonts}
+\usepackage{mathrsfs}
+\usepackage{mathtools}
+\usepackage[mathcal]{eucal} %% changes meaning of \mathcal
+\usepackage{enumerate}
+\usepackage[shortlabels]{enumitem}
+\usepackage{verbatim} %% includes comment environment
+\usepackage{hyperref}
+\usepackage[capitalize]{cleveref}
+\crefformat{equation}{~(#2#1#3)}
+\usepackage{caption, subcaption}
+\usepackage{graphicx}
+\usepackage{fullpage} %%smaller margins
+\usepackage[all,arc]{xy}
+\usepackage{mathrsfs}
+
+\hypersetup{
+    linktoc=all,     % set to all if you want both sections and subsections linked
+}
+
+\topmargin=-0.45in
+\evensidemargin=0in
+\oddsidemargin=0in
+\textwidth=6.5in
+\textheight=9.0in
+\headsep=0.25in
+\setlength{\headheight}{16pt}
+
+\linespread{1.1}
+
+\pagestyle{fancy}
+\lhead{\Name}
+\chead{\hwTitle}
+\rhead{\hwClass}
+\lfoot{\lastxmark}
+\cfoot{\thepage}
+
+\renewcommand\headrulewidth{0.4pt}
+\renewcommand\footrulewidth{0.4pt}
+
+\setlength\parindent{0pt}
+
+%% Title Info
+\newcommand{\hwTitle}{HW \# 6}
+\newcommand{\hwDueDate}{November 20, 2020}
+\newcommand{\hwClass}{AMATH 561}
+\newcommand{\hwClassTime}{}
+\newcommand{\hwClassInstructor}{}
+\newcommand{\Name}{\textbf{Marlin Figgins}}
+
+
+%% MATH MACROS
+\newcommand{\bbF}{\mathbb{F}}
+\newcommand{\bbN}{\mathbb{N}}
+\newcommand{\bbQ}{\mathbb{Q}}
+\newcommand{\bbR}{\mathbb{R}}
+\newcommand{\bbZ}{\mathbb{Z}}
+\newcommand{\bbC}{\mathbb{C}}
+\newcommand{\Prob}{\mathbb{P}}
+\newcommand{\calF}{\mathcal{F}}
+\newcommand{\abs}[1]{ \left| #1 \right| }
+\newcommand{\diff}[2]{\frac{d #1}{d #2}}
+\newcommand{\infsum}[1]{\sum_{#1}^{\infty}}
+\newcommand{\norm}[1]{ \left|\left| #1 \right|\right| }
+\newcommand{\eval}[1]{ \left. #1 \right| }
+\newcommand{\Expect}{\mathbb{E}}
+\newcommand{\Var}{\text{Var}}
+\renewcommand{\phi}{\varphi}
+\renewcommand{\emptyset}{\O}
+
+%--------Theorem Environments--------
+%theoremstyle{plain} --- defaultx
+\newtheorem{thm}{Theorem}[section]
+\newtheorem{cor}[thm]{Corollary}
+\newtheorem{prop}[thm]{Proposition}
+\newtheorem{lem}[thm]{Lemma}
+\newtheorem{conj}[thm]{Conjecture}
+\newtheorem{quest}[thm]{Question}
+
+\theoremstyle{definition}
+\newtheorem{defn}[thm]{Definition}
+\newtheorem{defns}[thm]{Definitions}
+\newtheorem{con}[thm]{Construction}
+\newtheorem{exmp}[thm]{Example}
+\newtheorem{exmps}[thm]{Examples}
+\newtheorem{notn}[thm]{Notation}
+\newtheorem{notns}[thm]{Notations}
+\newtheorem{addm}[thm]{Addendum}
+
+% Environments for answers and solutions
+\newtheorem{exer}{Exercise}
+\newtheorem{sol}{Solution}
+
+\theoremstyle{remark}
+\newtheorem{rem}[thm]{Remark}
+\newtheorem{rems}[thm]{Remarks}
+\newtheorem{warn}[thm]{Warning}
+\newtheorem{sch}[thm]{Scholium}
+
+\makeatletter
+\let\c@equation\c@thm
+\makeatother
+
+\begin{document}
+\begin{exer}
+    Let $X \sim \text{Binomial}(n, U)$ where $U\sim \text{Uniform}(0,1)$. What is the probability generating function $G_{X}(s)$ of $X$? What is $\Prob(X = k)$ for  $k\in \{0, 1, 2, \ldots, n\}$?
+\end{exer}
+
+  \begin{sol}
+    For a fixed $u\in [0,1]$, we can compute 
+    \begin{equation*}
+        \Prob(X = k  \mid u) = \binom{n}{k} u^{k}(1-u)^{n-k}.
+    \end{equation*}
+    By the law of total probability and the fact that $U$ is uniformly distributed, we have that 
+    \begin{equation*}
+        \Prob(X = k) = \int_{0}^{1} \Prob(X = x \mid u) f_{U}(u) du = \int_{0}^{1} \binom{n}{k} u^{k}(1-u)^{n-k} du.
+    \end{equation*}
+
+    We can use this coefficient in compute the generating function of $X$, so that
+    \begin{align*}
+        G_{X}(s) &= \sum^{k=0}_{n} s^{k} \Prob(X=k) \\
+                 &= \sum^{k=0}_{n} s^{k} \int_{0}^{1} \binom{n}{k} u^{k}(1-u)^{n-k} du \\
+                 &= \int_{0}^{1}\sum_{k=0}^{n} \binom{n}{k} (su)^{k}(1-u)^{k} du.
+    \end{align*}
+    Using the binomial theorem, we can simplify the integrand of the last integral, so that 
+    \begin{align*}
+        G_{X}(s) &= \int_{0}^{1}(1 - (1-s)u)^n du\\
+                 &= -\frac{1}{1-s} \int_{1}^{s} \rho^{n}d\rho, \quad \rho = 1- (1-s)u\\
+                 &= \frac{1}{1-s} \int_{s}^{1} \rho^{n}d\rho\\
+                 &= \frac{1}{1-s} \left(\frac{\rho^{n+1}}{n+1}\right)  \mid_{s}^{1}\\
+                 &= \frac{1}{n+1} \cdot \frac{1-s^{n+1}}{1-s}.  
+    \end{align*}
+    This last quantity contains is the partial sum of a geometric series, which reduces to
+    \begin{equation*}
+        G_{X}(s) = \sum_{k = 0}^{n} \frac{1}{n+1} s^{k}.
+    \end{equation*}
+    This shows that $X$ is uniform on $\{0, 1, \ldots, n\}$ since we have that $\Prob(X=k) =  \frac{1}{n+1}$ for all $k\in  \{0, 1, \ldots, n\}$.
+  \end{sol}
+
+  \newpage
+
+\begin{exer}
+Consider a branching process with immigration
+\begin{equation*}
+Z_{0} = 1, Z_{n+1} = \sum_{i=1}^{Z_n} \xi_{i}^{n+1} + Y_{n+1},
+\end{equation*}
+where the $(\xi_{i}^{n+1})$ are iid with common distribution $\xi$, the $(Y_n)$ are iid with common distribution  $Y$ and the  $(\xi_{i}^{n+1})$ and $(Y_{n+1})$ are independent. What is $G_{Z_{n+1}}(s)$ in terms of $G_{Z_{n}}(s), G_{\xi}(s)$, and $G_{Y}(s)$? Write $G_{Z_{2}}(s)$ explicitly in terms of $G_{\xi}(s)$ and $G_{Y}(s)$. 
+\end{exer}
+
+\begin{sol}
+We can write that 
+\begin{equation*}
+    Z_{n+1} = \underbrace{\sum_{k=1}^{Z_{n}} \xi_{i}^{n+1}}_{\hat{Z}_{n+1}} + Y_{n+1} ,
+\end{equation*}
+since $Z_{n+1}$ is the sum of independent random variables $\hat{Z}_{n+1}$ and $Y_{n+1}$, we have that
+\begin{equation*}
+    G_{Z_{n+1}}(s) = G_{\hat{Z}_{n+1}}(s) \cdot G_{Y_{n+1}}(s) =  G_{\hat{Z}_{n+1}}(s) \cdot G_{Y}(s),
+\end{equation*}
+where we've used that $Y_n$ share distribution $Y$. As shown in class, we know $ G_{\hat{Z}_{n+1}}(s) = G_{Z_{n}}(G_{\xi}(s))$ by the independence of $\xi_{i}^{n+1}$ and $Z_{n}$. This means that
+\begin{equation*}
+    G_{Z_{n+1}}(s) = G_{Z_{n}}(G_{\xi}(s)) \cdot G_{Y}(s),
+\end{equation*}
+here we've implicitly used that $\xi_{i}^{n+1}$ share common distribution $\xi$. We can now compute $G_{Z_{2}}(s)$ as
+\begin{equation*}
+    G_{Z_{2}}(s) = G_{Z_{1}}(G_{\xi}(s)) \cdot G_{Y}(s).
+\end{equation*}
+In this case, 
+\begin{equation*}
+    Z_{1} = \xi_{1}^{1} + Y_{1} \implies G_{Z_{1}} =  G_{\xi}(s)\cdot G_{Y}(s).
+\end{equation*}
+This gives us that
+\begin{equation*}
+    G_{Z_{2}}(s) = G_{\xi}(G_{\xi}(s))\cdot G_{Y}(G_{\xi}(s)) \cdot G_{Y}(s).
+\end{equation*}
+\end{sol}
+
+\newpage 
+
+\begin{exer}
+    (a) Let $X$ be exponentially distributed with parameter $\lambda$. Show by elementary integration (not complex integration) that $\Expect(e^{itX}) = \lambda / (\lambda - it)$.
+
+    (b) Find the characteristic function of the density function $f(x) = \frac{1}{2} e^{-\abs{x}}$ for $x\in\bbR$.
+ \end{exer}
+
+\begin{sol}\leavevmode
+    (a) We can write 
+    \begin{equation*}
+        \Expect(e^{itX}) 
+        = 
+        \Expect(\cos(tX)) + i \Expect(\sin(tX)) 
+        = 
+        \int_{0}^{\infty } \cos(tx) \lambda e^{-\lambda x}dx  + i \int_{0}^{\infty } \sin(tx) \lambda e^{-\lambda x}dx  .
+    \end{equation*}
+    We can compute this integrals directly using integration by parts. To compute the first of these, we write this expectation in terms of an integral involving the density of $X$ ($\lambda e^{- \lambda x}$)
+
+    \begin{align*}
+        \Expect(\cos(tX)) &= \int_{0}^{\infty } \cos(tx) \lambda e^{-\lambda x}dx\\
+                          &= (-\cos(tX)e^{tx}) \mid_{0}^{\infty } - \int_{0}^{\infty } (-e^{-\lambda x})(-t \sin(tx))dx\\
+                          &= 1 - \int_{0}^{\infty} t\sin(tx)e^{-\lambda x}dx.
+    \end{align*}
+    Here, we have used integration by parts with $u = \cos(tx), dv = \lambda e^{-\lambda x}$. From this result, we also note that
+    \begin{equation}
+        \label{eq:2aCheat}
+        \Expect(\cos(tX)) = 1 - \frac{t}{\lambda} \Expect(\sin(tX)).
+    \end{equation}
+
+    To finish the computation of $\Expect(\cos(tX))$, we'll once again use integration by parts. This time with $u = t\sin(tx), dv = -e^{-\lambda x}$. This shows
+    \begin{align*}
+        \Expect(\cos(tX)) &= 1 - \int_{0}^{\infty} t\sin(tx)e^{-\lambda x}dx \\
+                          &= 1 + (\frac{t}{\lambda} \sin(tx)e^{-\lambda x})  \mid_{0}^{\infty} - \frac{t^{2}}{\lambda}\int_{0}^{\infty } \cos(tx)e^{-\lambda x} dx\\
+                          &= 1 - \frac{t^{2}}{\lambda}\int_{0}^{\infty } \cos(tx)e^{-\lambda x} dx\\
+                          &= 1 - \frac{t^{2}}{\lambda^{2}}\int_{0}^{\infty } \cos(tx) \lambda e^{-\lambda x} dx\\
+                          &= 1 - \frac{t^{2}}{\lambda^{2}}   \Expect(\cos(tX)).
+    \end{align*}
+    Simplifying this expression to solve for $\Expect(\cos(tX))$ gives us
+    \begin{equation}
+        \label{eq:2bShortcut}
+        \Expect(\cos(tX)) = \int_{0}^{\infty } \cos(tx) \lambda e^{-\lambda x}dx = (1 + \frac{t^{2}}{\lambda^{2}} )^{-1} = \frac{\lambda^{2}}{\lambda^{2} + t^{2}}.
+    \end{equation}
+    Using \eqref{eq:2aCheat}, we can save ourselves the trouble of integrating again to compute 
+    \begin{equation*}
+        \Expect(\sin(tX)) 
+        =
+        \frac{\lambda}{t} ( 1 -  \Expect(\cos(tX)) ) 
+        = 
+        \frac{\lambda}{t} \left( 1 - \frac{\lambda^{2}}{\lambda^{2} + t^{2}} \right)
+        =
+        \frac{\lambda}{t} \left( \frac{t^{2}}{\lambda^{2} + t^{2}} \right)
+        =
+        \frac{\lambda t}{\lambda^{2} + t^{2}}.
+  \end{equation*}
+  This shows that 
+  \begin{equation*}
+      \Expect(e^{itX}) = \frac{\lambda^{2}}{\lambda^{2} + t^{2}} + i\frac{\lambda t}{\lambda^{2} + t^{2}}.
+  \end{equation*}
+  Multiplying both sides of this equation by $\lambda - it$, we see that
+  \begin{align*}
+      \Expect(e^{itX}) \cdot (\lambda - it) 
+      &= 
+      \frac{\lambda^{3}}{\lambda^{2} + t^{2}} + i \frac{\lambda^{2}t}{\lambda^{2}+t^{2}} 
+      - i  \frac{\lambda^{2}t}{\lambda^{2}+t^{2}} + \frac{\lambda t^{2}}{\lambda^{2}+t^{2}} \\
+      &=
+      \frac{\lambda(\lambda^{2}+t^{2})}{\lambda^{2}+t^{2}} =  \lambda. 
+  \end{align*}
+  This shows that 
+  \begin{equation*}
+  \Expect(e^{itX}) = \frac{\lambda}{\lambda - it}. 
+  \end{equation*}
+
+  \newpage
+
+  (b) We can compute the characteristic function for $X$ with density $f_{X}(x) = \frac{1}{2} e^{- \abs{x}}$ as
+  \begin{align*}
+      \Expect(e^{itX}) &= \int_{-\infty}^{\infty} e^{itx}   \frac{1}{2} e^{- \abs{x}}dx\\
+                       &= \frac{1}{2} \left(\int_{-\infty}^{0} e^{itx} e^{-x}dx  + \int_{0}^{\infty} e^{itx} e^{-x}dx  \right),
+  \end{align*}
+  where we have split the integral and used that $\abs{x} = -x$ for $x<0$. If we do a change of variables $u = -x$, we can see that
+  \begin{equation*}
+      \int_{-\infty}^{0} e^{itx} e^{x}dx = -\int_{\infty}^{0} e^{-itu} e^{-u}du = \int_{0}^{\infty} e^{-itx} e^{-x}dx.
+  \end{equation*}
+We can then substitute this new integral into the previous computation to show
+\begin{align*}
+\Expect(e^{itX})  &= \frac{1}{2} \left(\int_{-\infty}^{0} e^{itx} e^{-x}dx  + \int_{0}^{\infty} e^{itx} e^{-x}dx  \right) \\
+                  &= \frac{1}{2} \left(\int_{0}^{\infty} e^{-itx} e^{-x}dx + \int_{0}^{\infty} e^{itx} e^{-x}dx  \right) \\
+                  &= \int_{0}^{\infty} \frac{e^{itx} + e^{-itx}}{2} e^{-x}dx\\
+                  &= \int_{0}^{\infty} \cos(tx) e^{-x}dx.
+\end{align*}
+We've computed this integral in part (a) and know it to be 
+\begin{equation*}
+\Expect(e^{itX}) = \frac{1}{1+t^{2}}
+\end{equation*}
+from \eqref{eq:2bShortcut} with $\lambda = 1$.
+  \end{sol}
+
+\newpage
+
+\begin{exer}
+    A coin is tossed repeatedly with heads turning up with probability $p$ on each toss. Let $N$ be the minimum number of tosses required to obtain  $k$ heads. Show that as  $p\to 0$ the distribution function of  $2Np$ converges to that of a gamma distribution. Not that if  $X \sim \Gamma(\lambda, r)$, then 
+    \begin{equation*}
+        f_X(x) = \frac{1}{\Gamma(r)} \lambda^{r} x^{r-1} e^{-\lambda x} 1_{x\geq 0}.
+    \end{equation*}
+\end{exer}
+
+\begin{sol}\leavevmode
+If we think of this as a series of events waiting for a single heads of a biased coin with probability $p$, then we can observe that 
+\begin{equation*}
+N = k + \sum_{i=1}^{k} Y_{i},
+\end{equation*}
+where $Y_{i}$ are iid random variables with common geometric distribution $Y$ with probability $p$. The sum of the geometric variables describes the number of tails needed to get $k$ heads, we add $k$ to this to get the total number of trials needed. We can compute the characteristic function $N$ as 
+\begin{equation*}
+    \phi_{N}(t) = e^{ikt} \phi_{Y}(t)^{k},
+\end{equation*}
+where we've used the translation rules for the characteristic function and that each of the $Y_{i}$ share distribution $Y$. As shown in class, we have that the characteristic function of $Y$ is given by
+\begin{equation*}
+    \phi_{Y}(t) = \frac{p e^{it}}{1 - (1-p)e^{it}}.
+\end{equation*}
+Therefore, the full characteristic function of $N$ is given by
+\begin{equation*}
+    \phi_{N}(t) = e^{ikt} \left(\frac{p e^{it}}{1 - (1-p)e^{it}}  \right)^{k}.
+\end{equation*}
+
+Since we are interested in the limit as $p\to 0$, we will define a sequence of random variables $X_{n} = 2Np = 2N / n$, where we set $p = \frac{1}{n}$ throughout. For fixed $n$, this random variable has characteristic function
+
+\begin{align*}
+    \phi_{X_{n}}(s) = \phi_{N}(2 t /n) =   e^{ik 2 t / n} \left(\frac{ \frac{1}{n} e^{i2 t / n}}{1 - (1- 1 / n )e^{i2 t / n}}  \right)^{k}.
+\end{align*}
+Before taking the limit as $n\to \infty$, we will simplify this a bit
+\begin{align*}
+\frac{ \frac{1}{n} e^{i2 t / n}}{1 - (1- 1 / n )e^{i2 t / n}} 
+&=
+\frac{1}{n e^{- i2 t / n} ( 1 - (1 - 1/ n) e^{i2 t / n} )} \\
+&=
+\frac{1}{n(e^{-i2 t / n} - 1 + 1 / n)} \\
+&= \frac{1}{1 +  n (e^{-i2 t / n} -1) }
+\end{align*}
+In the limit as $n\to \infty$, we have 
+\begin{align*}
+    \frac{1}{1 +  n (e^{-i2 t / n} -1) } &\to  \frac{1}{1 - 2it}\\
+e^{i2k t / n} &\to 1.
+\end{align*}
+This first of these limits is a bit handwavey but you can see that it does indeed converge by expanding the exponential in terms of its power series around 0. This gives us the that in the limit
+\begin{equation*}
+    \phi_{X_{n}}(s) \to \phi_{X}(s) = (1 - 2it)^{-k}
+\end{equation*}
+Comparing this with against the internet aka wikipedia, we see that Gamma distribution of the form described above should have a characteristic function which looks like
+\begin{equation*}
+    \phi_{G}(s) = (1 - \frac{it}{\lambda})^{-r}.
+\end{equation*}
+From this, we can see that the compute characteristic function looks to be of the form of a Gamma random variable's in the limit as $p \to 0$. Therefore, by the continuity theorem, we conclude that $X_{n}$ converges to a Gamma distribution.
+\end{sol}
+
+%TODO: Double check answers and run this through
+\end{document}

@@ -1,0 +1,259 @@
+%Preamble
+\documentclass[12pt]{article}
+\usepackage{fancyhdr}
+\usepackage{extramarks}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{amsrefs}
+\usepackage{amsfonts}
+\usepackage{mathrsfs}
+\usepackage{mathtools}
+\usepackage[mathcal]{eucal} %% changes meaning of \mathcal
+\usepackage{enumerate}
+\usepackage[shortlabels]{enumitem}
+\usepackage{verbatim} %% includes comment environment
+\usepackage{hyperref}
+\usepackage[capitalize]{cleveref}
+\crefformat{equation}{~(#2#1#3)}
+\usepackage{caption, subcaption}
+\usepackage{graphicx}
+\usepackage{fullpage} %%smaller margins
+\usepackage[all,arc]{xy}
+\usepackage{mathrsfs}
+
+\hypersetup{
+    linktoc=all,     % set to all if you want both sections and subsections linked
+}
+
+\topmargin=-0.45in
+\evensidemargin=0in
+\oddsidemargin=0in
+\textwidth=6.5in
+\textheight=9.0in
+\headsep=0.25in
+\setlength{\headheight}{16pt}
+
+\linespread{1.1}
+
+\pagestyle{fancy}
+\lhead{\Name}
+\chead{\hwTitle}
+\rhead{\hwClass}
+\lfoot{\lastxmark}
+\cfoot{\thepage}
+
+\renewcommand\headrulewidth{0.4pt}
+\renewcommand\footrulewidth{0.4pt}
+
+\setlength\parindent{0pt}
+
+%% Title Info
+\newcommand{\hwTitle}{HW \# 7}
+\newcommand{\hwDueDate}{December 4, 2020}
+\newcommand{\hwClass}{AMATH 567}
+\newcommand{\hwClassTime}{}
+\newcommand{\hwClassInstructor}{}
+\newcommand{\Name}{\textbf{Marlin Figgins}}
+
+
+%% MATH MACROS
+\newcommand{\bbF}{\mathbb{F}}
+\newcommand{\bbN}{\mathbb{N}}
+\newcommand{\bbQ}{\mathbb{Q}}
+\newcommand{\bbR}{\mathbb{R}}
+\newcommand{\bbZ}{\mathbb{Z}}
+\newcommand{\bbC}{\mathbb{C}}
+\newcommand{\abs}[1]{ \left| #1 \right| }
+\newcommand{\diff}[2]{\frac{d #1}{d #2}}
+\newcommand{\infsum}[1]{\sum_{#1}^{\infty}}
+\newcommand{\norm}[1]{ \left|\left| #1 \right|\right| }
+\newcommand{\eval}[1]{ \left. #1 \right| }
+\newcommand{\Expect}[1]{\mathbb{E}\left[#1 \right]}
+\newcommand{\Var}[1]{\mathbb{V}\left[#1 \right]}
+\newcommand{\Res}{\text{Res}}
+
+\renewcommand{\phi}{\varphi}
+\renewcommand{\emptyset}{\O}
+\renewcommand{\Im}{\text{Im}}
+\renewcommand{\Re}{\text{Re}}
+
+%--------Theorem Environments--------
+%theoremstyle{plain} --- defaultx
+\newtheorem{thm}{Theorem}[section]
+\newtheorem{cor}[thm]{Corollary}
+\newtheorem{prop}[thm]{Proposition}
+\newtheorem{lem}[thm]{Lemma}
+\newtheorem{conj}[thm]{Conjecture}
+\newtheorem{quest}[thm]{Question}
+
+\theoremstyle{definition}
+\newtheorem{defn}[thm]{Definition}
+\newtheorem{defns}[thm]{Definitions}
+\newtheorem{con}[thm]{Construction}
+\newtheorem{exmp}[thm]{Example}
+\newtheorem{exmps}[thm]{Examples}
+\newtheorem{notn}[thm]{Notation}
+\newtheorem{notns}[thm]{Notations}
+\newtheorem{addm}[thm]{Addendum}
+
+% Environments for answers and solutions
+\newtheorem{exer}{Exercise}
+\newtheorem{sol}{Solution}
+
+\theoremstyle{remark}
+\newtheorem{rem}[thm]{Remark}
+\newtheorem{rems}[thm]{Remarks}
+\newtheorem{warn}[thm]{Warning}
+\newtheorem{sch}[thm]{Scholium}
+
+\makeatletter
+\let\c@equation\c@thm
+\makeatother
+
+\begin{document}
+
+\begin{exer}
+    (a) Construct the bilinaer transformation
+    \begin{equation*}
+        w(z) = \frac{az+b}{cz+d},
+    \end{equation*}
+    that maps the region between the two circles $\abs{z- 1 / 4 } = 1 / 4$ and $\abs{z- 1 / 2} = 1 / 2$ into an infinite strip bounded by the vertical lines $u = \Re[w] = 0$ and $u = \Re[w] = 1$. To avoid ambiguity, suppose that the outer circle is mapped to $u=1$.
+
+    (b) Upon finding the appropriate transformation $w$, carefully show that the image of the inner circle under $w$ is the vertical line $u=0$ and similar for the outer circle.
+  \end{exer}
+ 
+\begin{sol}\leavevmode
+    As we want to map both circles to an infinite line, we need to have a shared point of the two circles map to the point at infinity i.e. we must have that $w(z) = \infty$ at a point $z_{*}$ on both circles. Since the circles intersect at $z_{*}=0$, this amounts to having $ z_{*} = - d / c = 0$ or $d = 0$. To simplify what remains, we set $c=1$, so that
+    \begin{equation*}
+        w(z) = \frac{az + b}{cz} = \frac{az+b}{z}. 
+    \end{equation*}
+
+    In order to further simplify this, we'll use that we want the point $z_1 =  1 / 2$ which lies on the inner circle to have real part 0 after transformation by $w$. Similarly, we want the point $z_{2} = 1$ which lies on the outer circle to have real part 1 after transformation by $w$. Evaluating $w$ at these values
+    \begin{align*}
+        w(1 / 2) &= \frac{\frac{a}{2} + b}{\frac{1}{2}} = a + 2b \\
+        w(1) &= a + b.    
+    \end{align*}
+Using these equations, we have the following constraints on $a$ and $b$
+\begin{align*}
+    \Re[ w( 1 / 2 ) ] = \Re[a] + 2 \Re[b] = 0\\
+    \Re[w (1)] = \Re[a] + \Re[b] = 1
+\end{align*}
+Using the relationships above, we see that $\Re[a] = 1 - \Re[b]$, so that
+\begin{align*}
+    1 + \Re[b] = 0 &\implies \Re[b] = -1 \\
+                   &\implies \Re[a] = 2
+\end{align*}
+
+To ensure that the entire outer circle is on the line $\Re[w] = 1$, we use that the circle is parameterized by
+
+\begin{equation*}
+    z_{2}(t) = \frac{1}{2} e^{it} + \frac{1}{2} \quad t\in(0,2\pi].
+\end{equation*}
+Composing this with our transformation $w$ shows that
+\begin{align*}
+    w(z_{2}(t)) = \frac{az_{2}(t)+b}{z_{2}(t)} = a + \frac{b}{z_{2}(t)}.  
+\end{align*}
+We can solve for 
+\begin{align*}
+    \frac{b}{z_{2}(t)} &= b \overline{z}_{2}(t) / \abs{z_{2}(t)} \\
+                       &= b \overline{z}_{2}(t)  \cdot \frac{4}{(e^{it}+1)(e^{-it}+1)}\\
+                       &= b \overline{z}_{2}(t) \frac{2}{1 + (e^{it} + e^{-it}) / 2}\\
+                       &= b \overline{z}_{2}(t) \frac{2}{1 + \cos(t)}\\
+                       &= b \frac{e^{it} + 1}{1 + \cos(t)} \\
+                       &= b \frac{\cos(t) + 1}{1 +\cos(t)}  + ib \frac{\sin(t)}{\cos(t)}\\
+                       &= b + ib \tan(t).
+\end{align*}
+Though, we know already that $\Re[b] = -1$, if we set $b=-1$, we can see clearly that
+\begin{equation*}
+    w(z_{2(t)}) = a -  1 - i \tan(x)
+\end{equation*}
+which has real part 1 since $\Re[a] = 2$. Additionally, since $\tan(x)$ maps the interval $(-\pi, \pi)$ to $(-\infty, \infty )$. We see that the outer circle is indeed mapped to the vertical line with real part equal to 1. We can now do this same check with the inner circle which is parameterized by
+\begin{equation*}
+    z_{1}(t) = \frac{1}{2} z_{2}(t).
+\end{equation*}
+Following our previous computation, this shows that
+\begin{equation*}
+    w(z_{2}(t)) = a - 2 - 2i \tan(x).
+\end{equation*}
+This has real part 0 since $\Re[a] = 2$ and shows that the inner circle is mapped to the vertical line with real part equal to 0. Therefore, our desired bilinear transformation is
+\begin{equation*}
+    w(z) = \frac{2z-1}{z} = 2 - \frac{1}{z},
+\end{equation*}
+where we've set $a = 2$ for simplicity.
+\end{sol}
+
+\newpage
+
+\begin{exer}   
+Use the result of problem 1 to find the steady state temperature $T(x,y)$ in the region bounded by the two circles, where the inner circle is maintained at $T=0 ^\circ C$ and the outer circle at $T=100 ^\circ C$. Assume that $T$ satisfies the two-dimensional Laplace equation.
+\end{exer}
+
+\begin{sol}
+    As $w(z)$ is bilinear, we can first solve Laplace's equation in the $(u,v)$ plane. As the inner circle is mapped to $(0,v)$ and the outer circle is mapped to $(1,v)$, we have that
+    \begin{equation*}
+        T(0,v) = 0 \quad T(1,v) = 100 
+    \end{equation*}
+for $v\in\bbR$ and that the function of interest $T(u,v)$ satisfies
+    \begin{equation*}
+        \frac{\partial^{2} T}{\partial u^{2}}(u,v) + \frac{\partial^{2} T}{\partial v^{2}}(u,v) = 0.
+    \end{equation*}
+    Let's solve this with seperation of variables. Assume that $T$ can be written as a product of functions $g(u)$ and $h(v)$ so that
+\begin{equation*}
+    T(u,v) = g(u)h(v).
+\end{equation*}
+Then, we using that $T$ should satisfy Laplace's equation, we have 
+\begin{equation*}
+    g^{\prime \prime}(u) h(v) + g(u)h^{\prime \prime}(v) = 0.
+\end{equation*}
+Mutiplying this equation by $g(0)$ and $g(1)$ separately, we see
+\begin{align*}
+    g^{\prime \prime}(u) g(0)h(v) + g(u)g(0)h^{\prime \prime}(v) &= g(0)g(u)h^{\prime \prime}(v) = 0\\
+    g^{\prime \prime}(u) g(1)h(v) + g(u)g(1)h^{\prime \prime}(v) &= 100  g^{\prime \prime}(v) + g(1)g(u) h^{\prime \prime}(v) = 0
+\end{align*}
+This implies that
+\begin{equation*}
+    g(u)h^{\prime \prime}(v) \left(g(1)  - g(0)   \right) = - 100  g^{\prime \prime}(u).
+\end{equation*}
+In order for this relationship to hold for all $v$ given $u$ is fixed, we require that $h^{\prime \prime}(v)$ is constant, so that
+\begin{equation*}
+    h(v) = A v^{2} + Bv + C.
+\end{equation*}
+From this it follows 
+\begin{equation*}
+    100 = T(1,v) = g(1)h(v) = g(1)  (A v^{2} + Bv + C)
+\end{equation*}
+if this to hold for all $v$, $A = B = 0$. Therefore, $h(v)$ is constant and $h^{\prime \prime}(v) = 0$. This shows that additionally 
+\begin{equation*}
+    g^{\prime \prime}(u) = 0 
+\end{equation*}
+and that $g$ must be a linear function of $u$. This shows that our final equation is of the form
+\begin{equation*}
+    T(u,v) = g(u)h(v) = D u + E.
+\end{equation*}
+Using our initial conditions, we can solve for $D$ and $E$ as
+\begin{equation*}
+    0 = T(0,v) = E \quad 100 = T(1,v) = D + E = D = 100.
+\end{equation*}
+Therefore our solution is
+\begin{equation*}
+    T(u,v) = 100u
+\end{equation*}
+which satisfies 
+\begin{equation*}
+    \frac{\partial^{2} T}{\partial u^{2}}(u,v)  = 0 \quad  \frac{\partial^{2} T}{\partial v^{2}}(u,v) = 0
+\end{equation*}
+and is therefore a valid solution to Laplace's equation. In order to get a solution in the desired $(x,y)$ plane, we must take $(T \circ w)(z)$ which will also satisfy Laplace's equation. We write $w$ as 
+
+\begin{align*}
+    w(x,y) &= 2 - \frac{1}{z} = 2 - \frac{x-iy}{x^{2}+y^{2}} \\
+     &\implies\\
+    (u,v) &= (2-\frac{x}{x^{2}+y^{2}}, \frac{y}{x^{2}+y^{2}}).
+\end{align*}
+Therefore,
+\begin{equation*}
+T(x,y) = 100\left(2 - \frac{x}{x^{2}+y^{2}}\right).
+\end{equation*}
+\end{sol}
+
+\end{document}

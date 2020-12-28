@@ -1,0 +1,419 @@
+%Preamble
+\documentclass[12pt]{article}
+\usepackage{fancyhdr}
+\usepackage{extramarks}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{amsrefs}
+\usepackage{amsfonts}
+\usepackage{mathrsfs}
+\usepackage{mathtools}
+\usepackage[mathcal]{eucal} %% changes meaning of \mathcal
+\usepackage{enumerate}
+\usepackage[shortlabels]{enumitem}
+\usepackage{verbatim} %% includes comment environment
+\usepackage{hyperref}
+\usepackage[capitalize]{cleveref}
+\crefformat{equation}{~(#2#1#3)}
+\usepackage{caption, subcaption}
+\usepackage{graphicx}
+\usepackage{fullpage} %%smaller margins
+\usepackage[all,arc]{xy}
+\usepackage{mathrsfs}
+
+\hypersetup{
+    linktoc=all,     % set to all if you want both sections and subsections linked
+}
+
+\topmargin=-0.45in
+\evensidemargin=0in
+\oddsidemargin=0in
+\textwidth=6.5in
+\textheight=9.0in
+\headsep=0.25in
+\setlength{\headheight}{16pt}
+
+\linespread{1.1}
+
+\pagestyle{fancy}
+\lhead{\Name}
+\chead{\hwTitle}
+\rhead{\hwClass}
+\lfoot{\lastxmark}
+\cfoot{\thepage}
+
+\renewcommand\headrulewidth{0.4pt}
+\renewcommand\footrulewidth{0.4pt}
+
+\setlength\parindent{0pt}
+
+%% Title Info
+\newcommand{\hwTitle}{HW \# 6}
+\newcommand{\hwDueDate}{Novemeber 18, 2020}
+\newcommand{\hwClass}{AMATH 567}
+\newcommand{\hwClassTime}{}
+\newcommand{\hwClassInstructor}{}
+\newcommand{\Name}{\textbf{Marlin Figgins}}
+
+
+%% MATH MACROS
+\newcommand{\bbF}{\mathbb{F}}
+\newcommand{\bbN}{\mathbb{N}}
+\newcommand{\bbQ}{\mathbb{Q}}
+\newcommand{\bbR}{\mathbb{R}}
+\newcommand{\bbZ}{\mathbb{Z}}
+\newcommand{\bbC}{\mathbb{C}}
+\newcommand{\abs}[1]{ \left| #1 \right| }
+\newcommand{\diff}[2]{\frac{d #1}{d #2}}
+\newcommand{\infsum}[1]{\sum_{#1}^{\infty}}
+\newcommand{\norm}[1]{ \left|\left| #1 \right|\right| }
+\newcommand{\eval}[1]{ \left. #1 \right| }
+\newcommand{\Expect}[1]{\mathbb{E}\left[#1 \right]}
+\newcommand{\Var}[1]{\mathbb{V}\left[#1 \right]}
+\newcommand{\Res}{\text{Res}}
+
+\renewcommand{\phi}{\varphi}
+\renewcommand{\emptyset}{\O}
+\renewcommand{\Im}{\text{Im}}
+\renewcommand{\Re}{\text{Re}}
+
+%--------Theorem Environments--------
+%theoremstyle{plain} --- defaultx
+\newtheorem{thm}{Theorem}[section]
+\newtheorem{cor}[thm]{Corollary}
+\newtheorem{prop}[thm]{Proposition}
+\newtheorem{lem}[thm]{Lemma}
+\newtheorem{conj}[thm]{Conjecture}
+\newtheorem{quest}[thm]{Question}
+
+\theoremstyle{definition}
+\newtheorem{defn}[thm]{Definition}
+\newtheorem{defns}[thm]{Definitions}
+\newtheorem{con}[thm]{Construction}
+\newtheorem{exmp}[thm]{Example}
+\newtheorem{exmps}[thm]{Examples}
+\newtheorem{notn}[thm]{Notation}
+\newtheorem{notns}[thm]{Notations}
+\newtheorem{addm}[thm]{Addendum}
+
+% Environments for answers and solutions
+\newtheorem{exer}{Exercise}
+\newtheorem{sol}{Solution}
+
+\theoremstyle{remark}
+\newtheorem{rem}[thm]{Remark}
+\newtheorem{rems}[thm]{Remarks}
+\newtheorem{warn}[thm]{Warning}
+\newtheorem{sch}[thm]{Scholium}
+
+\makeatletter
+\let\c@equation\c@thm
+\makeatother
+
+\begin{document}
+
+\begin{exer}
+    Evaluate the integrals 
+    \begin{equation}
+        \frac{1}{2\pi i} \oint_C f(z)dz,
+    \end{equation}
+    where $C$ is the unit circle centered at the origin with $f(z)$ given below.    
+
+    \begin{enumerate}[(a)]
+        \item  $ \frac{z+1}{2z^3 - 3z^2 -2z} $.
+        \item $ \frac{\cosh(z^{-1})}{z}$.
+        \item $ \frac{e^{-\cosh(z)}}{4z^2 + \pi^2}$.
+        \item $\frac{\ln(z+2)}{2z+1}, \quad -\pi < \arg(z+2)\leq \pi$ 
+        \item $\frac{z + z^{-1}}{z (2z - (2z)^{-1})}$
+    \end{enumerate}
+\end{exer}
+ 
+\begin{sol}\leavevmode
+
+    (a) We begin by factoring the denominator of the integrand
+    \begin{equation*}
+        f(z) = \frac{z+1}{2z^3 - 3z^2 -2z} = \frac{z+1}{z(2z+1)(z-2)}.
+    \end{equation*}
+    This function has singularities in $C$ at $z= -1/2, 0$, but is otherwise analytic in $C$. By the Residue theorem, computing the integral is as simple as noting that
+\begin{equation*}
+    \frac{1}{2\pi i} \oint_C f(z)dz = \Res(f; -1/2) + \Res(f; 0).
+\end{equation*}
+    All of the poles of this function are simple, so we can compute the residues as follows
+    \begin{align*}
+        \Res(f; -1/2) &= \lim_{z \to -1/2} (z + \frac{1}{2})\left(\frac{z+1}{z(2z+1)(z-2)}\right) \\
+                      &= \lim_{z \to -1/2} \frac{z+1}{2z(z-2)} = - 1 / 5 
+    \end{align*}
+
+    We can compute the other residue as 
+    \begin{align*}
+        \Res(f;0) &= \lim_{z \to 0} (z )\left(\frac{z+1}{z(2z+1)(z-2)}\right) \\
+                  &= \lim_{z \to 0} \frac{z+1}{(2z+1)(z-2)}  = - 1 / 2  
+    \end{align*}
+    We can now conclude that
+
+    \begin{equation*}
+     \frac{1}{2\pi i} \oint_C \frac{z+1}{2z^3 - 3z^2 -2z} dz = - 7  / 10
+    \end{equation*}
+
+    \newpage
+
+    (b) We note that the only singularity of $f(z) = \frac{\cosh(z^{-1})}{z}$ in  $C$ occurs at 0, so our desired integral is equal to $\Res(f, 0)$. Writing the numerator in terms of its Taylor-Laurent series around 0, we see that
+     \begin{equation*}
+         \cosh(z^{-1}) = \sum_{n=0}^{\infty} \frac{z^{-2n}}{(2n)!},
+    \end{equation*}
+    we then have that 
+    \begin{equation*}
+        f(z) = \frac{\cosh(z^{-1})}{z} = \sum_{n=0}^{\infty} \frac{z^{-2n-1}}{(2n)!}.
+    \end{equation*}
+    From this, we can see that the residue is given by the coefficient of this series when $n=0$, so that 
+    \begin{equation*}
+        \frac{1}{2\pi i} \oint_C \frac{\cosh(z^{-1})}{z} dz = \Res(f;0) = 1 
+    \end{equation*}
+
+    \newpage
+
+    (c) The only singularities of  
+\begin{equation*}
+    f(z) = \frac{e^{-\cosh(z)}}{4z^2 + \pi^2} = \frac{e^{-\cosh(z)}}{4(z-i\frac{\pi}{2})(z + i \frac{\pi}{2})},
+\end{equation*}
+are given by $\pm i \frac{\pi}{2}, 0$. None of these occur in $C$. Therefore, the function is analytic within and on $C$ and we have
+\begin{equation*}
+        \frac{1}{2\pi i} \oint_C \frac{e^{-\cosh(z)}}{4z^2 + \pi^2} dz = 0
+    \end{equation*}
+
+    \newpage
+
+    (d) Since we've restricted to $-\pi < \arg(z+2) \leq \pi$, the function $f(z) = \frac{\ln(z+2)}{2z+1}$ only has a singularity at $z = -\frac{1}{2}$.  Therefore, the integral over $C$ can be computed using only the residue of this function at $-\frac{1}{2}$. We compute this as 
+    \begin{align*}
+        \Res(f; -1/2) &= \lim_{z\to -1/2} (z +1/2) \left(\frac{\ln(z+2)}{2z+1} \right)\\
+                      &= \lim_{z\to -1/2} \frac{\ln(z+2)}{2} = \frac{\ln(3/2)}{2}. 
+    \end{align*}
+
+    Therefore, our integral is simply
+    \begin{equation*}
+            \frac{1}{2\pi i} \oint_C \frac{\ln(z+2)}{2z+1} dz = \Res(f; -1/2) = \frac{\ln(3/2)}{2}. 
+    \end{equation*}
+
+    \newpage
+
+    (e) We begin by simplifying the integrand
+    \begin{equation*}
+        f(z)= \frac{z + z^{-1}}{z (2z - (2z)^{-1})} = \frac{z+z^{-1}}{2z^2 - \frac{1}{2}} = \frac{z + z^{-1}}{2 (z- \frac{1}{2})(z+\frac{1}{2})}.
+    \end{equation*}
+    We can then see that this function has singularities at $0, \pm\frac{1}{2}$, all of which are contained in $C$. We can then compute the residues at these various points using that they are all simple poles. Beginning with $\frac{1}{2}$, 
+\begin{align*}
+    \Res(f; 1/2) &= \lim_{z\to 1/2} (z-1/2) \left(\frac{z + z^{-1}}{2 (z- \frac{1}{2})(z+\frac{1}{2})}\right)\\
+                 &= \lim_{z\to 1/2} \frac{z + z^{-1}}{2 (z+\frac{1}{2})}\\
+                 &= 5 / 4
+\end{align*}
+
+Next, 
+\begin{align*}
+    \Res(f; -1/2) &= \lim_{z\to -1/2} (z+1/2) \left(\frac{z + z^{-1}}{2 (z- \frac{1}{2})(z+\frac{1}{2})}\right)\\
+                 &= \lim_{z\to -1/2} \frac{z + z^{-1}}{2 (z-\frac{1}{2})}\\
+                 &= 5 / 4
+\end{align*}
+
+We can compute the final residue as 
+\begin{align*}
+    \Res(f; 0) &= \lim_{z\to 0} z \left(\frac{z}{2z^2 - \frac{1}{2}} + \frac{z^{-1}}{2z^2 - \frac{1}{2}}  \right)\\
+               &= \lim_{z\to 0} \left(\frac{z^{2}}{2z^2 - \frac{1}{2}} + \frac{1}{2z^2 - \frac{1}{2}}  \right)\\
+               &= 0 + 2.
+\end{align*}
+We can then compute the integral as 
+\begin{equation*}
+    \frac{1}{2\pi i} \oint_C f(z)dz = \Res(f; 1/2) + \Res(f; -1/2) + \Res(f;0) = 9 / 2.
+    \end{equation*}
+\end{sol}
+
+\newpage
+
+\begin{exer}
+    Show that 
+    \begin{equation*}
+        I = \int_{0}^{\infty} \frac{\sin x}{x(x^2+1)} dx = \frac{\pi}{2} (1 - e^{-1})
+    \end{equation*}
+\end{exer}
+
+\begin{sol}
+    We instead will work with the integrand $f(z) = \frac{e^{iz}}{z(z^{2} + 1)}$ and compute the integral
+\begin{equation*}
+    J = \int_{-\infty}^{\infty} \frac{e^{iz}}{z(z^{2} + 1)} dz
+\end{equation*}
+since $\Im(J) = I$. We will compute the integral $J$ with the contour $\Gamma = C_\epsilon + C_R + [-R, -\epsilon] + [\epsilon, R]$, where $C_\epsilon$ is the upper half circle centered at 0 with radius $\epsilon$ oriented clockwise and $C_{R}$ the upper half circle centered at 0 with radius $R$ and oriented counter-clockwise. We then have that
+\begin{equation*}
+    \int_{\Gamma} f(z) dz = \int_{C_{\epsilon}} f(z)dz +  \int_{\epsilon}^{R} f(z)dz +  \int_{C_{R}} f(z)dz +  \int_{-R}^{-\epsilon} f(z)dz. 
+\end{equation*}
+
+We can compute the integral of the left hand side by Residue theorem since the contour $\Gamma$ contains the singularity of $f(z)$ at $i$, so that 
+\begin{equation*}
+    \int_{\Gamma} f(z) dz = 2\pi i \Res(f, i).
+\end{equation*}
+We can compute this residue as 
+\begin{align*}
+    \Res(f;i) &= \lim_{z\to i} (z - i)  \left( \frac{e^{iz}}{z(z + i)(z - i)}\right)\\
+              &= \lim_{z\to i} \frac{e^{iz}}{z(z + i)}\\
+              &= -\frac{e^{-1}}{2}.
+\end{align*}
+Therefore, 
+\begin{equation*}
+-\pi i e^{-1} = \int_{C_{\epsilon}} f(z)dz +  \int_{\epsilon}^{R} f(z)dz +  \int_{C_{R}} f(z)dz +  \int_{-R}^{-\epsilon} f(z)dz. 
+\end{equation*}
+As $\epsilon \to 0$, we can compute the integral over $C_\epsilon$ as
+\begin{equation*}
+    \int_{C_{\epsilon}} f(z)dz = -\pi i \Res(f,0).
+\end{equation*}
+We can compute this residue as 
+\begin{align*}
+    \Res(f;0) &= \lim_{z\to 0} z \cdot  \frac{e^{iz}}{z(z^{2} + 1)}\\
+              &= \lim_{z\to 0} \frac{e^{iz}}{z^{2} + 1} = 1.
+\end{align*}
+Therefore in the limit as $\epsilon\to 0$, we have 
+\begin{equation*}
+    \pi i(1 - e^{-1})= -\pi i e^{-1}  + \pi i = \int_{-R}^{R} f(z)dz +  \int_{C_{R}} f(z)dz. 
+\end{equation*}
+By Jordan's lemma, the integral over $C_R$ goes to 0 in the limit as $R\to \infty$, which leaves us with
+\begin{equation*}
+    \pi i (1 - e^{-1})= \int_{-\infty}^{\infty} f(z)dz. 
+\end{equation*}
+We now note that this implies
+\begin{equation*}
+  \int_{- \infty }^{\infty} \frac{\sin x}{x(x^2+1)} dx = \pi (1 - e^{-1})
+\end{equation*}
+due to our choice of $f(z)$. This integrand of the above integral is even, so we can conclude that
+\begin{equation*}
+  \int_{0}^{\infty} \frac{\sin x}{x(x^2+1)} dx = \frac{\pi}{2} (1 - e^{-1}).
+\end{equation*}
+\end{sol}
+
+\newpage
+
+\begin{exer}
+Consider the function
+\begin{equation*}
+    f(z) = \ln(z^2 -1),
+\end{equation*}
+made single-valued by restricting the angles in the following ways, with 
+\begin{equation*}
+    z_1 = z - 1 = r_{1} e^{i\theta_{1}}, \quad z_2 = z +1 = r_{2} e^{i\theta_{2}}
+\end{equation*}
+
+\begin{enumerate}[(a)]
+    \item $-\frac{3\pi}{2}< \theta_{1}\leq \frac{\pi}{2}, \quad -\frac{3\pi}{2}<\theta_{2}\leq \frac{\pi}{2}$
+    \item $0< \theta_{1}\leq 2\pi, \quad 0< \theta_{2}\leq 2\pi$
+    \item $-\pi < \theta_{1} \leq \pi,\quad 0<\theta_{2} \leq 2\pi$
+\end{enumerate}
+
+Find where the branch cuts are for each case by locating where the function is discontinuous. Use the AB tests and show your results.
+\end{exer}
+\begin{sol}
+    We begin by simplifying $f(z)$ in terms of $z_1$ and $z_2$, so that
+    \begin{align*}
+        f(z) &= \ln(z^2  -1) = \ln(z-1) + \ln(z+1)\\
+             &= \ln(z_1) + \ln(z_2)\\
+             & \ln(r_{1}r_{2}) + i(\theta_{1} + \theta_{2}).
+    \end{align*}
+
+    (a) Let's pick a point $A=iy-\epsilon$ with $y>0$ and $\epsilon$ small which is slightly to the left of a point on the positive imaginary axis.  We can then compute that
+    \begin{align*}
+        z_1(A) = A - 1 = -(1+\epsilon) + iy \quad z_{2}(A) = A + 1 = 1-\epsilon + iy.
+    \end{align*}
+    We can additionally find the angle using the arctangent, so that 
+    \begin{equation}
+        \theta_{1}(A) = \arctan(- \frac{y}{1+\epsilon} ) - \pi, \quad  \theta_{2}(A) = \arctan( \frac{y}{1-\epsilon} ),
+    \end{equation}
+    where we've added a constant to shift the angle into the proper range.
+    Then for $B = iy + \epsilon$ which is slightly to the right of the positive imaginary axis. We can compute that
+    \begin{align*}
+        z_1(B) &= B - 1 = -(1-\epsilon) + iy \quad z_{2}(B) = B + 1 = 1+\epsilon + iy\\
+        \theta_{1}(B) &= \arctan( -\frac{y}{1-\epsilon} ) - \pi, \quad  \theta_{2}(B) = \arctan( \frac{y}{1+\epsilon} ).
+    \end{align*}
+
+    In the limit as $\epsilon \to 0$, the various magnitudes $r$ converge, and we can see that 
+    \begin{align*}
+        \lim_{\epsilon\to 0}  \theta_{1}(A) + \theta_{2}(A) = \lim_{\epsilon \to 0} \theta_{1}(B) + \theta_{2}(B),
+    \end{align*}
+    so the function is continuous along the positive imaginary axis.
+
+    \newpage
+
+    (b) 
+\paragraph{Case 1: $x\geq1$}%
+
+    Now picking $A = x + i\epsilon$ for $x\geq 1$ and $\epsilon>0$ which is slightly above the real axis. We can compute that 
+    \begin{equation*}
+        z_1(A) = A - 1 = x - 1 + i\epsilon, \quad z_2(A) = A + 1 = x + 1 + i \epsilon.
+    \end{equation*}
+    We can compute the angles $\theta_{1}(A)$ and $\theta_{2}(A) $ as being slightly above 0 due to the side of the branch cut they are on. Similarly, for a point $B = x - i \epsilon$ for $x\geq1$ and $\epsilon>0$ which is slightly below the real axis. We see that the angle $\theta_{1}(B)$ and $\theta_{2}(B) $ are slightly below $2\pi$.   Taking the limit as $\epsilon\to 0$ from above, we have that 
+
+    \begin{equation*}
+        \lim_{\epsilon\to 0^+} \theta_{1}(A) + \theta_{2}(A) = 0 + 0 \neq 2\pi + 2\pi = \lim_{\epsilon\to 0^+} \theta_{1}(B) + \theta_{2}(B),
+    \end{equation*}
+    so $f(z)$ is discontinuous along the real axis where $x > 1$.
+
+    \paragraph{Case 2: $0<x<1$}%
+
+    Now when $A = x + i \epsilon$, we have the same $z_1(A)$, $z_2(A)$, $z_1(B)$, and $z_2(B)$ but now $z_1(A)$ and $z_1(B)$ have negative real part so that in the limit
+    \begin{equation*}
+        \lim_{\epsilon\to 0^+} \theta_{1}(A) + \theta_{2}(A) = \pi + 0 \neq \pi + 2\pi = \lim_{\epsilon\to 0^+} \theta_{1}(B) + \theta_{2}(B).
+    \end{equation*}
+    The case where $x=1$ is similar, but instead $z_1(A)$ and $z_1(B)$ have 0 real part and $\theta_1(A)$ and $\theta_1(B)$ converge to $\pi / 2$ and $3\pi / 2 $ as $z_1(A)$ and $z_1(B)$ live on the positive and negative imaginary axes respectively , so the function $f(z)$ is discontinuous along the positive real axis.
+
+    \newpage
+
+    (c) In this case, we have one branch cut along the negative real axis and another along the positive axis. We'll split into a couple of cases.
+
+    Picking $A = x + i\epsilon$ for $\epsilon > 0$ and $x\in\bbR$ gives a point which is slightly above the real axis. We have that 
+    \begin{equation}
+        z_1(A) = A - 1 = x - 1 + i\epsilon, \quad z_2(A) = A + 1 = x + 1 + i \epsilon.
+    \end{equation}
+    For $B = x - i\epsilon$, we have a point slightly below the real axis, so that 
+
+    \begin{equation*}
+            z_1(B) = B - 1 = x - 1 - i\epsilon, \quad z_2(B) = B + 1 = x + 1 - i \epsilon.
+    \end{equation*}
+
+    \paragraph{Case 1: $x>1$}%
+
+    We have that in the limit as $\epsilon\to 0$, $\theta_1(A) = 0$ since $z_1(A)$ is slightly above the positive real axis. Also, we have that in the same limit, $\theta_{2}(A) = 0$ since $z_2(A)$ is slightly above the real axis as well. For similar reasons, we have that $\theta_{1}(B) = 0 $ and $\theta_{2}(B)= 2\pi$. This shows that the function is discontinuous along $x\geq 1$
+
+    \paragraph{Case 2: $x< -1$}%
+  In this case, the four points of interest $z_1, z_2$ for $A$ and $B$ all have negative real part, so that in the limit as $\epsilon \to 0$,
+   \begin{align*}
+   \theta_1(A) = \pi \quad \theta_2(A) = \pi\\
+   \theta_1(B) = -\pi \quad \theta_2(B) = \pi.
+   \end{align*}
+   This shows that the function is also discontinuous along $x\leq -1$.
+
+   \paragraph{Case 3: $x\in (-1,1)$}
+   In this case, we have that $z_1(A)$ and $z_1(B)$ have negative real part and $z_2(A)$ and $z_2(B)$ have positive real part, so that in the limit
+   \begin{align*}
+   \theta_1(A) = \pi \quad \theta_2(A) = 0\\
+   \theta_1(B) = -\pi \quad \theta_2(B) = 2\pi.
+   \end{align*} 
+
+   This shows that the function is actually continuous on $(-1,1)$.
+
+   \paragraph{Case 4: $x=1$}%
+   
+   In this case, $z_1(A)$ and $z_1(B)$ have zero real part and $z_2(A)$ and $z_2(B)$ have positive real part, so that in the limit
+   \begin{align*}
+   \theta_1(A) = \pi / 2 \quad \theta_2(A) = 0\\
+   \theta_1(B) = -\pi  / 2\quad \theta_2(B) = 2\pi.
+   \end{align*} 
+   So the function is discontinuous here.
+
+   \paragraph{Case 5: $x=-1$}%
+    In this case, we have that $z_1(A)$ and $z_1(B)$ have negative real part and $z_2(A)$ and $z_2(B)$ have zero real part, so that in the limit
+   \begin{align*}
+   \theta_1(A) = \pi \quad \theta_2(A) = \pi / 2\\
+   \theta_1(B) = -\pi \quad \theta_2(B) = 3\pi / 2.
+   \end{align*} 
+   So the function is discontinuous here.
+
+   
+   This shows that the function is continuous along $(-1,1)$ and that $f(z)$ is discontinuous along the real axis where $\abs{x}\geq1$.
+   
+\end{sol}
+\end{document}
