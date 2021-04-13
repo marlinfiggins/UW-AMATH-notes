@@ -1,0 +1,193 @@
+%Preamble
+\documentclass[12pt]{article}
+\usepackage{fancyhdr}
+\usepackage{extramarks}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{amsrefs}
+\usepackage{amsfonts}
+\usepackage{mathrsfs}
+\usepackage{mathtools}
+\usepackage[mathcal]{eucal} %% changes meaning of \mathcal
+\usepackage{enumerate}
+\usepackage[shortlabels]{enumitem}
+\usepackage{verbatim} %% includes comment environment
+\usepackage{hyperref}
+\usepackage[capitalize]{cleveref}
+\crefformat{equation}{~(#2#1#3)}
+\usepackage{caption, subcaption}
+\usepackage{graphicx}
+\usepackage{fullpage} %%smaller margins
+\usepackage[all,arc]{xy}
+\usepackage{mathrsfs}
+
+\hypersetup{
+    linktoc=all,     % set to all if you want both sections and subsections linked
+}
+
+\topmargin=-0.45in
+\evensidemargin=0in
+\oddsidemargin=0in
+\textwidth=6.5in
+\textheight=9.0in
+\headsep=0.25in
+\setlength{\headheight}{16pt}
+
+\linespread{1.0}
+
+\pagestyle{fancy}
+\lhead{\Name}
+\chead{\hwClass: \hwTitle}
+\rhead{\hwDueDate}
+\lfoot{\lastxmark}
+\cfoot{\thepage}
+
+\renewcommand\headrulewidth{0.4pt}
+\renewcommand\footrulewidth{0.4pt}
+
+\setlength\parindent{0pt}
+
+%% Title Info
+\newcommand{\hwTitle}{HW \# 8}
+\newcommand{\hwDueDate}{March 19, 2021}
+\newcommand{\hwClass}{AMATH 568}
+\newcommand{\hwClassTime}{}
+\newcommand{\hwClassInstructor}{}
+\newcommand{\Name}{\textbf{Marlin Figgins}}
+
+
+%% MATH MACROS
+\newcommand{\bbF}{\mathbb{F}}
+\newcommand{\bbN}{\mathbb{N}}
+\newcommand{\bbQ}{\mathbb{Q}}
+\newcommand{\bbR}{\mathbb{R}}
+\newcommand{\bbZ}{\mathbb{Z}}
+\newcommand{\bbC}{\mathbb{C}}
+\newcommand{\abs}[1]{ \left| #1 \right| }
+\newcommand{\diff}[2]{\frac{d #1}{d #2}}
+\newcommand{\infsum}[1]{\sum_{#1}^{\infty}}
+\newcommand{\norm}[1]{ \left|\left| #1 \right|\right| }
+\newcommand{\eval}[1]{ \left. #1 \right| }
+\newcommand{\Expect}[1]{\mathbb{E}\left[#1 \right]}
+\newcommand{\Var}[1]{\mathbb{V}\left[#1 \right]}
+\renewcommand{\vec}[1]{\mathbf{#1}}
+
+\renewcommand{\phi}{\varphi}
+\renewcommand{\emptyset}{\O}
+
+%--------Theorem Environments--------
+%theoremstyle{plain} --- defaultx
+\newtheorem{thm}{Theorem}[section]
+\newtheorem{cor}[thm]{Corollary}
+\newtheorem{prop}[thm]{Proposition}
+\newtheorem{lem}[thm]{Lemma}
+\newtheorem{conj}[thm]{Conjecture}
+\newtheorem{quest}[thm]{Question}
+
+\theoremstyle{definition}
+\newtheorem{defn}[thm]{Definition}
+\newtheorem{defns}[thm]{Definitions}
+\newtheorem{con}[thm]{Construction}
+\newtheorem{exmp}[thm]{Example}
+\newtheorem{exmps}[thm]{Examples}
+\newtheorem{notn}[thm]{Notation}
+\newtheorem{notns}[thm]{Notations}
+\newtheorem{addm}[thm]{Addendum}
+
+% Environments for answers and solutions
+\newtheorem{exer}{Exercise}
+\newtheorem{sol}{Solution}
+
+\theoremstyle{remark}
+\newtheorem{rem}[thm]{Remark}
+\newtheorem{rems}[thm]{Remarks}
+\newtheorem{warn}[thm]{Warning}
+\newtheorem{sch}[thm]{Scholium}
+
+\makeatletter
+\let\c@equation\c@thm
+\makeatother
+
+\begin{document}
+
+\begin{exer}
+    Consider the Optical Parametric Oscillator as given in Lecture 23 of the notes (pg 99-102).
+
+    \begin{enumerate}[(a)]
+        \item Assuming slow time $\tau = \epsilon^{2} t$ and slow space $\xi = \epsilon x$, derive the Fisher-Kolmogorov equation for the slow evolution of the instability (the expression after Eq. (518)).
+        \item Derive the Swift-Hohenberg type expression which is given by Eq. (519) with the scalings detailed in the notes.
+    \end{enumerate}
+\end{exer}
+
+\begin{sol}
+    Disclaimer: I don't want to type up all the algebra. I will skip a lot of steps but ultimately I should get to where I'm trying to go!
+
+    (a) We start by considering the governing equation
+    \begin{align*}
+        U_{t} &= \frac{i}{2} U_{xx} + V U^{*} - (1 + i \Delta_{1}) U\\
+        V_{t} &= \frac{i}{2} \rho V_{xx} - U^{2} - (\alpha + i \Delta_{2}) V + S.
+    \end{align*}
+
+    We can find a steady state to this problem as 
+    \begin{align*}
+    U = 0. V = \frac{S}{\alpha + i \Delta_{2}},
+    \end{align*}
+    for which we require that 
+\begin{equation*}
+    \abs{S} < \abs{S_{c}} = \abs{(\alpha + i \Delta_{2})(1 + i \Delta_{1})}
+\end{equation*}
+    for stability of this this solution. We'll describe the onset of instability of this equation using the given slow time and slow space expansions. We then write $U$ in terms of an expansion about its steady state
+     \begin{align*}
+         U &= 0 + \epsilon u(\tau, \xi)\\
+         V &= \frac{S}{\alpha + i \Delta_{2}} + \epsilon^{2} v(\tau, \xi).
+    \end{align*}
+    Plugging this eqution into the governing equation gives a bunch of algebra,
+    \begin{align*}
+        \epsilon^{2} u_{\tau} &= \epsilon^{2} \frac{i}{2} u_{\xi \xi} + \left(\frac{S}{\alpha + i \Delta_{2}} + \epsilon^{2} v \right)  u^{*}  - (1 + i \Delta_{1}) u(\tau, \xi) + O(\epsilon^{4})\\
+        \epsilon^{2} v_{\tau} &= \epsilon^{2} \frac{i}{2} \rho v_{xx} - u - (\alpha + i \Delta_{2}) ( \frac{S \epsilon^{-2}}{\alpha + i \Delta_{2}}  + v ) + O(\epsilon^{4})
+    \end{align*}
+    Rearranging terms and using the expansion $S = S_{c} + \epsilon^{2} C + \epsilon^{3} C_{1} + \cdots$, we have eqns (516),
+    \begin{align*}
+        v &= - \frac{u^{2}}{\alpha + i \Delta_{2}} + \frac{\epsilon^{2}}{\alpha + i \Delta_{2}} \left[ \frac{i}{2} \rho v_{\xi \xi}  - v_{\tau} \right] + O(\epsilon^{4})\\
+        u^{*} &= u - \frac{\epsilon^{2}}{1 + i \Delta_{1}} \left[ \frac{i}{2} u_{\xi\xi} - u_{\tau} + v u^{*} + \frac{C}{\alpha + i \Delta_{2}}  u^{*} \right] + O(\epsilon^{4})
+    \end{align*}
+    Muliplying these two equations gives an equation of the form
+    \begin{align*}
+        v u^{*} = f(vu^{*})
+    \end{align*}
+    which can be solved iteratively to find
+    \begin{align*}
+        v u^{*} = - \frac{1}{\alpha + i \Delta_{2}} \abs{u}^{2} u + \frac{\epsilon^{2}}{(\alpha + i \Delta_{2})^{2}} \left( u (u^{2})_{\tau} - \frac{i}{2} \rho u (u^{2})_{\xi\xi}  \right) + O(\epsilon^{2}).
+    \end{align*}
+    This allows us to solve for the forcing of the system as 
+\begin{align*}
+    R = \epsilon^{2} \left[  \frac{i}{2} u_{\xi \xi} - u_{\tau} - \frac{\abs{u}^{2} u}{\alpha + i \Delta_{2}} + \frac{C}{\alpha + i \Delta_{2}}\right] + O(\epsilon^{4})
+\end{align*}
+    Using Fredholm's alternative theorem, we know that $R$ must be orthogonal to the null space of the adjoint corresponding with the leading order behavior. This allows us to derive a solvability conidiotn in terms of the  $R$ above
+    \begin{equation*}
+        (1 - i \Delta_{1}) R + (1 + i \Delta_{1}) R^{*} = 0.
+    \end{equation*}
+    This solvability condition can give several different equations depending on the retained scales. Keeping the scales $\tau, \xi$, gives us the equation (after algebra)
+     \begin{align*}
+         \phi_{\tau} - \phi_{\zeta\zeta} \pm \phi^{3} \pm \abs{C}(1 + \Delta_{1}^{2}) / S_{c},\\
+         u = \phi \sqrt{ \frac{\alpha^{2} + \Delta_{2}^{2}}{\Delta_{1} \Delta_{2} - \alpha} }, 
+         \quad \xi = \zeta \sqrt{\frac{\Delta_{1}}{2}}.
+    \end{align*}
+This is the desried Fisher-Komogorov equation.
+
+\newpage
+
+(b) To get to the Swift-Hohenberg type expression, we'll need to back track a bit to find the $O(\epsilon^{4})$ terms in our expression for $u$, so that we have scales scales  $\xi$, $X = \epsilon^{2} c$. $\tau$ and  $T = \epsilon^{4} t$. This will give updated $R$ as
+\begin{align*}
+    R &= \epsilon^{2} \left[  \frac{i}{2} u_{\xi \xi} - u_{\tau} - \frac{\abs{u}^{2} u}{\alpha + i \Delta_{2}} + \frac{C}{\alpha + i \Delta_{2}}\right]\\
+      &+ \epsilon^{4} \left[ \frac{i}{2} u_{XX} - u_{T} + \frac{1}{(\alpha + i \Delta_{2})^{2}} 
+      \left( u(u^{2})_{\tau} - \frac{i}{2} \rho u (u^{2})_{\xi\xi} \right)\right] + O(\epsilon^{6}).
+\end{align*}
+In this case, we retain the scales $\xi$ and $T$ and apply the same solvibility condition with $\Delta_{1} = \epsilon^{2} \kappa$ and $\alpha - \Delta_{1} \Delta_{2} = \epsilon^{2} \beta$.  Setting more variables $\omega = 2 \kappa \abs{\Delta_{2}}$, $\sigma = -2 \beta$, and  $\gamma = \omega^{2} / 4 + 2 C \beta + C^{2}$, we can get another equation in terms of $\phi$ 
+\begin{align*}
+    \phi_{t} + \frac{1}{4} \left(\partial_{\zeta}^{2} - \omega \right)^{2} \phi - \gamma \phi - \sigma \phi^{3} + \phi^{5} \pm 3 \phi \cdot (\phi_{\zeta})^{2} \pm 2 \phi^{2} \phi_{\zeta \zeta} = 0.
+\end{align*}
+I'm not showing much of any work here because I am lazy and got stuck several times. Please be merciful!
+\end{sol}
+\end{document}

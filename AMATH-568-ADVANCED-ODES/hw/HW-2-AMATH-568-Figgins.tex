@@ -1,0 +1,413 @@
+%Preamble
+\documentclass[12pt]{article}
+\usepackage{fancyhdr}
+\usepackage{extramarks}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{amsrefs}
+\usepackage{amsfonts}
+\usepackage{mathrsfs}
+\usepackage{mathtools}
+\usepackage[mathcal]{eucal} %% changes meaning of \mathcal
+\usepackage{enumerate}
+\usepackage[shortlabels]{enumitem}
+\usepackage{verbatim} %% includes comment environment
+\usepackage{hyperref}
+\usepackage[capitalize]{cleveref}
+\crefformat{equation}{~(#2#1#3)}
+\usepackage{caption, subcaption}
+\usepackage{graphicx}
+\usepackage{fullpage} %%smaller margins
+\usepackage[all,arc]{xy}
+\usepackage{mathrsfs}
+
+\hypersetup{
+    linktoc=all,     % set to all if you want both sections and subsections linked
+}
+
+\topmargin=-0.45in
+\evensidemargin=0in
+\oddsidemargin=0in
+\textwidth=6.5in
+\textheight=9.0in
+\headsep=0.25in
+\setlength{\headheight}{16pt}
+
+\linespread{1.0}
+
+\pagestyle{fancy}
+\lhead{\Name}
+\chead{\hwClass: \hwTitle}
+\rhead{\hwDueDate}
+\lfoot{\lastxmark}
+\cfoot{\thepage}
+
+\renewcommand\headrulewidth{0.4pt}
+\renewcommand\footrulewidth{0.4pt}
+
+\setlength\parindent{0pt}
+
+%% Title Info
+\newcommand{\hwTitle}{HW \# 2}
+\newcommand{\hwDueDate}{Jan 27, 2020}
+\newcommand{\hwClass}{AMATH 568}
+\newcommand{\hwClassTime}{}
+\newcommand{\hwClassInstructor}{}
+\newcommand{\Name}{\textbf{Marlin Figgins}}
+
+
+%% MATH MACROS
+\newcommand{\bbF}{\mathbb{F}}
+\newcommand{\bbN}{\mathbb{N}}
+\newcommand{\bbQ}{\mathbb{Q}}
+\newcommand{\bbR}{\mathbb{R}}
+\newcommand{\bbZ}{\mathbb{Z}}
+\newcommand{\bbC}{\mathbb{C}}
+\newcommand{\abs}[1]{ \left| #1 \right| }
+\newcommand{\diff}[2]{\frac{d #1}{d #2}}
+\newcommand{\infsum}[1]{\sum_{#1}^{\infty}}
+\newcommand{\norm}[1]{ \left|\left| #1 \right|\right| }
+\newcommand{\eval}[1]{ \left. #1 \right| }
+\newcommand{\Expect}[1]{\mathbb{E}\left[#1 \right]}
+\newcommand{\Var}[1]{\mathbb{V}\left[#1 \right]}
+\renewcommand{\vec}[1]{\mathbf{#1}}
+
+\renewcommand{\phi}{\varphi}
+\renewcommand{\emptyset}{\O}
+
+%--------Theorem Environments--------
+%theoremstyle{plain} --- defaultx
+\newtheorem{thm}{Theorem}[section]
+\newtheorem{cor}[thm]{Corollary}
+\newtheorem{prop}[thm]{Proposition}
+\newtheorem{lem}[thm]{Lemma}
+\newtheorem{conj}[thm]{Conjecture}
+\newtheorem{quest}[thm]{Question}
+
+\theoremstyle{definition}
+\newtheorem{defn}[thm]{Definition}
+\newtheorem{defns}[thm]{Definitions}
+\newtheorem{con}[thm]{Construction}
+\newtheorem{exmp}[thm]{Example}
+\newtheorem{exmps}[thm]{Examples}
+\newtheorem{notn}[thm]{Notation}
+\newtheorem{notns}[thm]{Notations}
+\newtheorem{addm}[thm]{Addendum}
+
+% Environments for answers and solutions
+\newtheorem{exer}{Exercise}
+\newtheorem{sol}{Solution}
+
+\theoremstyle{remark}
+\newtheorem{rem}[thm]{Remark}
+\newtheorem{rems}[thm]{Remarks}
+\newtheorem{warn}[thm]{Warning}
+\newtheorem{sch}[thm]{Scholium}
+
+\makeatletter
+\let\c@equation\c@thm
+\makeatother
+
+\begin{document}
+\begin{exer}
+ Consider the non-homogeneous problem
+ \begin{align*}
+     \frac{d \vec{x}}{ d t } = \vec{A} \vec{x} + \vec{g}(t).
+ \end{align*}
+
+ (a) Let $\vec{x} = \vec{M} \vec{y}$  where the columns of $\vec{M}$ are the eigenvector of the above problems.
+ (b) Write the equations in terms of $\vec{y}$ and multiply through by $\vec{M}^{-1}$,
+ (c) Show that the resulting equation is
+ \begin{equation*}
+      \frac{d \vec{y}}{ d t } = \vec{D} \vec{y} + \vec{M}^{-1}\vec{g}(t).
+ \end{equation*}
+ where $\vec{D} = \vec{M}^{-1}\vec{A}\vec{M}$ is a diagonal matrix whose diagonal elements are the eigenvalues of the problem considered.
+
+ (d) Show that this system is now decoupled so that each component of $\vec{y}$ can be solved independently of the other components.
+\end{exer}
+
+\begin{sol}
+Letting $\vec{x} = \vec{M} \vec{y}$, we write that 
+\begin{align*}
+\frac{d \vec{x}}{ d t } = \vec{A} \vec{M} \vec{y} + \vec{g}(t),
+\end{align*}
+assuming that $A$ is diagonalizable, we have that 
+\begin{align*}
+\vec{M}^{-1} \vec{A} \vec{M} = \vec{D},
+\end{align*}
+where $\vec{D}$ is the diagonal matrix with diagonal entries as the eigenvalues of $\vec{A}$. Then it follows
+\begin{align*}
+\frac{d \vec{x}}{ d t } = \vec{M} \vec{D} \vec{y} + \vec{g}(t),
+\end{align*}
+noting that $\frac{d \vec{x}}{dt} = \vec{M} \frac{ d \vec{y} }{dt}$ and multiplying the above through by $M$, we see that
+\begin{align*}
+    \frac{d \vec{y}}{dt} = \vec{D} \vec{y} + \vec{M}^{-1}\vec{g}(t).
+\end{align*}
+We can write out each of the components of this equation as 
+\begin{align*}
+    \frac{d y_{i}}{dt} = \lambda_{i} y_{i} + (\vec{M}^{-1} \vec{g}(t))_{i}
+\end{align*}
+where the subscript $i$ denotes the $i$-th component and $\lambda_{i}$ is the $i$-th eigenvalue of $\vec{A}$. This shows that each of the components are independent of one another as $d y_{i} / dt$ is independent of any other $y_{j}$.
+\end{sol}
+
+\newpage
+
+\begin{exer}
+    Given $L = - d^{2} / dx^{2}$, find the eigenfunction expansion solution of 
+    \begin{align*}
+        \frac{d^{2} y}{dx^{2}} + 2y = - 10 e^{x}, \quad y(0) = 0, y'(1) = 0.
+    \end{align*}
+\end{exer}
+
+\begin{sol}
+We rewrite the above equation as
+\begin{align*}
+-y'' = 10e^{x} + 2y.
+\end{align*}
+Using this, we'll represent this as a Sturm Liouville problem which has solution
+\begin{align*}
+    u(x) = \sum_{n=1}^{\infty} \frac{(f, u_{n})}{\lambda_{n}-2}u_{n}(x),
+\end{align*}
+for eigenvalues $\lambda_{n}$ and eigenfunction $u_{n}(x)$. Formulating this the following eigenvalue problem, we can solve for $\lambda_n$ and $u_{n}$, 
+\begin{equation*}
+    - \frac{d^{2}u_{n}}{dx^{2}} = \lambda_{n} u_{n},
+\end{equation*}
+which has solutions of the form
+\begin{align*}
+    u_{n} = c_{1} \sin (\sqrt{\lambda_{n}} x) + c_{2} \cos (\sqrt{\lambda_{n}} x).
+\end{align*}
+In order for this to satisfy our desired boundary condition $u_{n}(0) = 0$, we have that $c_{2} = 0$. The second boundary condition then gives that $y'(1) = 0$ or 
+\begin{align*}
+    \sqrt{\lambda_{n}} \cos \sqrt{\lambda_{n}} = 0
+\end{align*}
+which has solutions when 
+\begin{align*}
+    \sqrt{\lambda_{n}} = \frac{\pi}{2} (2n + 1)
+\end{align*}
+so that
+\begin{equation*}
+    \lambda_{n} = \left( \frac{2n + 1}{2} \pi \right)^{2},
+\end{equation*}
+we then have eigenfunctions
+\begin{align*}
+    u_{n} = c_{n} \sin \left( \frac{\pi(2n + 1)}{2} x \right),
+\end{align*}
+where $c_{n}$ is a normalization constant. We can compute this normalization constant with
+
+\begin{align*}
+    (u_{n}, u_{n}) &= \int_{0}^{1} \sin^{2} \left( \sqrt{\lambda_{n}} x \right)dx\\
+                         &= \frac{1}{2}\int_{0}^{1} 1 - \cos ( 2\sqrt{\lambda_{n}} x )dx\\
+                         &= \frac{1}{2} - \frac{\sin(2\sqrt{\lambda_{n}})}{4\sqrt{\lambda_{n}}}\\
+                         &= \frac{1}{2} - \frac{\sin ((2n+1) \pi)}{4\sqrt{\lambda_{n}}} = \frac{1}{2},
+\end{align*}
+where we've used that $\sin x$ is zero for $x = k\pi, k\in\bbZ$. Now, we have normalization constant
+
+\begin{align*}
+c_{n} = (u_{n}, u_{n})^{- 1 / 2} = \sqrt{2}\\
+u_{n}(x) = \sqrt{2} \sin(\sqrt{\lambda_{n}x}).
+\end{align*}
+We can then see that our $u_{n}$ form an orthonormal set of functions with real valued eigenvalues. We can then compute the inner product of our in-homogenous term $f(x) = 10e^{x}$ and the eigenfunctions as 
+\begin{align*}
+    (10e^{x}, u_{n}) &= 10\sqrt{2}\int_{0}^{1} e^{x}\sin \left( \sqrt{\lambda_{n}} x \right)dx\\
+                     &= \frac{10 \sqrt{2}}{\lambda_{n} + 1} \left(e^{x} \sin(\sqrt{\lambda_{n}}x) - e^{x}\sqrt{\lambda_{n}}\cos(\sqrt{\lambda_{n}}x)\right)_{x=0}^{x=1}\\
+                     &= \frac{10 \sqrt{2}}{\lambda_{n} + 1} \left(\sqrt{\lambda_{n}} + e \sin\sqrt{\lambda_{n}} \right)\\
+                     &= \frac{10 \sqrt{2}}{\lambda_{n} + 1} \left(\sqrt{\lambda_{n}} + e(-1)^{n} \right),
+\end{align*}
+where we've solved the integral with integration by parts and noted that $\sin \sqrt{\lambda_{n}} = \pm 1$ in the last line. Finally, we can solve for our solution as
+
+\begin{align*}
+    u(x) &= \sum_{n=1}^{\infty} \frac{(f, u_{n})}{\lambda_{n} - 2} u_{n}(x)\\
+         &= 20\sum_{n=1}^{\infty} \left(\frac{\sqrt{\lambda_{n}} + e(-1)^{n}}{(\lambda_{n} + 1)(\lambda_{n} - 2)}\right)\sin(\sqrt{\lambda_{n}}x).
+\end{align*}
+\end{sol}
+
+\newpage
+
+\begin{exer}
+    Given $L = - d^{2} / dx^{2}$, find the eigenfunction expansion solution of 
+    \begin{align*}
+        \frac{d^{2} y}{dx^{2}} + 2y = -x, \quad y(0) = 0, y(1) + y'(1) = 0.
+    \end{align*}
+\end{exer}
+
+\begin{sol}
+We rewrite this as
+\begin{align*}
+-y'' = 2y + x.
+\end{align*}
+Rewriting this as an eigenvalue problem, we have
+\begin{align*}
+    - \frac{d^{2}u_{n}}{dx^{2}} = \lambda_{n} u_{n},
+\end{align*}
+where $\lambda_{n}$ and $u_{n}$ are the $n$-th eigenvalue and eigenfunction respectively. This eigenvalue problem has solutions of the form
+\begin{align*}
+    u_{n} = c_{1} \sin (\sqrt{\lambda_{n}} x) + c_{2} \cos (\sqrt{\lambda_{n}} x).
+\end{align*}
+In order for this to satisfy our desired boundary condition $u_{n}(0) = 0$, we have that $c_{2} = 0$. The second boundary condition then gives that
+\begin{align*}
+    \sqrt{\lambda_{n}} + \tan(\sqrt{\lambda_{n}}) = 0.
+\end{align*}
+As this is a transcendental function, I will not solve it by hand. Our normalized eigenfunctions are then of the form
+\begin{align*}
+    u_{n} = \left(\frac{2}{1 + \cos^{2} \sqrt{\lambda_{n}}}\right)^{\frac{1}{2}} \sin \sqrt{\lambda_{n}} x, n \in \bbN.
+\end{align*}
+This is equation 60 in the lecture notes. Next, we compute inner product of our in-homogenous term $x$ and our basis functions, so that 
+\begin{align*}
+    (f, u_{n}) &=  \left(\frac{2}{1 + \cos^{2} \sqrt{\lambda_{n}}}\right)^{\frac{1}{2}} \int_{0}^{1} x \sin(\sqrt{\lambda_{n}} x) dx\\
+                       &= \frac{2\sqrt{2} \sin \sqrt{\lambda_{n}}}{\lambda_{n} (1 + \cos^{2}(\sqrt{\lambda_{n}}))^{\frac{1}{2}}}
+\end{align*}
+Writing $f$ in terms of its eigenfunction expansion is then
+\begin{align*}
+    f(x) &= \sum_{n=1}^{\infty}  (f, u_{n}) u_{n}(x) \\
+         &= 4 \sum_{n=1}^{\infty} \frac{\sin \sqrt{\lambda_{n}} \sin( \sqrt{\lambda_{n}} x )}{\lambda_{n} (1 + \cos^{2}(\sqrt{\lambda_{n}}))},
+\end{align*}
+which gives us a final solution to our differential equation
+\end{sol}
+\begin{align*}
+    u(x) &= \sum_{n=1}^{\infty} \frac{(f, u_{n})}{\lambda_{n} - 2} u_{n}(x)\\
+         &= 4 \sum_{n=1}^{\infty} \frac{\sin \sqrt{\lambda_{n}} \sin( \sqrt{\lambda_{n}} x )}{\lambda_{n} (\lambda_{n} - 2) (1 + \cos^{2}(\sqrt{\lambda_{n}}))},
+\end{align*}
+\newpage
+
+\begin{exer}
+Consider the Sturm-Liouville eigenvalue problem:
+\begin{align*}
+    Lu = -\frac{d}{dx}\left[ p(x) \frac{du}{dx} \right] + q(x) u = \lambda \rho(x) u, 0 < x < L,
+\end{align*}
+with the boundary conditions
+\begin{align*}
+    \alpha_{1}u(0) + \beta_{1}u'(0) &= 0\\
+    \alpha_{2}u(L) + \beta_{2}u'(L) &= 0
+\end{align*}
+and with $p(x) > 0$,  $\rho(x) > 0$, and  $q(x) \geq 0$ and with  $p(x), \rho(x), q(x)$ and  $p'(x)$ continuous over  $0 < x < L$. With the inner product,
+\begin{equation*}
+    (\phi, \psi) = \int_{0}^{L} \rho(x) \phi(x) \overline{\psi}(x)dx
+\end{equation*}
+show the following:
+
+\begin{enumerate}[(a)]
+    \item $L$ is a self-adjoint operator.
+    \item Eigenfunctions corresponding to different eigenvalues are orthogonal 
+    \item Eigenvalues are real, non-negative, and eigenfunctions may be chosen to be real value.
+    \item Each eigenvalue is simple i.e. it only has one eigenfunction. (Hint: recall that for each eigenvalue, there can be at most two linearly independent solutions - calculate the Wronskian of these two solutions adn see what it implies).
+\end{enumerate}
+\end{exer}
+
+\begin{sol}
+    a) We'll show that 
+    \begin{equation*}
+        (Lu, v) - (u, Lv) = 0.
+    \end{equation*}
+We write the difference as
+\begin{align*}
+  (Lu, v) - (u, Lv) =  \int_{0}^{L} Lu(x) \cdot \overline{v}(x) - u(x) \cdot \overline{Lv}(x) dx 
+\end{align*}
+We can simplify this as
+\begin{align*}
+   (Lu, v) - (u, Lv)  &= \int_{0}^{L} u(x)\frac{d}{dx}\left[ p(x) \overline{v'}(x)\right] 
+    - \overline{v}(x) \frac{d}{dx}\left[p(x) u'(x) \right]dx\\
+    &+ \int_{0}^{L} q(x)u(x) \overline{v}(x) - q(x)\overline{v}(x) u(x) dx.
+\end{align*}
+The term in the last line is clearly 0, we can additionally expand the integrand in the first line with the product rule
+\begin{align*}
+&\int_{0}^{L} u(x)\frac{d}{dx}\left[ p(x) \overline{v'}(x)\right]      - \overline{v}(x) \frac{d}{dx}\left[p(x) u'(x) \right]dx\\
+&= \int_{0}^{L} \frac{d}{dx}\left[ p(x)\left( u(x)\overline{v'}(x) - u'(x) \overline{v}(x)\right) \right] \\
+&= \left[ p(x)\left( u(x)\overline{v'}(x) - u'(x) \overline{v}(x)\right) \right]_{x=0}^{x=L}
+\end{align*}
+In the case that $u$ and $v$ share boundary conditions, this must be 0. We'll show this as follows. Under our assumed boundary conditions, both $u$ and $v$ satisfy
+\begin{align*}
+    g(0) = -\frac{\beta_{1}}{\alpha_{1}} g'(0)\\
+    g(L) = -\frac{\beta_{2}}{\alpha_{2}} g'(L).
+\end{align*}
+
+We then have that
+\begin{align*}
+   &u(L) \overline{v'}(L) - u'(L) \overline{v}(L)\\
+   &= -\frac{\alpha_{2}}{\beta_{2}} u(L) \overline{v}(L) +  \frac{\alpha_{2}}{\beta_{2}} u(L) \overline{v}(L) = 0
+\end{align*}
+The same follows for the other boundary at 0. This shows that
+\begin{align*}
+    (Lu, v) - (u, Lv) = 0,
+\end{align*}
+i.e. that $L$ is self-adjoint.
+
+\newpage
+
+    b) Suppose that we have eigenfunctions $u_{n}$ and $u_{m}$ corresponding to distinct eigenvalues $\lambda_{n} \neq \lambda_{m}$. We have that
+    \begin{equation*}
+        (Lu_{m}, u_{n}) = (u_{m}, Lu_{n})
+    \end{equation*}
+    since $L$ is self-adjoint. Further, using that $u_{m}$ and $u_{n}$ are eigenfunctions, we have
+\begin{equation*}
+    (Lu_{m}, u_{n}) = \lambda_{m} (u_{m}, u_{n}) \quad (u_{m}, Lu_{n}) = \overline{\lambda}_{n} = (u_{m}, u_{n}).
+\end{equation*}
+As $\lambda_{n} \neq \lambda_{m}$, we see that
+\begin{equation*}
+    (\lambda_{m} - \overline{\lambda}_{n})(u_{m}, u_{n}) =  (Lu_{m}, u_{n}) - (u_{m}, Lu_{n}) =  0
+\end{equation*}
+which implies that $(u_{m}, u_{n}) = 0$.
+
+\newpage
+
+    c) Once again assuming that $u_{m}$ is an eigenfunction, we have that
+    \begin{align*}
+    (Lu_{m}, u_{m}) = (u_{m}, Lu_{m})\\
+    (Lu_{m}, u_{m}) = \lambda_{m} (u_{m}, u_{m})\\
+    (u_{m}, Lu_{m}) = \overline{\lambda}_{m} (u_{m}, u_{m}).
+    \end{align*}
+    This implies that 
+    \begin{align*}
+     \lambda_{m} (u_{m}, u_{m}) =\overline{\lambda}_{m} (u_{m}, u_{m}),
+    \end{align*}
+    which implies that $\lambda_{m} = \overline{\lambda}_{m}$ i.e. the eigenvalue is real. To show the eigenvalues are non-negative, we begin with the eigenvalue problem and multiply by $u(x)$
+\begin{align*}
+    \int_{0}^{L} \frac{d}{dx}\left[p(x) u'(x)\right] u(x) + q(x) u^{2}(x) + \lambda \rho(x) u^{2}(x) dx = 0.
+\end{align*}
+Integrating the first by parts, we see
+\begin{align*}
+\int_{0}^{L} \frac{d}{dx}\left[p(x) u'(x)\right] u(x) 
+= [ p(x) u'(x) u(x) ]_{x=0}^{x=L} - 
+\int_{0}^{L} p(x) u'(x)^{2}dx
+\end{align*}
+Putting this together, we have
+
+\begin{align*}
+[ p(x) u'(x) u(x) ]_{x=0}^{x=L} +
+\int_{0}^{L} q(x) u^{2}(x) + \lambda \rho(x) u^{2}(x) - p(x) u'(x)^{2}dx = 0
+\end{align*}
+Plugging in boundary conditions, we have that
+\begin{align*}
+    \lambda \int_{0}^{L} \rho(x) u^{2}(x)dx + \int_{0}^{L} q(x) u^{2}(x)dx = \int_{0}^{L} p(x) u'(x)^{2}  dx +  \frac{\alpha_{2}}{\beta_{2}}p(L) u(L)^{2} - \frac{\alpha_{1}}{\beta_{1}} p(0) u(0)^{2}.
+\end{align*}
+I want to make a claim here on the right hand side but the fact that I don't have conditions on $\alpha_{1}$, $\alpha_{2}$, $\beta_{1}$ and $\beta_{2}$ seems to be preventing this.
+
+%TODO: Show that they arwe non-negartive and eigenfunctions are real.
+
+\newpage
+
+    d) Suppose that $y_{m}, y_{n}$ are eigenfunctions corresponding to the eigenvalue $\lambda$. Writing the Wronksian of these two functions at 0, we have
+    \begin{align*}
+        y_{m}(0) y'_{n}(0) - y'_{m}(0)y_{n}(0) = 0
+    \end{align*}
+    because $y_{m}$ and $y_{n}$ have the same boundary conditions at 0. Now writing
+    \begin{align*}
+        y_{m}(x) L y_{n}(x) - y_{n}(x) Ly_{m}(x) = 0
+    \end{align*}
+    since $y_{m}$ and $y_{n}$ correspond to the same eigenvalue, we can expand the definition of the operator, so that
+    \begin{align*}
+        - y_{m}(x) \frac{d}{dx}\left[ p(x) y'_{n}(x)\right]
+        + y_{n}(x) \frac{d}{dx}\left[ p(x) y'_{m}(x)\right]
+        = 0
+    \end{align*}
+    We can recognize this as the product rule of another function which shows
+    \begin{equation*}
+        \frac{d}{dx}\left[ p(x)(y_{n} y'_{m} - y'_{n} y_{m})\right] = 0,
+    \end{equation*}
+    which implies that 
+    \begin{align*}
+        p(x) W(y_{n}, y_{m})(x) = 0
+    \end{align*}
+    for all $x$ i.e. the Wronskian is identically 0 and $y_{n}$ and $y_{m}$ are linearly dependent.
+\end{sol}
+\end{document}

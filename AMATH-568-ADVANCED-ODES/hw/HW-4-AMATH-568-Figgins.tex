@@ -1,0 +1,300 @@
+%Preamble
+\documentclass[12pt]{article}
+\usepackage{fancyhdr}
+\usepackage{extramarks}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{amsrefs}
+\usepackage{amsfonts}
+\usepackage{mathrsfs}
+\usepackage{mathtools}
+\usepackage[mathcal]{eucal} %% changes meaning of \mathcal
+\usepackage{enumerate}
+\usepackage[shortlabels]{enumitem}
+\usepackage{verbatim} %% includes comment environment
+\usepackage{hyperref}
+\usepackage[capitalize]{cleveref}
+\crefformat{equation}{~(#2#1#3)}
+\usepackage{caption, subcaption}
+\usepackage{graphicx}
+\usepackage{fullpage} %%smaller margins
+\usepackage[all,arc]{xy}
+\usepackage{mathrsfs}
+
+\hypersetup{
+    linktoc=all,     % set to all if you want both sections and subsections linked
+}
+
+\topmargin=-0.45in
+\evensidemargin=0in
+\oddsidemargin=0in
+\textwidth=6.5in
+\textheight=9.0in
+\headsep=0.25in
+\setlength{\headheight}{16pt}
+
+\linespread{1.0}
+
+\pagestyle{fancy}
+\lhead{\Name}
+\chead{\hwClass: \hwTitle}
+\rhead{\hwDueDate}
+\lfoot{\lastxmark}
+\cfoot{\thepage}
+
+\renewcommand\headrulewidth{0.4pt}
+\renewcommand\footrulewidth{0.4pt}
+
+\setlength\parindent{0pt}
+
+%% Title Info
+\newcommand{\hwTitle}{HW \# 4}
+\newcommand{\hwDueDate}{Feb 12, 2020}
+\newcommand{\hwClass}{AMATH 568}
+\newcommand{\hwClassTime}{}
+\newcommand{\hwClassInstructor}{}
+\newcommand{\Name}{\textbf{Marlin Figgins}}
+
+
+%% MATH MACROS
+\newcommand{\bbF}{\mathbb{F}}
+\newcommand{\bbN}{\mathbb{N}}
+\newcommand{\bbQ}{\mathbb{Q}}
+\newcommand{\bbR}{\mathbb{R}}
+\newcommand{\bbZ}{\mathbb{Z}}
+\newcommand{\bbC}{\mathbb{C}}
+\newcommand{\abs}[1]{ \left| #1 \right| }
+\newcommand{\diff}[2]{\frac{d #1}{d #2}}
+\newcommand{\infsum}[1]{\sum_{#1}^{\infty}}
+\newcommand{\norm}[1]{ \left|\left| #1 \right|\right| }
+\newcommand{\eval}[1]{ \left. #1 \right| }
+\newcommand{\Expect}[1]{\mathbb{E}\left[#1 \right]}
+\newcommand{\Var}[1]{\mathbb{V}\left[#1 \right]}
+\renewcommand{\vec}[1]{\mathbf{#1}}
+
+\renewcommand{\phi}{\varphi}
+\renewcommand{\emptyset}{\O}
+
+%--------Theorem Environments--------
+%theoremstyle{plain} --- defaultx
+\newtheorem{thm}{Theorem}[section]
+\newtheorem{cor}[thm]{Corollary}
+\newtheorem{prop}[thm]{Proposition}
+\newtheorem{lem}[thm]{Lemma}
+\newtheorem{conj}[thm]{Conjecture}
+\newtheorem{quest}[thm]{Question}
+
+\theoremstyle{definition}
+\newtheorem{defn}[thm]{Definition}
+\newtheorem{defns}[thm]{Definitions}
+\newtheorem{con}[thm]{Construction}
+\newtheorem{exmp}[thm]{Example}
+\newtheorem{exmps}[thm]{Examples}
+\newtheorem{notn}[thm]{Notation}
+\newtheorem{notns}[thm]{Notations}
+\newtheorem{addm}[thm]{Addendum}
+
+% Environments for answers and solutions
+\newtheorem{exer}{Exercise}
+\newtheorem{sol}{Solution}
+
+\theoremstyle{remark}
+\newtheorem{rem}[thm]{Remark}
+\newtheorem{rems}[thm]{Remarks}
+\newtheorem{warn}[thm]{Warning}
+\newtheorem{sch}[thm]{Scholium}
+
+\makeatletter
+\let\c@equation\c@thm
+\makeatother
+
+\begin{document}
+
+\begin{exer}
+
+Consider the weakly nonlinear oscillator:
+
+\begin{equation*}
+    \frac{d^{2} u}{dt^{2}} + u + \epsilon u^{5} = 0
+\end{equation*}
+with $u(0) = 0$ and $u'(0) = A > 0$ and with $0 < \epsilon \ll 1$.
+\begin{enumerate}[(a)]
+    \item  Use a regular perturbation expansion and calculate the first two terms.
+    \item Determine at what time the approximation of part (a) fails to hold.
+    \item Use a Poincare-Lindstedt expansion and determine the first two terms and frequency corrections. 
+    \item For $\epsilon = 0.1$ plot the numerical solution (from MATLAB), the regular expansion solution, and the Poincare-Lindstedt solution for $0 \leq t \leq 20$.
+\end{enumerate}
+\end{exer}
+
+\begin{sol}
+    (a) We begin by writing 
+    \begin{equation*}
+        u(t) = u_{0}(t) + \epsilon u_{1}(t) + \cdots.
+    \end{equation*}
+    Plugging this subsitution in the differential equation, we can gather terms of the same order. For example, we have that
+    \begin{align*}
+        O(1): \quad \quad u_{0 tt} + u_{0} = 0,
+    \end{align*}
+    since all $u^{5}$ terms are of order $\epsilon$ or higher. We can get the first and second order coeffiecient as
+    \begin{align*}
+        O(\epsilon):& \quad \quad u_{1tt} + u_{1} = - u_{0}^{5} \\
+        O(\epsilon^{2}):& \quad \quad u_{2tt} + u_{2} = - 5 u_{1} u_{0}^{4}. 
+    \end{align*}
+    We've used the binomial theorem to find the coefficients in the expansion 
+\begin{equation*}
+    \epsilon u^{5} = \epsilon \left( \sum_{n=0}^{\infty} \epsilon^{n} u_{n} \right)^{5} = \epsilon u_{0}^{5} + \epsilon^{2} u_{1} u_{0}^{4} + \cdots.
+\end{equation*}
+Starting with the $O(1)$ equation, we see that with the initial conditions $u_{0}(0) = 0$ and $u_{0}'(0) = A > 0$, we have that
+\begin{align*}
+    u_{0}(t) = A \sin(t).
+\end{align*}
+This allows us to simplify the first order equation as
+\begin{align*}
+    u_{1tt} + u_{1} = - A^{5} \sin^{5}(t) &= -\frac{A^{5}}{16} (\sin(5t) - 5\sin(3t) + 10 \sin(t))\\
+    u_{1}(0) = 0, &\quad  u_{1}'(0) = 0.
+\end{align*}
+This equation has solution
+\begin{equation*}
+    u_{1}(t) = \frac{A^{5}}{384}\left( - 80\sin(t) - 15 \sin(3t) + \sin(5t) + 120 t \cos(t) \right)
+\end{equation*}
+
+(b) Given that our approximation is written as
+\begin{align*}
+    u(t) \approx u_{0}(t) + \epsilon u_{1}(t),
+\end{align*}
+we see this approximation will grow unbounded as $t \approx \epsilon^{-1}$ due to growth term given by $\frac{120}{384} A^{5} t \cos(t)$ above.
+
+(c) We'll now use a Poincare-Lindstedt expansion. This is using the similar expansion of $u$ but we addditionally change variables to $\tau = \omega t$ so that
+\begin{align*}
+    \omega &= \omega_{0} + \epsilon \omega_{1} + \epsilon^{2}  \omega_{2} + \cdots\\
+    u(\tau) &= u_{0}(\tau) + \epsilon u_{1}(\tau) + \epsilon^{2} u_{2}(\tau) \\
+           &\omega^{2} u_{\tau \tau}(\tau) + u(\tau) + \epsilon u(\tau)^{5} = 0.
+\end{align*}
+This gives leading order equation
+\begin{align*}
+    \omega_{0}^{2} u_{0\tau \tau} + u_{0} = 0\\
+    u_{0}(0) = 0, \quad u_{0}'(0)=0.
+\end{align*}
+Picking $w_{0} = 1$ for simplicity, we see that this has leading order solution
+\begin{align*}
+    u_{0} = A \sin(\tau).
+\end{align*}
+We can now find the first order approximation
+\begin{align*}
+   u_{1 \tau \tau } + u_{1} = - u_{0}^{5} -   2 \omega_{1} u_{0\tau \tau}.
+\end{align*}
+
+This gives us a solution
+\begin{equation*}
+    u_{1}(\tau) = \frac{A^{5}}{384}\left( - 80\sin(\tau) - 15 \sin(3\tau) + \sin(5\tau) + 120 \tau \cos(\tau) \right) + A \omega_{1} (\tau \cos(\tau) - \sin(\tau)).
+\end{equation*}
+To remove the secular growth term, we  solve
+\begin{align*}
+    \left( \frac{120}{384} A^{5} + A\omega_{1}\right) \tau \cos(\tau) = 0.\\
+    \omega_{1} = -\frac{120}{384} A^{4}.
+\end{align*}
+
+
+(d) Plotting attached in appendix.
+
+\end{sol}
+
+\newpage
+
+\begin{exer}
+Consider Rayleigh’s equation:
+\begin{align*}
+    \frac{d^{2} u}{dt^{2}} + u + \epsilon \left[ -\frac{du}{dt}  + \frac{1}{3} \left( \frac{du}{dt} \right)^{3}\right] = 0
+\end{align*}
+which has only one periodic solution called a “limit cycle” $0 < \epsilon \ll 1$. Given
+\begin{equation*}
+    u(0) = 0 \quad \text{ and } \quad \frac{d u}{dt}(0) = A.
+\end{equation*}
+
+\begin{enumerate}[(a)]
+    \item Use a multiple scale expansion to calculate the leading order behavior.
+    \item Use a Poincare-Lindsted expansion and an expansion of $A = A_0 + \epsilon A_1 + \ldots$ to calculate the leading-order solution and the first non-trivial frequency shift for the limit cycle.
+    \item For $\epsilon = 0.01, 0.1, 0.2$ and $0.3$, plot the numerical solution and the multiple scale expansion for $0 \leq t \leq 40$ and for various values of $A$ for your multiple scale solution. Also plot the limit cycle solution calculated from part (b)
+    \item Calculate the error
+\begin{equation*}
+    E(t) = \abs{ y_{\text{numerical}}(t) - y_{\text{approx}}(t) }
+\end{equation*}
+as a function of time ($0 \leq t \leq 40$) using $\epsilon = 0.01,0.1,0.2$ and $0.3$.
+\end{enumerate}
+\end{exer}
+
+\begin{sol}
+    (a) Adding an independent scaled time variable $\tau = \epsilon t$ to our differential equation, we get that our leading order term is given by
+    \begin{align*}
+        u_{0tt} + u_{0} = 0\\
+        u_{0}(0,0) = 0, \quad u_{0t}(0,0) = A. 
+    \end{align*}
+    Solving this, gives the leading order behavior as 
+    \begin{align*}
+        u_{0}(t, \tau) &= A(\tau) \sin(t) + B(\tau) \cos(t)\\
+        A(0) = A, & \quad B(0) = 0.
+    \end{align*}
+    Writing out the $O(\epsilon)$ terms of the expansion, we can derive formulas for $A(\tau)$ and  $B(\tau)$. Writing $\rho(\tau) = 4 A^{2} / ( A^{2} + (4 - A^{2}) \exp(- \tau) )$ as in (268) in the lecture notes, we have
+    \begin{align*}
+        A(\tau) &=\frac{2A}{\sqrt{A^{2} + (4 - A^{2}) \exp(- \tau) }}\\
+        B(\tau) &= 0.
+    \end{align*}
+
+    (b) Now using a PL, we'll expand 
+    \begin{align*}
+       \omega &= \omega_{0} + \epsilon \omega_{1} + \epsilon^{2}  \omega_{2} + \cdots\\
+    u(\tau) &= u_{0}(\tau) + \epsilon u_{1}(\tau) + \epsilon^{2} u_{2}(\tau) \\
+    A &= A_{0} + \epsilon A_{1} + \epsilon^{2} A_{2}\\
+           &\omega^{2} u_{\tau \tau} + u - \epsilon \omega u_{\tau}+ \epsilon \omega^{3}u_{\tau}^{3} / 3 = 0
+    \end{align*}
+    This allows us to write the leading order solution as
+    \begin{align*}
+        &u_{0\tau \tau} + u_{0} = 0,\\
+        &u_{0}(0,0) = 0, u_{0t}(0,0) = A_{0}
+    \end{align*}
+    where once again I've set $\omega_{0}$ = 1. This has solution
+    \begin{align*}
+        u_{0} = A_{0} \sin(\tau) .
+    \end{align*}
+    Now for the $O(\epsilon)$ term,
+    \begin{align*}
+    u_{1 \tau \tau} + u_{1} =  u_{0\tau} - u_{0\tau}^{3} / 3  - 2 \omega_{1} u_{0\tau \tau}= 0,\\
+    u_{1}(0,0) = 0, \quad u_{1 \tau}(0,0) = A_{1}.
+    \end{align*}
+    Plugging in our previous solution, we can simplify the baove equation as
+    \begin{align*}
+        u_{1 \tau \tau} + u_{1} &= A_{0} \cos(\tau) - A_{0}^{3} \cos^{3}(\tau) / 3 + 2 \omega_{1} \sin(\tau)\\
+                                &= \left(A_{0} - \frac{A_{0}^{3}}{4}\right ) \cos(\tau) + 2 \omega_{1} \sin(\tau) - \frac{A_{0}^{3}}{12} \cos(3x).
+\end{align*}
+In order to rid ourselves of the secular growth here (caused by the $\sin(\tau)$ and $\cos(\tau)$), we require that
+    \begin{align*}
+    A_{0} = 2, \quad \omega_{1} = 0.
+    \end{align*}
+    This leaves us with 
+    \begin{align*}
+        u_{1 \tau \tau} + u_{1} = - \frac{2}{3} \left(\cos(3\tau) \right) \\
+            u_{1}(0,0) = 0, \quad u_{1 \tau}(0,0) = A_{1}.
+    \end{align*}
+    This gives solution
+\begin{equation*}
+    u_{1}(\tau) = A_{1} \sin( \tau ) + \frac{2}{3} \cos(\tau)\cos(3\tau) - \frac{2}{3} \cos(3 \tau)
+\end{equation*}
+    Going one more level up, we can solve for the $O(\epsilon^{2})$ term as
+    \begin{align*}
+        2 \omega_{2} u_{0 \tau \tau} &+ u_{2 \tau \tau} + u_{2} - u_{1 \tau} + u_{0 \tau}^{2} u_{1 \tau} = 0.
+    \end{align*}
+    which we simplify to 
+    \begin{align*}
+        u_{2 \tau \tau} + u_{2} &= u_{1 \tau} - 2 \omega_{2} u_{0 \tau \tau} - u_{0 \tau}^{2} u_{1 \tau}\\
+                                &= - 2 A_{1} \cos( \tau ) - A_{1} \cos(3 \tau) + \frac{1}{4} \sin(\tau) + 4  \omega_{2} \sin( \tau ) + \frac{1}{6} \sin(3 \tau) + \frac{1}{4} \sin(5 \tau)    
+    \end{align*}
+    Once again, canceling secular growth terms requires
+    \begin{align*}
+    -2 A_{1} = 0 \quad  \frac{1}{4} = 4 \omega_{2} = 0\\
+    A_{1} = 0, \quad \omega_{2} = -\frac{1}{16}.
+    \end{align*}
+
+    (c, d) Plots attached in appendix.
+\end{sol}
+\end{document}

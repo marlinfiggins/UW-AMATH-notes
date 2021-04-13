@@ -1,0 +1,361 @@
+%Preamble
+\documentclass[12pt]{article}
+\usepackage{fancyhdr}
+\usepackage{extramarks}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{amsrefs}
+\usepackage{amsfonts}
+\usepackage{mathrsfs}
+\usepackage{mathtools}
+\usepackage[mathcal]{eucal} %% changes meaning of \mathcal
+\usepackage{enumerate}
+\usepackage[shortlabels]{enumitem}
+\usepackage{verbatim} %% includes comment environment
+\usepackage{hyperref}
+\usepackage[capitalize]{cleveref}
+\crefformat{equation}{~(#2#1#3)}
+\usepackage{caption, subcaption}
+\usepackage{graphicx}
+\usepackage{fullpage} %%smaller margins
+\usepackage[all,arc]{xy}
+\usepackage{mathrsfs}
+
+\hypersetup{
+    linktoc=all,     % set to all if you want both sections and subsections linked
+}
+
+\topmargin=-0.45in
+\evensidemargin=0in
+\oddsidemargin=0in
+\textwidth=6.5in
+\textheight=9.0in
+\headsep=0.25in
+\setlength{\headheight}{16pt}
+
+\linespread{1.0}
+
+\pagestyle{fancy}
+\lhead{\Name}
+\chead{\hwClass: \hwTitle}
+\rhead{\hwDueDate}
+\lfoot{\lastxmark}
+\cfoot{\thepage}
+
+\renewcommand\headrulewidth{0.4pt}
+\renewcommand\footrulewidth{0.4pt}
+
+\setlength\parindent{0pt}
+
+%% Title Info
+\newcommand{\hwTitle}{HW \# 3}
+\newcommand{\hwDueDate}{Feb 3, 2020}
+\newcommand{\hwClass}{AMATH 568}
+\newcommand{\hwClassTime}{}
+\newcommand{\hwClassInstructor}{}
+\newcommand{\Name}{\textbf{Marlin Figgins}}
+
+
+%% MATH MACROS
+\newcommand{\bbF}{\mathbb{F}}
+\newcommand{\bbN}{\mathbb{N}}
+\newcommand{\bbQ}{\mathbb{Q}}
+\newcommand{\bbR}{\mathbb{R}}
+\newcommand{\bbZ}{\mathbb{Z}}
+\newcommand{\bbC}{\mathbb{C}}
+\newcommand{\abs}[1]{ \left| #1 \right| }
+\newcommand{\diff}[2]{\frac{d #1}{d #2}}
+\newcommand{\infsum}[1]{\sum_{#1}^{\infty}}
+\newcommand{\norm}[1]{ \left|\left| #1 \right|\right| }
+\newcommand{\eval}[1]{ \left. #1 \right| }
+\newcommand{\Expect}[1]{\mathbb{E}\left[#1 \right]}
+\newcommand{\Var}[1]{\mathbb{V}\left[#1 \right]}
+\renewcommand{\vec}[1]{\mathbf{#1}}
+
+\renewcommand{\phi}{\varphi}
+\renewcommand{\emptyset}{\O}
+
+%--------Theorem Environments--------
+%theoremstyle{plain} --- defaultx
+\newtheorem{thm}{Theorem}[section]
+\newtheorem{cor}[thm]{Corollary}
+\newtheorem{prop}[thm]{Proposition}
+\newtheorem{lem}[thm]{Lemma}
+\newtheorem{conj}[thm]{Conjecture}
+\newtheorem{quest}[thm]{Question}
+
+\theoremstyle{definition}
+\newtheorem{defn}[thm]{Definition}
+\newtheorem{defns}[thm]{Definitions}
+\newtheorem{con}[thm]{Construction}
+\newtheorem{exmp}[thm]{Example}
+\newtheorem{exmps}[thm]{Examples}
+\newtheorem{notn}[thm]{Notation}
+\newtheorem{notns}[thm]{Notations}
+\newtheorem{addm}[thm]{Addendum}
+
+% Environments for answers and solutions
+\newtheorem{exer}{Exercise}
+\newtheorem{sol}{Solution}
+
+\theoremstyle{remark}
+\newtheorem{rem}[thm]{Remark}
+\newtheorem{rems}[thm]{Remarks}
+\newtheorem{warn}[thm]{Warning}
+\newtheorem{sch}[thm]{Scholium}
+
+\makeatletter
+\let\c@equation\c@thm
+\makeatother
+
+\begin{document}
+
+\begin{exer}[Particle in a box]
+
+    Consider the time-dependent Schrodinger equation:
+    \begin{equation*}
+        i \hslash \frac{\partial \psi}{\partial t} = - \frac{\hslash^{2}}{2m} \frac{\partial^{2} \psi}{\partial x^{2}} + V(x) \psi
+    \end{equation*}
+    which is the underlying equation of quantum mechanics where $V(x)$ is a given potential.
+
+    \begin{enumerate}[(a)]
+        \item Let $\psi = u(x) \exp(-iEt / \hslash)$ and derive the time-independent Schrodinger equation. Note that $E$ here corresponds to energy. 
+        \item Show that the resulting eigenvalue problem is of Sturm-Liovulle type.
+        \item Consider the potential
+            \begin{equation*}
+                V(x) = 
+                \begin{cases}
+                    0,\quad \abs{x} < L\\
+                    \infty, \quad\text{elsewhere}
+                \end{cases}
+            \end{equation*}
+            which implies $u(L) = u(-L) = 0$. Calculate the normalized eigenfunctions and eigenvalues.
+        \item What is the energy of the ground state (the lowest energy state  $\neq $ 0)?
+        \item If an electron jumps from the third state to the ground state, what is the frequency of the emitted photon? Recall that $E = \hslash \omega$.
+        \item If the box is cut in half, then $u(0) = u(L) = 0$. What are the resulting eigenfunctions and eigenvalues? (Think!)
+    \end{enumerate}
+\end{exer}
+
+\begin{sol}
+    (a) Plugging in the form of $\psi$ given, we see that
+     \begin{equation*}
+         i \hslash u(x) \frac{\partial }{\partial t}\Big( e^{-i E t / \hslash} \Big) = - \frac{\hslash^{2}}{2m} e^{-i E t / \hslash} \frac{\partial^{2}}{\partial x^{2}}\Big( u(x) \Big) + V(x) u(x) e^{-iEt / \hslash}.
+    \end{equation*}
+    Executing the derivatives, we see that
+    \begin{equation*}
+       E u(x) e^{- i E t / \hslash} = - \frac{\hslash^{2}}{2m} u''(x) e^{- i E t / \hslash} + V(x) u(x) e^{-i E t / \hslash}.
+    \end{equation*}
+    Dividing by the exponential term, we get the desired time independent equation,
+    \begin{equation*}
+        E u(x) = - \frac{\hslash^{2}}{2m} u''(x) + V(x) u(x).
+    \end{equation*}
+
+
+    (b) We can see this is of the form of a Sturm-Lioville eigenvalue problem for
+    \begin{equation*}
+        p(x) = \frac{\hslash^{2}}{2m}, \quad V(x) = q(x), w(x) = 1.
+    \end{equation*}
+
+    (c) We want eigenfunctions $u_{n}$ which satisfy 
+    \begin{align*}
+        E u_{n} = \frac{\hslash^{2}}{2m} u_{n}''\\
+        u(-L) = 0 = u(L)
+    \end{align*}
+    We can re-write this first equation as
+\begin{equation*}
+    \lambda u_{n} = - u''_{n}, \quad \lambda = \frac{2mE}{\hslash^{2}},
+\end{equation*}
+satisfying the same boundary conditions. This has general solutions of the form
+    \begin{equation*}
+        c_{1} \sin( \sqrt{\lambda} x) + c_{2} \cos( \sqrt{\lambda} x).
+    \end{equation*}
+  \end{sol}
+  Using the desired boundary conditions $u(L) = u(-L) = 0$, we see that
+  \begin{align*}
+      c_{1} \sin(-\sqrt{\lambda}  L) + c_{2} \cos( -\sqrt{\lambda} L) = 0\\
+      c_{1} \sin(\sqrt{\lambda}  L) + c_{2} \cos(\sqrt{\lambda} L) = 0
+  \end{align*}
+  There are two cases here. One for the sine term being 0 and another for the cosine term. When $\sqrt{\lambda} L = n\pi$ for $n\in\bbN$, we have eigenfunction of the form 
+  \begin{equation*}
+      \phi_{n} = c_{1} \sin( -\sqrt{\lambda} L ) = c_{1} \sin( \sqrt{\lambda} L ) = 0, \quad \sqrt{\lambda} = \frac{n\pi}{L}, n\in\bbN.
+  \end{equation*}
+
+  When instead $\sqrt{\lambda} L = (n +\frac{1}{2}) \pi$, we have eigenfunctions of the form
+  \begin{equation*}
+      \psi_{n} = c_{2} \cos(- \sqrt{\lambda} L) + c_{2} \cos(\sqrt{\lambda}L) = 0, \quad \sqrt{\lambda} = \frac{(n + \frac{1}{2}) \pi}{L}, n\in \bbN_{0}.
+  \end{equation*}
+  We can then normalize these eigenfunctions by integrating them. From which, we'll find normalized eigenfunctions and eigenvalues. I write these as $E_{n}$ a bit further down.
+  \begin{align*}
+      \phi_{n} &= \sqrt{\frac{1}{L}} \sin( \sqrt{\lambda_{n, \phi}} x),  \lambda_{n, \phi} = \frac{n^{2} \pi^{2}}{L^{2}}\\
+      \psi_{n} &= \sqrt{\frac{1}{L}} \cos( \sqrt{\lambda_{n, \psi}} x),  \lambda_{n, \psi} = \frac{(2n + 1)^{2} \pi^{2}}{4L^{2}}\\
+  \end{align*}
+
+  (d) The energy of the ground state can be computed using $\lambda_{0, \psi}$ as that is the lowest non-zero eigenvalue. That is,
+  \begin{align*}
+      \lambda_{0, \psi} = \frac{2mE}{\hslash^{2}} = \frac{\pi^{2}}{4L^{2}} \implies E_{\text{GS}} = \frac{\hslash^{2}\pi^{2}}{8mL^{2}}
+  \end{align*}
+
+  (e) We can write the energy corresponding to various states as
+  \begin{align*}
+      E_{n, \phi} &= \frac{n^{2}\hslash^{2} \pi^{2}}{ 2mL^{2}}\\
+      E_{n, \psi} &= \frac{(2n + 1)^{2} \hslash^{2}\pi^{2}}{8mL^{2}} 
+  \end{align*}
+  We can order the first couple of energies so that
+  \begin{equation*}
+      E_{0, \psi} < E_{1, \phi} < E_{1, \psi} < E_{2, \phi} < \ldots < E_{n-1, \psi} < E_{n, \phi} < E_{n, \psi} < \ldots.
+  \end{equation*}
+  If $\omega$ denotes the angular frequency, we can then write that the frequency emitted is given by the energy difference between the third state and the ground state. I'm unsure if the ordering is "Ground, 1st, 2nd" or "Ground, 2nd, 3rd" because I know nothing about physics, but I use the former.
+   \begin{equation*}
+       \omega = \frac{1}{\hslash} \left( E_{2, \phi} - E_{0, \psi} \right) = \frac{2\hslash\pi^{2}}{mL^{2}} - \frac{\hslash\pi^{2}}{8mL^{2}} = \frac{15\hslash \pi^{2}}{8mL^{2}}.
+  \end{equation*}
+
+  (f) If the box is cut in half, the boundary condition $u(0) = 0$ would eliminate all the $\psi_{n}$ eigenfunctions. We would have sine eigenfunctions which satisfy 
+  \begin{equation*}
+      \phi_{n} = c_{1} \sin (\sqrt{\lambda_{n}} L) = 0,
+  \end{equation*}
+  so that $ \sqrt{\lambda_{n}} = n\pi / L$ and our normalized eigenfunctions and eigenvalues would then be
+  \begin{equation*}
+      \phi_{n} = \sqrt{\frac{2}{L}} \sin \left( \frac{n\pi x}{L} \right), \quad \lambda_{n} = \frac{n^{2}\pi^{2}}{L^{2}} , \quad E_{n} = \frac{n^{2}\hslash^{2}\pi^{2}}{2mL^{2}}.
+  \end{equation*}
+  Notice that the normalization constant has changed as the interval of interest is now $[0,L]$.
+
+\newpage
+
+
+\begin{exer}
+Find the Green’s function (fundamental solution) for each of the following problems, and express the solution $u$ in terms of the Green’s function.
+\begin{enumerate}[(a)]
+    \item $u'' + c^{2}u = f(x)$ with $u(0) = u(L) = 0$
+    \item $u'' - c^{2} u = f(x)$ with $u(0) = u(L) = 0$
+\end{enumerate}
+\end{exer}
+
+\begin{sol}
+    (a) We will solve for the Green's function $G(x, \xi)$, $x,\xi \in [0,L]$ which satisfies
+    \begin{align*}
+        L^{\star} G(x, \xi) = L G(x, \xi) = G_{xx}(x, \xi) + c^{2} G(x, \xi) = \delta(x - \xi),
+    \end{align*}
+    since the Sturm-Lioville operator is self-adjoint. First, we impose continuity on our solution and next we integrate to find the jump in the derivative, so that for $\xi^{-}, \xi^{+}$ near $\xi$ with $\xi^{-} < \xi < \xi^{+}$ 
+    \begin{equation*}
+        \int_{\xi^{-}}^{\xi^{+}} G_{xx}(x, \xi) + c^{2} G(x, \xi) dx = \int_{\xi^{-}}^{\xi^{+}} \delta(x - \xi) dx = 1.
+    \end{equation*}
+    Integrating, we see that
+    \begin{align*}
+        G_{x}(\xi^{+}, \xi) - G_{x}(\xi^{-}, \xi) + c^{2} \int_{\xi^{-}}^{\xi^{+}} G(x, \xi) dx = 1,
+    \end{align*}
+    as $\xi^{-}$ and $\xi^{+}$ become closer the integral above should become 0 due to the continuity of $G$. Therefore, we have that
+    \begin{equation*}
+        G_{x}(\xi^{+}, \xi) - G_{x}(\xi^{-}, \xi)  = 1.
+    \end{equation*}
+\end{sol}
+We now we will find $y_{1}$ which satisfies boundary condition $y_{1}(0) = 0$ and satisfies
+\begin{equation*}
+    (y_{1})_{xx} + c^{2}y_{1} = 0,
+\end{equation*}
+which in this case is 
+\begin{equation*}
+    y_{1}(x) = \sin cx.
+\end{equation*}
+Repeating for the right boundary condition, we solve for $y_{2}$ and see that
+\begin{equation*}
+    y_{2} =  \sin c(x - L).
+\end{equation*}
+Computing the Wronskian of these two functions, we see that
+\begin{align*}
+    W(\xi) &= c \sin(c\xi) \cos(c\xi - cL)) - c\sin(c\xi - cL)) \cos(c\xi)\\
+           &= c \sin(cL).
+\end{align*}
+This allows us to write our Green's function as 
+\begin{align*}
+    G(x, \xi) = 
+    \begin{cases}
+        \frac{\sin(cx)\sin(c\xi - cL)}{c\sin(cL)}, \quad x \leq \xi\\
+        \frac{\sin(c\xi)\sin(cx - cL)}{c\sin(cL)}, \quad x > \xi.
+    \end{cases}
+\end{align*}
+We can then write our solution in terms of the Green's function as
+\begin{align*}
+    u(x) &= \int_{0}^{L} f(\xi) G(\xi, x) d\xi\\
+         &= \frac{\sin(cx - cL)}{c\sin(cL)} \int_{0}^{x} f(\xi)\sin(c\xi) d\xi +    \frac{\sin(cx)}{c\sin(cL)} \int_{x}^{L} f(x) \sin(c\xi - cL)d\xi.
+\end{align*}
+
+(b) Based on the work from part (a), we have that the jump in the derivative of our Green's function should still be one and our function is continuous. We begin by finding the $y_{1}$ which satisfies the left boundary condition $y_{1}(0) = 0$ and \begin{equation*}
+    (y_{1})_{xx} - c^{2} y_{1} = 0.
+\end{equation*}
+One such solution to this is given by
+\begin{equation*}
+    y_{1}(x) = e^{-cx} - e^{cx}. 
+\end{equation*}
+Add over the term with $c^{2}$ and integrate twice to see this, I'm lazy and will not show work here. Repeating this for the second boundary condition $y_{2}(L) = 0$, we find
+\begin{align*}
+    y_{2}(x) = e^{-cx} - e^{cx - 2Lc}.
+\end{align*}
+We can know compute the Wronksian as 
+\begin{align*}
+    W(\xi) &= -c(e^{-cx} - e^{cx})(e^{-cx} + e^{cx-2Lc}) +  c(e^{-cx} + e^{cx})(e^{-cx} - e^{cx-2Lc})\\
+           &= 2c( 1 - e^{-2Lc}).
+\end{align*}
+This shows that our Green's function is given by
+\begin{align*}
+    G(x, \xi) = 
+\begin{cases}
+    (e^{-cx} - e^{cx})(e^{-c\xi} - e^{c\xi - 2Lc}) / (2c(1 - e^{-2Lc})), \text{ if } x \leq \xi\\
+    (e^{-c\xi} - e^{c\xi})(e^{-cx} - e^{cx - 2Lc}) / (2c(1 - e^{-2Lc})), \text{ if } x > \xi.
+\end{cases}
+\end{align*}
+We can then find the solution by integrating
+\begin{align*}
+    u(x) &= \int_{0}^{L} f(\xi) G(\xi, x)d\xi \\
+         &= \frac{e^{-cx} - e^{cx - 2Lc}}{2c(1 - e^{-2LC})}\int_{0}^{x} f(\xi) (e^{-c\xi} - e^{c\xi}) d\xi\\
+         &+ \frac{e^{-cx} - e^{cx}}{2c(1 - e^{-2LC})} \int_{x}^{L} f(\xi) (e^{-c\xi} - e^{c\xi - 2Lc}) d\xi.
+\end{align*}
+\newpage
+
+\begin{exer}
+Calculate the solution of the Sturm-Liouville problem using the Green’s function approach (See the notes as I already showed you what the answer should be)
+\begin{equation*}
+    Lu = -[ p(x) u_{x} ]_{x} + q(x) u = f(x), \quad 0\leq x \leq L
+\end{equation*}
+with 
+\begin{equation*}
+    \alpha_{1} u(0) + \beta_{1} u'(0) = 0 \text{ and } \alpha_{2} u(L) + \beta_{2} u(L) = 0.
+\end{equation*}
+\end{exer}
+ \begin{sol}
+     Following the beginning of (2a), due to the self-adjointness of SL operator, we have that our Green's function ought to satisfy
+     \begin{align*}
+         L G(x,\xi) = - [p(x) G_{x}(x,\xi)]_{x} + q(x)G(x,\xi) = \delta(x - \xi),
+     \end{align*}
+     for $x,\xi \in L$. We can force our Green's function to be continuous, so that
+     \begin{align*}
+         G(\xi^{+}, \xi) - G(\xi^{-}, \xi) = 0,
+     \end{align*}
+     as $\xi^{-},\xi^{+} \to \xi$ from below and above respectively. In order to evaluate the jump in our derivative, we begin by integrating over the interval $[\xi^{-}, \xi^{+}]$, so that
+     \begin{align*}
+         -\int_{\xi^{-}}^{\xi^{+}} [p(x)G_{x}(x,\xi)]_{x} dx + \int_{\xi^{-}}^{\xi^{+}} q(x)G(x, \xi) dx + \int_{\xi^{-}}^{\xi^{+}} \delta(x - \xi) dx.
+     \end{align*}
+     The rightmost integral is one by the definition of the delta function. Additionally since we are integrating $[p(x)G(x,\xi)]_{x}$ with respect to $x$, we have that
+     \begin{align*}
+         - [ p(x) G_{x}(x, \xi) ]_{\xi^{-}}^{\xi^{+}} +  \int_{\xi^{-}}^{\xi^{+}} q(x)G(x, \xi) dx = 1\\
+         [p(x) G_{x}(x, \xi)]_{\xi} = -1.
+     \end{align*}
+     As $\xi^{-}$ and $\xi^{+}$ get closer to $\xi$, we have that the jump in our derivative is approximately
+     \begin{align*}
+         [G_{x}(x, \xi)]_{\xi} = -\frac{1}{p(\xi)}.
+     \end{align*}
+     Now solving the homogenous equation using the left boundary condition $\alpha_{1} u(0) + \beta_{1}u'(0)$, we can find a solution $y_{1}(x)$. Likewise using the right boundary condition, we find a solution $y_{2}(x)$ to the homogenous equation $L y_{2} = 0$. Combining these solutions with the constraints on continuity and the jump on the derivative, we see that
+     \begin{align*}
+         G(x, \xi) =
+         \begin{cases}
+             y_{1}(x) y_{2}(\xi) / (p(\xi) W(\xi)), x \leq \xi\\
+             y_{1}(\xi) y_{2}(x) / (p(\xi) W(\xi)), x > \xi.
+         \end{cases}
+     \end{align*}
+We can then integrate the Green's function against the forcing $f(x)$, so that the solution to the SL problem is given by
+     \begin{align*}
+         u(x) = \int_{0}^{L} f(\xi) G(\xi, x)d\xi.
+     \end{align*}
+     This will usually be computed as a weighted sum of two integrals as shown in the previous exercise.
+ \end{sol}
+\end{document}
