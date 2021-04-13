@@ -1,0 +1,464 @@
+%Preamble
+\documentclass[12pt]{article}
+\usepackage{fancyhdr}
+\usepackage{extramarks}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{amsrefs}
+\usepackage{amsfonts}
+\usepackage{mathrsfs}
+\usepackage{mathtools}
+\usepackage[mathcal]{eucal} %% changes meaning of \mathcal
+\usepackage{enumerate}
+\usepackage[shortlabels]{enumitem}
+\usepackage{verbatim} %% includes comment environment
+\usepackage{hyperref}
+\usepackage[capitalize]{cleveref}
+\crefformat{equation}{~(#2#1#3)}
+\usepackage{caption, subcaption}
+\usepackage{graphicx}
+\usepackage{fullpage} %%smaller margins
+\usepackage[all,arc]{xy}
+\usepackage{mathrsfs}
+
+\hypersetup{
+    linktoc=all,     % set to all if you want both sections and subsections linked
+}
+
+\topmargin=-0.45in
+\evensidemargin=0in
+\oddsidemargin=0in
+\textwidth=6.5in
+\textheight=9.0in
+\headsep=0.25in
+\setlength{\headheight}{16pt}
+
+\linespread{1.1}
+
+\pagestyle{fancy}
+\lhead{\Name}
+\chead{\hwTitle}
+\rhead{\hwClass}
+\lfoot{\lastxmark}
+\cfoot{\thepage}
+
+\renewcommand\headrulewidth{0.4pt}
+\renewcommand\footrulewidth{0.4pt}
+
+\setlength\parindent{0pt}
+
+%% Title Info
+\newcommand{\hwTitle}{HW \# 1}
+\newcommand{\hwDueDate}{Jan 20, 2021}
+\newcommand{\hwClass}{AMATH 562}
+\newcommand{\hwClassTime}{}
+\newcommand{\hwClassInstructor}{}
+\newcommand{\Name}{\textbf{Marlin Figgins}}
+
+
+%% MATH MACROS
+\newcommand{\bbF}{\mathbb{F}}
+\newcommand{\bbN}{\mathbb{N}}
+\newcommand{\bbQ}{\mathbb{Q}}
+\newcommand{\bbR}{\mathbb{R}}
+\newcommand{\bbZ}{\mathbb{Z}}
+\newcommand{\bbC}{\mathbb{C}}
+\newcommand{\Prob}{\mathbb{P}}
+\newcommand{\calF}{\mathcal{F}}
+\newcommand{\abs}[1]{ \left| #1 \right| }
+\newcommand{\diff}[2]{\frac{d #1}{d #2}}
+\newcommand{\infsum}[1]{\sum_{#1}^{\infty}}
+\newcommand{\norm}[1]{ \left|\left| #1 \right|\right| }
+\newcommand{\eval}[1]{ \left. #1 \right| }
+\newcommand{\Expect}{\mathbb{E}}
+\newcommand{\Var}{\text{Var}}
+\renewcommand{\phi}{\varphi}
+\renewcommand{\emptyset}{\O}
+\let\vec\mathbf
+\def\mA{{\bf A}}
+\def\vT{{\bf T}}
+\def\vx{{\bf x}}
+\def\vy{{\bf y}}
+\def\rd{{\rm d}}
+
+%--------Theorem Environments--------
+%theoremstyle{plain} --- defaultx
+\newtheorem{thm}{Theorem}[section]
+\newtheorem{cor}[thm]{Corollary}
+\newtheorem{prop}[thm]{Proposition}
+\newtheorem{lem}[thm]{Lemma}
+\newtheorem{conj}[thm]{Conjecture}
+\newtheorem{quest}[thm]{Question}
+
+\theoremstyle{definition}
+\newtheorem{defn}[thm]{Definition}
+\newtheorem{defns}[thm]{Definitions}
+\newtheorem{con}[thm]{Construction}
+\newtheorem{exmp}[thm]{Example}
+\newtheorem{exmps}[thm]{Examples}
+\newtheorem{notn}[thm]{Notation}
+\newtheorem{notns}[thm]{Notations}
+\newtheorem{addm}[thm]{Addendum}
+
+% Environments for answers and solutions
+\newtheorem{exer}{Exercise}
+\newtheorem{sol}{Solution}
+
+\theoremstyle{remark}
+\newtheorem{rem}[thm]{Remark}
+\newtheorem{rems}[thm]{Remarks}
+\newtheorem{warn}[thm]{Warning}
+\newtheorem{sch}[thm]{Scholium}
+
+\makeatletter
+\let\c@equation\c@thm
+\makeatother
+
+\begin{document}
+\begin{exer}
+    (a) Combining what you have read from the Preface of 
+E. T. Jaynes' ``Probability Theory: The Logic of Science'' (Cambridge University Press, 2003) and the observation given below, discuss relationships between the mathematical theory of probability and its applications.
+	
+	Let us consider a probability space with finite $\Omega=\{1,2,\cdots,n\}$, $\mathcal{F}=2^{\Omega}$, and $\mathbb{P}=\{p_i|1\le i\le n\}$, and a random variable $X(\omega): \Omega\to\mathbb{R}$.
+If $X_1,X_2,\cdots,X_m$ are a sequence of i.i.d. $X$'s, then
+\begin{equation}
+	  \lim_{m\to\infty} \frac{X_1+X_2+\cdots+\cdots X_m}{m}
+     = \mathbb{E}[X].
+\label{eq1}
+\end{equation}
+Furthermore, let a function of the sequence of random variables
+\[
+          \nu_k(m) = \sum_{i=1}^m 1_{k}(X_i), 
+\]
+in which $k\in\Omega$.  Then
+\begin{equation}
+   \lim_{m\to\infty} \frac{\nu_k(m)}{m} = p_k.
+\label{eq2}
+\end{equation}
+Eqs. (\ref{eq1}) and (\ref{eq2}) are known as the {\em law of large numbers} and the {\em Borel's law of large numbers}, respectively.
+You note that the terms on the left-hand-side of the two equations are quantities that widely used on measurements in the real world. The terms on the right-hand-side of the two equations, however, are
+abstract mathematical concepts in the theory of probability. 
+
+(b)  Check out what {\em frequentist} and {\em Bayesian} approaches are.  Please comment on the statement in my notes 
+that in terms of the Gibbs conditioning principle, ``{\em statistical mechanics is a nuanced blend of the frequentist and Beyesian schools.}''
+\end{exer}
+
+\begin{sol}
+    (a) Probability theory as I understand it is a way of making sense of the world through small scale modeling. That is, it gives us a way of analysing systems via observation under certain logical paradigms. Taking the law of large numbers as an example, we might collect some data which we believe to have come from some fixed unobserved process with particular properties. We may assume that each datum is an independent observation under our logical paradigm and this allows us to make judgements or form expectations on how our data may behave. In the case of the LLN, this is just the idea that we can approximate with some confidence the theoretical or underlying mean of our observed variables based on a large sampling of those variables. The difference in how we can understand this mean differs though between the Bayesian and frequentist approaches.
+
+    (b) Gibbs conditioning in a way is way of conditioning on the empirical statistics of observations from a system, an element of the frequentist school, while generating a posterior distribution on the true statistics of the larger population or system being observed. In this way, I agree that Gibbs conditioning combines elements present in both frequentist and Bayesian schools. I additionally think this is common practice in most interpretations of Bayesian statistics, so I'm unsure if the element of using empirical statistics can be uniquely attributed to the frequentist school.
+
+\end{sol}
+
+\newpage
+
+\begin{exer}
+	
+	Consider a reference measure $\mathbb{P}_1$ and a
+sequence of measures $\mathbb{P}_2(\theta)$ which contains a continuous parameter $\theta$.  The RND
+\[
+       Z(\omega;\theta) 
+       = \frac{\rd\mathbb{P}_2}{\rd\mathbb{P}_1}(\omega;\theta)
+\]
+is a random variable that contains the continuous parameter 
+$\theta$.  We shall assume that the function
+$Z(;\theta)$ is differentiable as many times as you like
+w.r.t. $\theta$, and resulting
+$\partial^k Z(\omega;\theta)/\partial\theta^k$
+are also random variables.
+	
+	Introducing
+\[
+   \mathcal{I}_k(\theta) = -\mathbb{E}^{\mathbb{P}_2}\left[\frac{\partial^k}{\partial\theta^k}\log\left(
+       \frac{\rd\mathbb{P}_2}{\rd\mathbb{P}_1}(\omega;\theta)\right)\right],
+\]
+where the expectation is w.r.t. $\mathbb{P}_2(\theta)$.  We
+shall assume the order of integration involved in taking the 
+expectations and differentiations w.r.t. $\theta$
+are exchangable.   Show that 
+
+(a)
+\[
+           \mathcal{I}_0(\theta) = -\int_{\Omega}   
+          \left( \frac{\rd\mathbb{P}_2}{\rd\mathbb{P}_1}(\omega;\theta)\right)
+         \log\left(\frac{\rd\mathbb{P}_2}{\rd\mathbb{P}_1}
+               (\omega;\theta)\right) \mathbb{P}_1 (\rd\omega)
+\]
+is the Shannon entropy of $\mathbb{P}_2(\theta)$ w.r.t. the
+measure $\mathbb{P}_1$.  
+   
+(b) $\mathcal{I}_1(\theta) = 0$.
+
+(c) 
+\[
+		\mathcal{I}_2(\theta) =  \mathbb{E}^{\mathbb{P}_2}\left[ \left(\frac{\partial }{
+        \partial\theta}\log\left(\frac{\rd\mathbb{P}_2}{\rd\mathbb{P}_1}(\omega;\theta) \right) \right)^2 \right] \ge 0.
+\]
+This is known as the {\em Fisher information}.
+\end{exer}
+
+\begin{sol}
+    (a) Starting from the definition of $\mathcal{I}_{0}(\theta)$, we have that
+
+       \begin{align*}
+           \mathcal{I}_{0}(\theta) &= - \Expect^{\Prob_{2}} \left[ \log\left(
+       \frac{\rd\mathbb{P}_2}{\rd\mathbb{P}_1}(\omega;\theta)\right) \right] \\
+                                   &= - \int_{\Omega}  \log\left(
+                                   \frac{\rd\mathbb{P}_2}{\rd\mathbb{P}_1}(\omega;\theta)\right)  \Prob_{2}( \rd\omega)\\
+                                   &= -  \frac{\rd\mathbb{P}_2}{\rd\mathbb{P}_1}(\omega;\theta) \int_{\Omega} \log\left(
+                                   \frac{\rd\mathbb{P}_2}{\rd\mathbb{P}_1}(\omega;\theta)\right)\Prob_{1}( \rd\omega),
+       \end{align*}
+       where the last line follows from a change of measure using the fact $\frac{\rd\mathbb{P}_2}{\rd\mathbb{P}_1}(\omega;\theta)$ is the Radon-Nikodym derivative of $\Prob_{2}$ with respect to $\Prob_{1}$.
+
+    (b) Starting from the definition of $\mathcal{I}_{1}(\theta)$, we have that
+    \begin{align*}
+        \mathcal{I}_1(\theta) &= -\mathbb{E}^{\mathbb{P}_2}\left[\frac{\partial}{\partial\theta}\log\left(
+       \frac{\rd\mathbb{P}_2}{\rd\mathbb{P}_1}(\omega;\theta)\right)\right]\\
+                              &= -\int_{\Omega} \frac{\partial}{\partial\theta}\log\left(
+                              \frac{\rd\mathbb{P}_2}{\rd\mathbb{P}_1}(\omega;\theta)\right) \Prob_{2}(\rd \omega)\\
+                              &= \int_{\Omega} \frac{\partial}{\partial\theta}\left(\frac{\rd\mathbb{P}_2}{\rd\mathbb{P}_1}(\omega;\theta)\right) 
+                              \left(\frac{\rd\mathbb{P}_2}{\rd\mathbb{P}_1}(\omega;\theta) \right )^{-1} \Prob_{2}(\rd \omega),
+    \end{align*}
+    where we've used the chain rule to find the partial derivative of $\log Z(\omega; \theta)$ with respect to $\theta$. Next, changing the measure to measure of integration to $\Prob_{1}$, we see
+    \begin{align*}
+     \mathcal{I}_1(\theta) &= \int_{\Omega} \frac{\partial}{\partial\theta}\left(\frac{\rd\mathbb{P}_2}{\rd\mathbb{P}_1}(\omega;\theta)\right) \Prob_{1}(\rd \omega)\\
+                           &= \frac{\partial}{\partial\theta} \int_{\Omega} \left(\frac{\rd\mathbb{P}_2}{\rd\mathbb{P}_1}(\omega;\theta)\right) \Prob_{1}(\rd \omega)\\
+                           &= \frac{\partial}{\partial\theta} ( 1 )\\
+                           &= 0,
+    \end{align*}
+    where we've interchanging the integral and the partial derivative.
+
+    (c) We'll begin by doing a bit of calculus using that 
+\begin{equation*}
+    \frac{\partial}{\partial\theta} \log Z(\omega; \theta) =  \left( \frac{\partial}{\partial\theta} Z(\omega; \theta)  \right) \cdot Z(\omega; \theta)^{-1},
+\end{equation*}
+we have that 
+\begin{align*}
+    \frac{\partial^{2}}{\partial\theta^{2}} \log Z(\omega; \theta) &=   \frac{\partial}{\partial\theta}  \left[ \left( \frac{\partial}{\partial\theta} Z(\omega; \theta) \right) \cdot Z(\omega; \theta)^{-1} \right]\\
+                                                                   &= \left(\left(\frac{\partial^{2}}{\partial\theta^{2}} Z(\omega; \theta) \right) \cdot Z(\omega; \theta)^{-1} \right)  
+                                                                   - \left( \left(\frac{\partial}{\partial\theta} Z(\omega; \theta) \right) \cdot Z(\omega; \theta)^{-1} \right)^{2}\\
+                                                                   &=\left( \left(\frac{\partial^{2}}{\partial\theta^{2}} Z(\omega; \theta) \right) \cdot Z(\omega; \theta)^{-1} \right)  
+                                                                   - \left(  \frac{\partial}{\partial\theta} \log Z(\omega; \theta)  \right)^{2}.
+\end{align*}
+The above follows from the product rule for differentiation. We'll now turn our attention to the quantity of interest
+
+\begin{align*}
+    \mathcal{I}_2(\theta) &= -\mathbb{E}^{\mathbb{P}_2}\left[\frac{\partial^2}{\partial\theta^2}\log\left(\frac{\rd\mathbb{P}_2}{\rd\mathbb{P}_1}(\omega;\theta)\right)\right]\\
+                          &=  \mathbb{E}^{\mathbb{P}_2}\left[ \left(  \frac{\partial}{\partial\theta} \log Z(\omega; \theta)  \right)^{2}   \right] 
+                      - \mathbb{E}^{\mathbb{P}_2}\left[\frac{\partial^{2}}{\partial\theta^{2}} \left(Z(\omega; \theta) \right) \cdot Z(\omega; \theta)^{-1} \right].   
+\end{align*}
+
+Focusing on the last term, we change the measure to $\Prob_{1}$ and exchange the order of integration and differentiation
+\begin{align*}
+    \Expect^{\Prob_{2}} \left[\frac{\partial^{2}}{\partial\theta^{2}} \left(Z(\omega; \theta) \right) \cdot Z(\omega; \theta)^{-1} \right] &= \int_{\Omega} \frac{\partial^{2}}{\partial\theta^{2}} \left(Z(\omega; \theta) \right) \cdot Z(\omega; \theta)^{-1} \Prob_{2}(\rd \omega)\\
+                                                                                                                                           &= \int_{\Omega} \frac{\partial^{2}}{\partial\theta^{2}} \left(Z(\omega; \theta) \right) \Prob_{1}(\rd \omega) \\
+                                                                                                                                           &= \frac{\partial^{2}}{\partial\theta^{2}} \int_{\Omega}  Z(\omega; \theta) \Prob_{1}(\rd \omega) \\
+                                                                                                                                           &= 0.
+\end{align*}
+
+This leaves us with 
+\begin{align*}
+\mathcal{I}_2(\theta) &= \mathbb{E}^{\mathbb{P}_2}\left[ \left(  \frac{\partial}{\partial\theta} \log \left(\frac{\rd\mathbb{P}_2}{\rd\mathbb{P}_1}(\omega;\theta)\right)  \right)^{2}   \right]  \geq 0,
+\end{align*}
+as the integrand itself is non-negative.
+\end{sol}
+
+\newpage
+
+\begin{exer}
+The Legendre-Fenchel transform is introduced in MLN \S3.5:
+\[
+     \Lambda^*(x)  = \sup_{t\in\mathbb{R}}
+      \big\{ xt - \Lambda(t)\big\}, \   x\in\mathbb{R}.
+\]
+Assuming that the $\Lambda(t)$ is strictly convex and twice
+differentiable, then the supremum in the equation can be 
+obtained by differentiation, which yields
+\begin{equation}
+     \Lambda^*(x) = \left\{\begin{array}{ccl}
+                  \Lambda^*(t) &=& x(t) t - \Lambda(t) \\[5pt]
+                  x(t) &=& \Lambda'(t)
+                    \end{array}\right.
+\label{pb2}
+\end{equation}
+This gives function $\Lambda^*(x)$ in a parametric form in
+terms of $t$.  Show that Eq. (\ref{pb2}) implies :
+
+(a) $\Lambda^*(x)$ is also convex; and 
+
+(b) an inverse, dual relation
+\[
+       \Lambda(t) = \sup_{x\in\mathbb{R}}\big\{
+                       tx - \Lambda^*(x) \big\}.
+\]
+\end{exer}
+
+\begin{sol}
+    (a) As $\Lambda(t)$ is strictly convex and twice differentiable, we have that $\Lambda''(t) > 0$ for all $t$. In what follows, for a fixed point $x \in \bbR$, we have there is a specific $t ^{*}$ (which depends on $x$) so that
+    \begin{align*}
+        \Lambda^{*}(x) = xt^{*} - \Lambda(t^{*}).
+    \end{align*}
+Taking the derivative of this with respect to $t^{*}$, we have that 
+\begin{align*}
+    \Lambda'(t^{*}(x)) = x.
+\end{align*}
+
+Due to the fact that $\Lambda''(t) > 0$ for all $t$, $\Lambda'(t)$ is strictly increasing and therefore, there  $\Lambda'(t)$ is invertible so that 
+ \begin{align*}
+     g(x) = (\Lambda')^{-1}(x) = t^{\star}.
+\end{align*}
+Taking the derivative of this with respect to $x$, we see that
+\begin{align*}
+    \frac{\rd g}{\rd x} (x) = \frac{1}{\Lambda''(g(x))} > 0
+\end{align*}
+and $g$ is differentiable. As 
+\begin{align*}
+    \Lambda^{*}(x) = x g(x) - \Lambda( g(x) ),
+\end{align*}
+is a composition of differentiable functions, it is differentiable. We can then compute
+\begin{align*}
+    \frac{\rd \Lambda^{*}}{\rd x} &= g(x) + g'(x)x - g'(x)\Lambda'(g(x))\\
+                                  &= g(x) + (x - \Lambda'(g(x)) ) g'(x)\\
+                                  &= g(x),
+\end{align*}
+where we've used that $g(x) = (\Lambda')^{-1}(x)$. This shows that 
+\begin{align*}
+   \frac{\rd^{2} \Lambda^{*}}{\rd x^{2}} = \frac{\rd g}{\rd x} (x) > 0
+\end{align*}
+which shows that $\Lambda^{*}$ is convex.
+
+(b) Using a similar formulation to above, we have that for a fixed $t$
+    \begin{align*}
+        \Lambda^{**}(t) = t x^{*} - \Lambda^{*}(x^{*}) 
+    \end{align*}
+    for some $x^{*}$ which depends on $t$. Writing $t$ as $(\Lambda')^{-1}(x^{*})$, we see that
+    \begin{align*}
+        \Lambda^{**}(t) &= (\Lambda')^{-1}(x^{*}) x^{*} - \Lambda^{*}(x^{*}) \\
+                        &= \Lambda( (\Lambda')^{-1}(x^{*}) )\\
+                        &= \Lambda(t),
+    \end{align*}
+    where we've used the definition for $\Lambda(t)$ as well as $t =  (\Lambda')^{-1}(x^{*})$.
+\end{sol}
+
+\newpage
+
+\begin{exer}
+ Let $\Omega$ be a simply connected compact  
+domain in $\mathbb{R}^m$.  In statistical mechanics, in addition 
+to the concept of ``mechanica energy function'' $E(\vx)$ where $\vx\in\Omega\subset\mathbb{R}^m$, there is a sequence of probability measures whose density functions
+w.r.t. the Lebesgue measure is
+\begin{subequations}
+\begin{equation}
+             f_{n}(\vx) = A_n e^{-n E(\vx)},
+\end{equation}
+in which the $A_n$ is a normalization factor
+\begin{equation}
+      A^{-1}_n = \int_{\Omega} e^{-n E(\vx)}\rd\vx,
+\end{equation}
+and 
+\begin{equation}
+        \lim_{n\to\infty} \frac{\ln A_n}{n} = 0.
+\end{equation}
+\label{Blaw}
+\end{subequations}
+Eq. (\ref{Blaw}) is called {\em Boltzmann-Gibbs distribution} if
+one replaces the $n$ by the inverse temperature.
+Let $f_1(x;n)$ be a marginal distribution for $x_1$, the first 
+component of $\vx$:
+\[
+   f_1(x;n) = A_n\int_{\Omega\cap\mathbb{R}^{m-1}}
+               e^{-n E(x,\vy)}\rd\vy,
+\]
+in which $\vy=(x_2,\cdots,x_m)$.   Assuming in the limit of
+$n\to\infty$, 
+\[
+       - \lim_{n\to\infty} \frac{1}{n}\ln f_1(x;n) = \Lambda^*(x),
+           \  x\in\mathbb{R}.
+\]
+
+(a) Show that the $n$-scaled cumulant generating function,
+using $e^{ntx}$ instead of $e^{tx}$, 
+\[
+              \log\int f_1(x;n)e^{ntx}\rd x,
+\]
+has the limit:
+\[
+   \lim_{n\to\infty} \frac{1}{n} \log\int
+                    f_1(x;n)e^{ntx}\rd x =
+      \max_{x\in\mathbb{R}}
+              \big\{ tx - \Lambda^*(x) \big\},
+\]
+which is the Legendre-Fenchel transform of $\Lambda^*(x)$.
+All functions are sufficiently smooth and 
+you are allowed to freely exchange 
+\[
+     \lim_{n\to\infty} \  \text{ and } \
+        \int_{\Omega\cap\mathbb{R}} \rd x.
+\]
+
+
+(b) Denoting
+\[
+             \Lambda(t) =  \max_{x\in\mathbb{R}}
+              \big\{ tx - \Lambda^*(x) \big\},
+\]
+show that one can obtain $\Lambda^*(x)$ parametrically
+as:
+\[
+  \Lambda^*(x) = \left\{\begin{array}{ccl}
+            \Lambda^*(t) &=& 
+               -\frac{\rd}{\rd (1/t)} \left( \frac{\Lambda(t)}{t}\right)
+             \\[6pt]
+             x(t) &=& \Lambda'(t) 
+          \end{array}\right.
+\]
+
+\end{exer}
+
+\begin{sol}
+    (a)       
+
+    Noting that by assumption, 
+    \begin{align*}
+        \ln f_1(x;n) \approx -n\Lambda^*(x) \ \text{ for large } n.
+    \end{align*}
+     In the case of large $n$, we can write
+     \begin{align*}
+        \Lambda(nt) &= \log \int f_{1}(x;n) e^{ntx} \rd x \\
+                    &\simeq \log \int e^{ntx} \cdot e^{- n\Lambda^{*}(x)}\\
+                    &= \log \int e^{n(tx - \Lambda^{*}(x))} .
+    \end{align*}
+    Using the Lapalace's method for integral (setting $h(x) = tx - \Lambda^{*}(x)$) and the assumed smoothness of the functions involved, we see that
+    \begin{align*}
+       \lim_{n\to\infty} \frac{1}{n} \log\int
+                    f_1(x;n)e^{ntx}\rd x =
+      \max_{x\in\mathbb{R}}
+              \big\{ tx - \Lambda^*(x) \big\}.
+    \end{align*}
+
+    (b) We'll repeat a bit from the proof of exercise 3. For any fixed $x\in\bbR$, there is a specific $t$ which depends on $x$ so that
+    \begin{align*}
+        \Lambda^{*}(x) = x \cdot t(x) - \Lambda(t)
+    \end{align*}
+    Taking the derivative with respect to $t$, it follows
+    \begin{align*}
+        0 = x - \Lambda'(t)
+    \end{align*}
+    Therefore, we know that $x = \Lambda'(t)$. Replacing this shows
+    \begin{align*}
+        \Lambda^{*}(x) = \Lambda'(t) \cdot t - \Lambda(t)
+    \end{align*}
+    Writing this out as 
+    \begin{align*}
+            \Lambda^{*}(x) = \Lambda'(u^{-1}) \cdot u^{-2} \cdot u - \Lambda(u^{-1}), \ t = u^{-1},
+    \end{align*}
+    we can see that 
+    \begin{align*}
+        \Lambda^{*}(x) &=  -\frac{\rd}{\rd u} \left( \Lambda(u^{-1})\cdot u \right)\\
+                       &=  -\frac{\rd}{\rd ( 1 / t )} \left( \frac{\Lambda(t)}{t} \right).
+    \end{align*}
+    This suggests that for a given $x$ and $\Lambda(t)$, we can obtain the value of $\Lambda^{*}(x)$ parametrically.
+\end{sol}
+
+\end{document}

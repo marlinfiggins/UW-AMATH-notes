@@ -1,0 +1,692 @@
+%Preamble
+\documentclass[12pt]{article}
+\usepackage{fancyhdr}
+\usepackage{extramarks}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{amsrefs}
+\usepackage{amsfonts}
+\usepackage{mathrsfs}
+\usepackage{mathtools}
+\usepackage[mathcal]{eucal} %% changes meaning of \mathcal
+\usepackage{enumerate}
+\usepackage[shortlabels]{enumitem}
+\usepackage{verbatim} %% includes comment environment
+\usepackage{hyperref}
+\usepackage[capitalize]{cleveref}
+\crefformat{equation}{~(#2#1#3)}
+\usepackage{caption, subcaption}
+\usepackage{graphicx}
+\usepackage{fullpage} %%smaller margins
+\usepackage[all,arc]{xy}
+\usepackage{mathrsfs}
+\usepackage{color}
+
+\hypersetup{
+    linktoc=all,     % set to all if you want both sections and subsections linked
+}
+
+\topmargin=-0.45in
+\evensidemargin=0in
+\oddsidemargin=0in
+\textwidth=6.5in
+\textheight=9.0in
+\headsep=0.25in
+\setlength{\headheight}{16pt}
+
+\linespread{1.1}
+
+\pagestyle{fancy}
+\lhead{\Name}
+\chead{\hwTitle}
+\rhead{\hwClass}
+\lfoot{\lastxmark}
+\cfoot{\thepage}
+
+\renewcommand\headrulewidth{0.4pt}
+\renewcommand\footrulewidth{0.4pt}
+
+\setlength\parindent{0pt}
+
+%% Title Info
+\newcommand{\hwTitle}{HW \# 6}
+\newcommand{\hwDueDate}{March 2, 2021}
+\newcommand{\hwClass}{AMATH 562}
+\newcommand{\hwClassTime}{}
+\newcommand{\hwClassInstructor}{}
+\newcommand{\Name}{\textbf{Marlin Figgins}}
+
+
+%% MATH MACROS
+\newcommand{\bbF}{\mathbb{F}}
+\newcommand{\bbN}{\mathbb{N}}
+\newcommand{\bbQ}{\mathbb{Q}}
+\newcommand{\bbR}{\mathbb{R}}
+\newcommand{\bbZ}{\mathbb{Z}}
+\newcommand{\bbC}{\mathbb{C}}
+\newcommand{\Prob}{\mathbb{P}}
+\newcommand{\calF}{\mathcal{F}}
+\newcommand{\abs}[1]{ \left| #1 \right| }
+\newcommand{\diff}[2]{\frac{d #1}{d #2}}
+\newcommand{\infsum}[1]{\sum_{#1}^{\infty}}
+\newcommand{\norm}[1]{ \left|\left| #1 \right|\right| }
+\newcommand{\eval}[1]{ \left. #1 \right| }
+\newcommand{\Expect}{\mathbb{E}}
+\newcommand{\Var}{\text{Var}}
+\newcommand{\Cov}{\text{Cov}}
+
+\renewcommand{\phi}{\varphi}
+\renewcommand{\emptyset}{\O}
+\let\vec\mathbf
+\def\mA{{\bf A}}
+\def\vT{{\bf T}}
+\def\vx{{\bf x}}
+\def\vy{{\bf y}}
+\def\rd{{\rm d}}
+
+%--------Theorem Environments--------
+%theoremstyle{plain} --- defaultx
+\newtheorem{thm}{Theorem}[section]
+\newtheorem{cor}[thm]{Corollary}
+\newtheorem{prop}[thm]{Proposition}
+\newtheorem{lem}[thm]{Lemma}
+\newtheorem{conj}[thm]{Conjecture}
+\newtheorem{quest}[thm]{Question}
+
+\theoremstyle{definition}
+\newtheorem{defn}[thm]{Definition}
+\newtheorem{defns}[thm]{Definitions}
+\newtheorem{con}[thm]{Construction}
+\newtheorem{exmp}[thm]{Example}
+\newtheorem{exmps}[thm]{Examples}
+\newtheorem{notn}[thm]{Notation}
+\newtheorem{notns}[thm]{Notations}
+\newtheorem{addm}[thm]{Addendum}
+
+% Environments for answers and solutions
+\newtheorem{exer}{Exercise}
+\newtheorem{sol}{Solution}
+
+\theoremstyle{remark}
+\newtheorem{rem}[thm]{Remark}
+\newtheorem{rems}[thm]{Remarks}
+\newtheorem{warn}[thm]{Warning}
+\newtheorem{sch}[thm]{Scholium}
+
+\makeatletter
+\let\c@equation\c@thm
+\makeatother
+
+\def\mA{{\bf A}}
+\def\vT{{\bf T}}
+\def\vx{{\bf x}}
+\def\vy{{\bf y}}
+\def\d{{\rm d}}
+\def\vnu{\mbox{\boldmath$\nu$}}
+\def\vpi{\mbox{\boldmath$\pi$}}
+
+\begin{document}
+
+\begin{exer}
+    Consider a diffusion $X = (X_{t})_{t\geq 0}$ that lives on a finite interval $(l,r)$,  $0 < l < r < \infty$ and satisfies the SDE
+    \begin{align*}
+    \d X_{t} = \mu X_{t} \d t + \sigma X_{t} \d W_{t}.
+    \end{align*}
+    One can easily check that the endpoints $l$ and $r$ are regular. Assume both endpoints are killing. Find the transition density $\Gamma(t, x; T, y)$ of $X$.
+\end{exer}
+
+\begin{sol}
+As $l$ and $r$ are regular killing endpoints, we have that
+    \begin{align*}
+        \Gamma(t, l; T, y) \d y = \Gamma(t, r; T, y) \d y = 0.
+    \end{align*}
+    Therefore, we want to operator $\mathcal{A}$ to act on functions which are 0 on the boundary. In this case, we have that $\mu(t, X_{t}) = \mu x$ and $\sigma(t, x) = \sigma x$, so that 
+\begin{equation*}
+    \mathcal{A} = \mu x \partial_{x}  + \frac{\sigma^{2}}{2} x^{2} \partial_{xx}.
+\end{equation*}
+    This then gives the following PDE for the Kolomogorov Forward equation
+    \begin{align*}
+        \partial_{t} \Gamma = -\mu x \partial_{x} \Gamma - \frac{\sigma^{2}}{2} x^{2} \partial_{xx} \Gamma\\
+        \Gamma(t, x, t, \cdot) = \delta_{x}.
+    \end{align*}
+    The right side of the above equation is an Euler ODE. We'll now find an eigenfunction expansion to the following problem. That is, we want eigenfunctions $\phi$ which satisfy
+    \begin{align*}
+        \mathcal{A} \phi = \lambda \phi \\
+        \phi(l) = \phi(r) = 0.
+    \end{align*}
+To find the eigenfunctions, we write the eigenvalue problem.
+    \begin{align*}
+        \frac{\sigma^{2}}{2}x^{2} \phi'' + \mu x \phi' - \lambda \phi = 0, \phi(l) = \phi(r) = 0
+    \end{align*}
+    which one can notice as an Euler equation. Writing the solution in terms of $x^{r}$, we see that $r$ must satisfy
+    \begin{align*}
+        \frac{\sigma^{2}}{2} r(r - 1) + \mu r - \lambda &= 0\\
+        s r^{2}  + (\mu - s) r - \lambda = 0,
+    \end{align*}
+    where $s = \sigma^{2} / 2$. We can solve this quadratic as
+    \begin{align*}
+        r = \frac{s - \mu \pm \sqrt{ (\mu - s)^{2} + 4s\lambda}}{2s} = \frac{s-u}{2s} \pm \sqrt{ \frac{(\mu - s)^{2}}{4s^{2}} + \frac{\lambda}{s} }.
+    \end{align*}
+    In general, this is complex as long as
+    \begin{align*}
+        -\frac{(\mu - s)^{2}}{4s} > \lambda.
+    \end{align*}
+    We'll proceed with this case in mind. Our solution is then of the form
+
+    \begin{align*}
+        \phi(x) = c_{1} x^{ \left( \frac{s - \mu}{2s}\right) } \sin\left( \ln (x)  \sqrt{ \frac{(\mu - s)^{2}}{4s^{2}} + \frac{\lambda}{s} } \right) + c_{2}  x^{ \left( \frac{s - u}{2s}\right) } \cos\left( \ln (x)  \sqrt{ \frac{(\mu - s)^{2}}{4s^{2}} + \frac{\lambda}{s} } \right).
+    \end{align*}
+    First, we'll attempt to apply the boundary conditions, we require that $\phi(r) = 0$, so that 
+    \begin{align*}
+    \ln r  \sqrt{ \frac{(\mu - s)^{2}}{4s^{2}} + \frac{\lambda_{n}}{s} } = n \pi\\
+    \lambda_{n} = -\frac{(\mu - s)^{2}}{4s}+ s\left(  \frac{n \pi}{\ln r}\right)^{2} 
+    \end{align*}
+    This allows us to simplify
+    \begin{align*}
+        \phi_{n}(x) = c_{1} x^{(s-\mu) / 2s} \sin( \ln x  \frac{n\pi}{\ln r}) + c_{2} x^{(s-\mu) / 2s} \cos(\ln x \frac{n\pi}{\ln r}).    
+    \end{align*}
+    This can only satisfy the $\sin$ term at $x = r$ so we conclude that $c_{2} = 0 $. Frankly, I'm a bit unsure how to proceed from here, but I'll show how to finish.
+
+    Using this family of eigenfunctions, we can compute the solution as
+    \begin{align*}
+        \Gamma(t,x; T, y) = m(y) \sum_{n} \exp((T - t)\lambda_{n}) \phi_{n}(y) \phi_{n}(x),
+    \end{align*}
+    by Corollary 9.5.5 where $m$ is the speed density given by (pg 153) as 
+    \begin{align*}
+        m(y) = \frac{2}{\sigma^{2}} \exp( \frac{2\mu}{\sigma^{2}} x).
+    \end{align*}
+\end{sol}
+
+\newpage
+
+\begin{exer}
+    Consider a two-dimensional diffusion process $X = (X_{t})_{t\geq 0}$ and $Y = (Y_{t})_{t\geq 0}$ that satisfy the SDEs
+    \begin{align*}
+    \d X_{t} = \d W_{t}^{1}\\
+    \d Y_{t} = \d W_{t}^{2},
+    \end{align*}
+    where $W_{t}^{1}$ and $W_{t}^{2}$ are two independent Brownian motions. Define a function $u$ as follows 
+    \begin{align*}
+        u(x, y) &= \Expect[ \phi(X_{\tau}) \mid X_{t} = x, Y_{t} = y ]\\
+        \tau &= \inf\{ s \geq t \mid Y_{s} = a\}.
+    \end{align*}
+    \begin{enumerate}
+        \item State a PDE and boundary conditions satisfied by the function $u$.
+        \item Let us define the Fourier transform and the inverse Fourier transform, respectively, as follows
+            \begin{align*}
+                \text{FT:} \quad \hat{f}(\omega) &= \int e^{- i \omega x} f(x) \d x\\
+                \text{IFT:} \quad f(x) &= \frac{1}{2\pi} \int e^{i \omega x} \hat{f}(\omega) \d \omega
+            \end{align*}
+            Use Fourier trasnforms and a conditioning argument to derive an expression for $u(x,y)$ as an inverse Fourier transform. Use this result to derive an explicit form for  $\Prob(X_{\tau} \in \d z \mid X_{t} = x , Y_{t} = y)$ i.e. an expression involving no integrals.
+        \item Show the expression you derived in part (2) for $u(x,y)$ satisfies the PDE and BCs you stated in part (1).
+    \end{enumerate}
+\end{exer}
+
+\begin{sol}
+    (1.) Per section 9.6, we see that $u$ must satisfy
+\begin{align*}
+    \mathcal{A} u(x, y) &= 0, \quad  (x, y) \in \bbR \times (-\infty, a) \\
+    u(x, a) &= \phi(x),
+\end{align*}
+where 
+\begin{align*}
+    \mathcal{A} = \frac{1}{2} \partial_{xx} + \frac{1}{2} \partial_{xy} + \frac{1}{2} \partial_{yy}
+\end{align*}
+
+This holds since the hitting time $\tau$ is almost surely finite. We can rewrite these equations as
+\begin{align*}
+    \frac{1}{2} \partial_{xx}u + \frac{1}{2} \partial_{yy}u &= 0,\\
+    u(x, a) &= \phi(x),
+\end{align*}
+using that $\sigma(t, x)$ is the identity matrix as the two Brownian motions are independent and $\mu$ is the 0 vector.
+
+(2.) We begin by writing $X_{\tau}$ in terms of its Fourier transform using IFT
+ \begin{align*}
+     \phi(X_{\tau}) = \frac{1}{2\pi} \int \exp(i \omega X_{\tau}) \hat{\phi}(\omega) \d \omega.
+\end{align*}
+Plugging this into the definition of $u$, we then have that
+\begin{align*}
+    u(x, y) &= \Expect\left[   \frac{1}{2\pi} \int \exp(i \omega X_{\tau}) \hat{\phi}(\omega) \d \omega \mid X_{t} = x, Y_{t} = y     \right] \\
+            &= \frac{1}{2 \pi} \int \hat{\phi}(\omega)  \Expect\left[ \exp(i \omega X_{\tau})   \mid X_{t} = x, Y_{t} = y  \right] \d \omega\\
+            &= \frac{1}{2 \pi} \int \hat{\phi}(\omega)  \Expect\left[ \Expect\left[ \exp(i \omega X_{\tau})   \mid X_{t} = x, Y_{t} = y  \right]  \mid X_{t} = x, Y_{t} = y  \right] \d \omega,
+\end{align*}
+where we've used the tower property. Noticing that as $X_{t}$ is a Brownian motion, we have that $X_{\tau} \sim \text{Norm}(x, \tau - t)$ since $X_{t} - X_{t}$ has normal distribution with mean zero and variance $\tau - t$ and $X_{t} = x$. This allows us to write $\Expect[ \exp(i\omega X_{\tau}) ]$ as $\exp(i \omega x) \exp(- \frac{1}{2} \omega^{2} (\tau - t))$, so that
+\begin{align*}
+    u(x,y) &= \frac{1}{2 \pi} \int \hat{\phi}(\omega) \exp(i \omega x) \Expect\left[ \exp\left(- \frac{1}{2} \omega^{2} (\tau - t)   \right)\mid X_{t} = x, Y_{t} = y  \right] \d \omega\\
+\end{align*}
+Notice the conditional expectation now depends only on the hitting time $\tau$ starting from $Y_{t} = y$. Since $Y_{t}$ is also a Brownian motion, we can shift the Brownian motion so that $Z_{0} = Y_{t} - y$ and $Z_{\tau - t} = Y_{\tau} - y = a - y$. Under $Z_{t}$, we have that
+\begin{align*}
+    \Expect\left[ \exp\left(- \frac{1}{2} \omega^{2}(\tau - t  ) \right)\mid X_{t} = x, Y_{t} = y  \right]  = \exp\left(-\abs{a - y} \sqrt{\omega^{2}}\right) = \exp(- \abs{y - a} \abs{\omega})
+\end{align*}
+after applying theorem 7.5.2. MLN. This leaves us with the following formula for $u(x,y)$
+ \begin{align*}
+     u(x, y ) &= \frac{1}{2\pi} \int \hat{\phi}(\omega) \exp\left(i\omega x - \abs{y - a} \abs{\omega}\right)\d \omega\\
+              &= \frac{1}{2\pi} \int \hat{\phi}(\omega) \exp\left( -\abs{y - a} \abs{\omega}\right) \exp\left(i\omega x \right) \d \omega.
+\end{align*}
+We now have the inverse Fourier Transform of a product of functions, which will give us a convolution going backwards. This means that
+\begin{align*}
+    u(x,y) &= \frac{1}{2\pi} \int \mathcal{F}[\phi(x)] \left[\exp\left( - \abs{y - a} \abs{\omega}\right)  \right] \exp\left(i\omega x \right) \d \omega.\\
+           &= \mathcal{F}^{-1} \left( \mathcal{F}[\phi(x)] \left[\exp\left(- \abs{y - a} \abs{ \omega }\right)  \right] \right) \\
+           &= \int_{-\infty}^{\infty} \phi(u) \mathcal{F}^{-1}\left[ \exp\left(- \abs{y - a} \abs{ \omega}\right)  \right](x-u) \d u,
+\end{align*}
+where $\mathcal{F}$ denotes the Fourier transform. All that remains is to compute the inverse transform of the inside term. 
+Individually, these have inverse Fourier transform
+\begin{align*}
+    \mathcal{F}^{-1} \left[\exp\left(- \abs{y - a} \abs{\omega}\right)\right](x) &=  \frac{\abs{y - a}}{\abs{y-a}^{2} + x^{2}}
+\end{align*}
+Plugging this into the previous equation, we get that
+\begin{align*}
+    u(x, y) = \int_{-\infty}^{\infty} \phi(u) \frac{\abs{y - a}}{\abs{y-a}^{2} + (x - u)^{2}}  \d u.
+\end{align*}
+We can turn this into a conditional probability by picking $\phi$ to be an indicator function  $\mathbf{1}_{X_{\tau} = z}$. Therefore, we have that
+\begin{align*}
+    \Prob(X_{\tau} \in \d z \mid X_{t} = x, Y_{t} = y) &= \int_{-\infty}^{\infty} \phi(u) \frac{\abs{y - a}}{\abs{y-a}^{2} + (x - u)^{2}} \d u\\
+                             &= \frac{\abs{y-a}}{\abs{y - a}^{2} + (x-z)^{2}}.
+\end{align*}
+Differentiating this equation with respect to $x$ and $y$ shows that this indeed satisfies Lapalace's equation. Further, we see that this satisfies the boundary condition as the above probability is zero when $y = a$ unless $z = x$.
+\end{sol}
+
+
+\newpage
+
+\begin{exer}
+  Consider a continuous-time $(n+1)$-state
+Markov process $X(t)$, $X\in\mathcal{S}=\{0,1,2,\cdots,n\}$,
+with transition rates $g(i,j)$.  Let state $0$ be an absorbing
+state, e.g., all $g(0,j)=0$, $1\le j\le n$.  Let $\tau_k$ be a
+hitting time:
+\[
+    \tau_k := \inf \big\{ t\ge 0: X(t)=0, X(0)=k\big\}.
+\]
+
+(a) Show that 
+\[
+      \sum_{1\le k\le n} g(j,k)\mathbb{E}[\tau_k] = -1.
+\]
+
+(b) Derive a system of equations relating $\mathbb{E}[\tau_k^2]$
+to $\mathbb{E}[\tau_j]$, $1\le j,k\le n$.
+
+(c)  Now if both states $0$ and $n$ are absorbing, let
+$u_k$ be the probability of $X(t)$, starting with 
+$X(0)=k$, being absorbed into state $0$
+and $1-u_k$ be the probability being absorbed into state $n$.
+Derive a system of equations for $u_k$.
+\end{exer}
+
+\begin{sol}
+    Derive expectation for $\tau_{k}$,
+    We write that
+    \begin{align*}
+        \Prob( X_{t} = 0 \mid X(0) = k ) &=   \Prob(\tau_{k} \leq t)\Prob(X_{t} = 0 \mid X(0) = k, \tau_{k} \leq t)\\ 
+                                         &+ \Prob(\tau_{k} > t) \Prob(X_{t} = 0 \mid X(0) = k, \tau_{k} > t) .
+    \end{align*}
+    In the cases where $\Prob(\tau_{k} \leq t)$, we know the $X_{t} = 0$ since 0 is absorbing. We then have that
+    \begin{align*}
+        \Prob( X_{t} = \mid X(0) = k ) = \Prob( \tau_{k} \leq t) + (1 -\Prob(\tau_{k} \leq t)) \Prob(X_{t} = 0 \mid X(0) = k, \tau_{k} > t) .
+    \end{align*}
+    We can write the expectation as 
+    \begin{align*}
+        \Expect[ \tau_{k} ] &= \int_{0}^{\infty} t \frac{d}{dt} p_{t}(k,0) \d t\\
+                            &= \int_{0}^{\infty} t \sum_{i} p_{t}(k, i) g(i,0)\d t.
+    \end{align*}
+
+    We then have that
+    \begin{align*}
+        g(j,k) \Expect[\tau_{k}] &= \int_{0}^{\infty} t \sum_{i} p_{t}(k,i) g(j,k)g(i,0)  \d t\\
+        \sum_{1\leq k \leq n} g(j,k) \Expect[\tau_{k}] &= \int_{0}^{\infty} t \sum_{k}\sum_{i} g(j,k)p_{t}(k,i) g(i,0) \d t\\
+                                                       &= \sum_{i} g(i,0) \int_{0}^{\infty} t \frac{\partial }{\partial t} p_{t}(j,i) \d t \\
+                                                       &= - \int_{0}^{\infty} \sum_{i} p_{t}(j,i) g(i,0) \d t,
+    \end{align*}
+    where in last line we've used integration by parts to eliminate $t$. We can write this using the KFE, so that
+    \begin{align*}
+       \sum_{1\leq k \leq n} g(j,k) \Expect[\tau_{k}] &= - \int_{0}^{\infty} \sum_{i} p_{t}(j,i) g(i,0) \d t\\
+                                                      &= - \int_{0}^{\infty} \frac{\partial }{\partial t} p_{t}(j,0) \d t\\
+                                                      &= \lim_{t\to \infty} p_{0}(j, 0) - p_{t}(j, 0)\\
+                                                      &= - 1,
+    \end{align*}
+    since 0 is absorbing.
+
+    (b) We can write the expectation as 
+    \begin{align*}
+        \sum_{1\leq k \leq n} g(j,k) \Expect[ \tau_{k}^{2} ] &= \int_{0}^{\infty} t^{2} \frac{d}{dt} p_{t}(k,0) \d t\\
+                                &= \cdots\\
+                                &=- 2\int_{0}^{\infty} t\frac{\partial }{\partial t} p_{t}(j, 0) \d t \\
+                                &= - 2\Expect[ \tau_{j} ].
+    \end{align*}
+    Essentially, we've repeated exactly what we did in part (a) with $t^{2}$ instead of $t$. 
+
+
+    (c) We'll define
+    \begin{align*}
+        u_{k} = \lim_{t\to \infty} p_{t}(k,0).
+    \end{align*}
+    As $0$ and $n$ are the only two absorbing states, we have that 
+    \begin{align*}
+        1 - u_{k} = \lim_{t \to \infty} p_{t}(k, n).
+    \end{align*}
+    We'll now consider the sum 
+    \begin{align*}
+        \sum_{1\leq k \leq n} g(j,k) u_{k} &= \lim_{t \to \infty} \sum_{1\leq k < n} g(j,k)p_{t}(k, 0)\\
+                                           &= \lim_{t \to \infty} \frac{\partial }{\partial t} p_{t}(j, 0)\\
+                                           &= 0,
+    \end{align*}
+    since $0$ is absorbing.
+    %If we take the expectation of $X_{\tau_{k}}$, we have that
+\end{sol}
+
+\newpage
+
+\begin{exer}
+This problem is set up in the language of 
+Theorem 9.4.1. and its Corollary 9.4.2, but
+really is about solving a first-order linear ordinary differential 
+equation (ODE) and carrying out asymptotic evaluation of
+an integral by Laplace's method.
+
+Consider an Ito process $X(t)$ with boundaries, $X\in (0,1)$:
+\[
+              \rd X(t) = \mu(X)\rd t + \epsilon \rd W(t),
+\] 
+where $\epsilon$ is a small constant, and $\mu(x)$ has a 
+potential function $U(x)$: $\mu(x) = -\rd U(x)/\rd x$.
+The drift $\mu(x)$ has two roots $x_1,x_2\in [0,1]$,  $x_1<x_2$, $\mu'_x(x_1) < 0 $ and $\mu'_x(x_2)>0$; they correspond
+to a local minimum, at $x_1$, and a local maximum, at $x_2$, of $U(x)$.  The backward equation for the expected value of the 
+hitting time, $T(x)$ is
+\[
+      \frac{\epsilon^2}{2}\frac{\rd^2 T(x)}{\rd x^2}           
+         + \mu(x) \frac{\rd T(x)}{\rd x} = -1, \
+                \frac{\rd T(0)}{\rd x} = 0, \  T(1) = 0.
+\]
+The boundary condition at $x=0$ is understood as
+``reflecting the process'', the boundary at $x=1$ is understood
+as ``killing the process''.
+
+(a) Show that the $T(x;\epsilon)$, the solution to the ODE, 
+\[
+      T(x;\epsilon) = \frac{2}{\epsilon^2}
+         \int_x^1 \rd u \int_0^u  \exp\left\{\frac{2}{\epsilon^2}
+           \Big[ U(u) - U(v)\Big]
+             \right\} \rd v. 
+\]
+
+
+(b)  Using the result in (a) show that $T(x;\epsilon)$, 
+as $\epsilon\to 0$, has an asymptotic expression that is 
+independent of $x$,
+\[
+      T(x;\epsilon) \simeq \frac{2\pi}{\sqrt{U''(x_1)|U''(x_2)|}}
+        \exp\left\{\frac{2}{\epsilon^2} \Big[U(x_2)-U(x_1)\Big] \right\}.
+\]
+It only has to do with the ``barrier height''
+$U(x_2)-U(x_1)$ and the curvatures at the $x_1$ and $x_2$.
+\end{exer}
+
+\begin{sol}
+    (a) We begin by taking the first derivative of the function above
+    \begin{align*}
+        \frac{\d T}{\d x} &= -\frac{2}{\epsilon^{2}} \int_{0}^{x} \exp\left\{ \frac{2}{\epsilon^{2}} \left[ U(x) - U(v)\right] \right\} \d v\\
+                          &=  -\frac{2}{\epsilon^{2}}\exp\left\{\frac{2}{\epsilon^{2}} U(x)\right\} \int_{0}^{x} \exp\left\{ -\frac{2}{\epsilon^{2}} U(v) \right\} \d v 
+    \end{align*}
+    Next, taking the second derivative using product rule, we see
+    \begin{align*}
+        \frac{\d^{2} T}{\d ^{2} x} = -\frac{2}{\epsilon^{2}} -\frac{2}{\epsilon^{2}} \left( \frac{2}{\epsilon^{2}} U'(x)    \exp\left\{\frac{2}{\epsilon^{2}} U(x)\right\} \right) \int_{0}^{x} \exp\left\{ -\frac{2}{\epsilon^{2}} U(v) \right\} \d v         \end{align*}.
+\end{sol}
+Plugging this into the ODE, we have
+\begin{align*}
+    -1  + \left(-U'(x)  \frac{2}{\epsilon^{2}} \exp\left\{\frac{2}{\epsilon^{2}} U(x)\right\}  - \mu(x) \frac{2}{\epsilon^{2}} \exp\left\{\frac{2}{\epsilon^{2}} U(x)\right\}  \right) \int_{0}^{x} \exp\left\{ -\frac{2}{\epsilon^{2}} U(v) \right\} \d v = -1,\\
+\end{align*}
+where we've used that $\mu = - U'$. $T(x;\epsilon)$ is a solution to the ODE.
+
+(b) We begin by rewriting $T(x;\epsilon)$ as nested integrals
+\begin{align*}
+    T(x;\epsilon) = -\frac{2}{\epsilon^{2}} \int_{0}^{x} \exp \left( \frac{2}{\epsilon^{2}} U(u)\right) \int_{0}^{u}   \exp \left( - \frac{2}{\epsilon^{2}} U(v) \right ) \d v \d u. 
+\end{align*}% $x < x_{2}$ 
+We first will asymptotically evaluate the inner integral  in the $\epsilon \to 0$ limit around $x_{1}$ which maximizes $-U$ as $(-U)''(x_{1}) = \mu'(x_{1}) < 0$ and $\mu(x_{1}) = 0$, so that
+\begin{align*}
+    T(x;\epsilon) \simeq \frac{2}{\epsilon^{2}} \left(  \sqrt{\frac{2\pi}{\frac{2}{\epsilon^{2}} \abs{U''(x_{1})}}}  \exp\left(- \frac{2}{\epsilon^{2}} U(x_{1}) \right)\right)\int_{0}^{x} \exp \left( \frac{2}{\epsilon^{2}} U(u)\right)  \d u.
+\end{align*}
+We'll repeat this method to asymptotically evaluate the inner integral using that $U$ is maximized at $x_{2}$ by similar argument to what we used for $x_{1}$. Using Laplace's method allows us to conclude
+\begin{align*}
+    T(x;\epsilon) &\simeq  \frac{2}{\epsilon^{2}} \left(  \sqrt{\frac{2\pi}{\frac{2}{\epsilon^{2}} \abs{U''(x_{1})}}}  \exp\left(- \frac{2}{\epsilon^{2}} U(x_{1}) \right)\right) \left( \sqrt{\frac{2\pi}{\frac{2}{\epsilon^{2}} U''(x_{2})}}  \exp\left(\frac{2}{\epsilon^{2}} U(x_{2}) \right)\right)\\
+                  &\simeq \frac{2\pi}{\sqrt{\abs{U''(x_{2})} U''(x_{1})}} \exp\left(\frac{2}{\epsilon^{2}} [U(x_{2}) - U(x_{1})]   \right).
+\end{align*}
+I skipped most of the algebra in the last line, but it's mostly manipulating square roots and combining the exponentials.
+\newpage
+
+\begin{exer}
+    As a special example of a L\'{e}vy process,
+let $Y(t)$ be the standard Poisson process with probability 
+mass function
+\[
+            p_{Y(t)}(n) =\mathbb{P}\big\{ Y(t) = n\big\} 
+          =  \frac{ t^n e^{-t} }{n!};
+\]
+all jumps in the Poisson process have $\Delta Y = 1$.
+If one denotes the random times at which the jumps
+occur sequentially as $T_1, T_2,\cdots$, then $\{T_k\}_{k\ge 1}$
+is a positive real-valued, discrete-time stochastic process with
+independent and stationary increments.  This is in contrast to $Y(t)$ which is an integer-valued continuous-time stochastic process with 
+independent and stationary increments.  $Y_t$ and $T_k$ are 
+widely called Poisson counting process and Poisson point
+process, respectively.
+
+(a) Show that for any $0\le t_1 <  t_2 < t_3 < t_4 < \infty$,
+$(Y_{t_4}-Y_{t_3}) \perp \!\!\! \perp (Y_{t_2}-Y_{t_1})$
+according to the definition of a Poisson process in Chapter 5;
+show also that for any $0\le t_1<t_2<\infty$, 
+$(Y_{t_2}-Y_{t_1}) \sim Y_{t_2-t_1}$.
+
+(b)  A standard Brownian motion $W(t)$ has independent and stationary increments, between $t$ and $t+\tau$, that are normally
+distributed: 
+\[
+          W(t+\tau)-W(t) \sim \mathcal{N}(0, \tau),   \  \
+            t, \tau \ge 0.
+\]
+What is the distribution for the stationary increment
+$Y(t+\tau)-Y(t)$?  What is the stationary increment 
+$T_{k+\ell}-T_k$, where $\ell$ is a positive integer?
+
+(c)  Introducing time-changed Poisson process with 
+rate function $\lambda(t)\ge 0$.  Assuming that $\lambda(t)$
+is uniformly bounded for all time $t$:
+\begin{equation*}
+        \tilde{Y}(t) := Y\left(\int_0^t \lambda(s)\rd s\right).
+\end{equation*}
+Show that in the limit of $t\to\infty$,
+\[
+  \lim_{t\to\infty} \mathbb{P}\left( \left|
+      \frac{\tilde{Y}(t)}{t} - \lambda(t) \right| >\epsilon  \right) 
+        = 0, \  \forall \epsilon>0.
+\]
+
+(d) Show that for a continuous time two-state Markov process
+$X(t)$, $X\in\{-1,+1\}$, with transition rates $g(-1,+1)=g_+$ 
+and $g(+1,-1)=g_-$, can be represented by an
+integral equation in terms of two independent 
+Poisson processes $Y_1(t)$ and $Y_2(t)$ with time changes:
+\[
+   X(t) = X(0) + 2Y_1\left( g_+\int_0^t \mathbf{1}_{-1}\big(
+     X(s)\big) \rd s \right)  - 
+               2Y_2\left(g_-\int_0^t \mathbf{1}_{1}\big(
+     X(s)\big) \rd s \right).
+\]
+
+(e) Applying the result in (d), show that 
+\begin{align*}
+    \frac{\d }{\d t} \Expect[X(t)]  = 2 g_{+} P_{-1}(t) - 2 g_{-} P_{1}(t),
+\end{align*}
+where $P_{k}(t) = \Prob(X(t) = k)$
+
+\end{exer}
+
+\begin{sol}
+    %TODO: Be more clear on this. 
+    (a) We write that 
+    \begin{align*}
+        Y_{t} = \sum_{k = 1}^{\infty} \mathbf{1}_{T_{k} \leq t},
+    \end{align*}
+    so that $Y_{t}$ counts the events which have occurred up to time $t$. We then have that for $t_{1} < t_{2} < t_{3} < t_{3}$,
+    \begin{align*}
+        Y_{t_{4}} - Y_{t_{3}} = \sum_{k = 1}^{\infty} \mathbf{1}_{T_{k} \leq t_{4}} - \mathbf{1}_{T_{k} \leq t_{3}} = \sum_{k=1}^{\infty} \mathbf{1}_{t_{3} < T_{k} \leq t_{4}}. 
+    \end{align*}
+    As the underlying $T_{k}$ are independent for the differences $Y_{t_{4}} - Y_{t_{3}}$ and $Y_{t_{2}} - Y_{t_{1}}$ and do not overlap, this representation shows that
+    \begin{align*}
+        Y_{t_{4}} - Y_{t_{3}}  \text{ is independent of } Y_{t_{2}} - Y_{t_{1}}
+    \end{align*}
+Additionally, the derived equation for $Y_{t_{4}} - Y_{t_{3}}$ shows that the increments is the number of events which have occurred between the two time points as these increments are i.i.d. they must share the same distribution with $Y_{t_{4} - t_{3}}$, so that 
+\begin{align*}
+    Y_{t_{4}} - Y_{t_{3}} \sim Y_{t_{4} - t_{3}}.
+\end{align*}
+
+    (b) The increments of the counting process are Poisson distributed with
+     \begin{align*}
+         Y_{t + \tau} - Y_{t} \sim \text{Pois}( \tau ) \\
+         T_{t + l} - T_{t} \sim \text{Gamma}(l, 1).
+    \end{align*}
+    The first statement we've proved in 561. The second uses that the between event times are independent exponentials with rate $\lambda$ as from Thm 5.1.5. Their sum is then Gamma distributed with parameters  $l$ and  $1$.
+%Rehash the Poisson argument. Can use the sum is conv
+
+    (c) We start with the transformed Poisson process and write
+     \begin{align*}
+         \abs{ \frac{\tilde{Y}(t)}{t} - \lambda(t) } = \abs{  \frac{1}{t} Y\left(  \int_{0}^{t} \lambda(s) \d s  \right) - \lambda(t)}.
+    \end{align*}
+By mean value theorem for integrals, we have that for $s_{\star}(t) \in (0,t)$, we have that
+\begin{align*}
+    \frac{1}{t} \int_{0}^{t} \lambda(s) \d s = \lambda(s_{\star}).
+\end{align*}
+By uniform boundness, we then have that
+\begin{align*}
+    \abs{\frac{1}{t} \int_{0}^{t}\lambda(s) \d s} = \abs{\lambda(s_{\star})}\leq M,
+\end{align*}
+for some fixed $M > 0$. We can then write out write out the probability distribution of the time changed Poisson as
+\begin{align*}
+    \Prob(\tilde{Y}(t)  = kt) &= \left( \lambda(s_{\star})\right)^{kt} \frac{1}{(kt)!} \exp(-\lambda(s_{\star})).
+\end{align*}
+We then subtract $\lambda(t)t$ from both sides so that
+\begin{align*}
+    \Prob([\tilde{Y}(t) - \lambda(t)t] \approx [k-\lambda(t)]t) &\leq \frac{ M^{kt}  }{(kt)!} \exp(-\lambda(s_{\star})) \leq  \frac{ M^{kt}  }{(kt)!},
+\end{align*}
+where we've used that $\lambda(t)$ is non-negative. Yes, we know the distribution is integer valued but we're playing fast and loose with it. For any fixed $k\in\bbN$ as $t\to \infty$, we have
+\begin{align*}
+    \frac{M^{kt}}{(kt)!} \xrightarrow{t \to \infty} 0,
+\end{align*}
+which shows that 
+\begin{align*}
+    \Prob \left( \abs{ \tilde{Y}(t) / t - \lambda(t) } > \epsilon \right) \xrightarrow{t \to \infty} 0.
+\end{align*}
+
+    (d)Assuming that $\Delta t$ is sufficiently, small only one of the integrals can be non-zero, in the case that $X(t) = 1$
+    \begin{align*} 
+        X(t + \Delta t) - X(t) = - 2 Y_{2} \left( g_{-} \int_{t}^{t + \Delta t} \d s\right) = -2 Y_{2} \left( g_{-}
+\Delta t\right)\\
+    \end{align*}
+    This will match up when $Y_{1}$ returns 1, so the conditional probability is then given by
+    \begin{align*}
+        \Prob( X(t+\Delta t) = -1  \mid X(t) = 1) &= f_{\text{Pois}}(g_{-} \Delta t, 1)\\
+                                                 &= -g_{-}  \Delta t\exp( - g_{-} \Delta t) \\
+                                                 &=  1 - g_{-}\Delta t + O(\Delta t^{2}), 
+    \end{align*}
+    where last line we've used $\exp(-x) \approx 1 - x + x^{2}$. This then shows the $g_{-}$ is the generator element corresponding to $g(1, -1)$ using the definition of the generator. We can repeat this argument assuming  $X(t) = -1$ to show that $g(-1, 1) = g_{+}$
+\begin{align*}
+    \Prob( X(t+\Delta t) = 1 \mid X(t) = -1 ) = 1 - g_{+} \Delta t + O(\Delta t^{2}).
+\end{align*}
+This shows that this representation is equivalent to the original Markov chain.
+
+    (e) Taking the expectation of the result in (d), we have that
+
+    \begin{align*}
+        \Expect[X(t)] &= X(0) 
+        + 2 \Expect\left[ Y_1\left( g_+\int_0^t \mathbf{1}_{-1}\big(
+     X(s)\big) \rd s \right) \right]  
+     - 2 \Expect\left[ Y_2\left(g_-\int_0^t \mathbf{1}_{1}\big(
+     X(s)\big) \rd s \right)  \right] \\
+                      &= X(0) + 2g_{+} \int_{0}^{t} \Expect \mathbf{1}_{-1}\big(
+     X(s)\big)  \d s - 2g_{-} \int_{0}^{t} \Expect \mathbf{1}_{1}\big(
+     X(s)\big)  \d s,
+    \end{align*}
+    where we've interchanged the integral and expectation and then used that the expectation of an indicator event is its probability. Taking the derivative of this equation, gives the result
+    \begin{align*}
+    \frac{\d }{\d t} \Expect[X(t)] = 2g_{+} P_{-1}(t) - 2g_{-} P_{1}(t).
+    \end{align*}
+\end{sol}
+
+\newpage
+
+\begin{exer}
+    Let $P = (P_{t})_{t\geq 0}$ be a Poisson process with intensity $\lambda$.
+    \begin{enumerate}
+        \item What is the Levy measure $\nu$ of $P$?
+        \item Let  $\d X_{t} = \d P_{t}$. Define $u(t,x) = \Expect[\phi(X_{T})\mid X_{t} = x]$. Find $u(t,x)$ and verify that it solves the Kolmogorov Backward Equation.
+    \end{enumerate}
+\end{exer}
+
+\begin{sol}
+    (1.) Using definition 10.1.6 and 10.17, we can write the Levy measure of $P$ as 
+     \begin{align*}
+         \nu(U) = \Expect N(1, U) = \Expect\left[ \sum_{s: 0 < s \leq 1} \mathbf{1}_{\Delta P_{s} \in U}   \right].
+    \end{align*}
+    We'll now compute the probability distribution of $\Delta P_{s}$, we have that
+    \begin{align*}
+        N_{t + \d t} - N_{t} \sim \text{Pois}(\lambda \d t),
+    \end{align*}
+    so that jumps can only of size one since this depends on powers of $\lambda \d t$. We then have that the number of jumps of size one in $U$ depends on whether or not $U$ contains $1$. We can express this as: 
+    \begin{align*}
+    \nu(U) = \Expect \left[ \sum_{n=1}^{P_{1}} \mathbf{1}_{1 \in U} \right] = \begin{cases}
+        \lambda = \Expect \left[ P_{1} \right], \quad 1 &\in U \\
+        0, \quad 1 &\not\in U.
+    \end{cases}
+\end{align*}
+We can write the full measure as
+    \begin{align*}
+        \nu(U)= \lambda \mathbf{1}_{1 \in U} \text{ or } \nu(x) = \lambda \delta(x - 1).
+    \end{align*}
+
+    (2.) As a pure jump process, we can write $P_{t}$ in the form
+    \begin{align*}
+        P_{t} &= \int_{\abs{z} < 1 / 2} z \tilde{N}(t, \d z) + \int_{\abs{z} \geq 1 / 2} z N(t, \d z)\\
+              &= \int_{\abs{z} \geq 1 / 2} z N(t, \d z) = N(t, \d z)\\
+    \end{align*}
+    where we've used that the Poisson process has jumps of size 1. In short, this allows us to write
+    \begin{align*}
+        \d P_{t} = \lambda t + \int_{\bbR}z \tilde{N}(t, \d z).
+    \end{align*}
+    Following the notes, we have that
+    \begin{align*}
+        u(t, x) = \frac{1}{2\pi} \int_{\bbR} \exp(i \xi x + (T-t)\psi(\xi)) \hat{\phi}(\xi).
+    \end{align*}
+   We can find the characteristic exponent $\psi$ as
+    \begin{align*}
+        \psi(\xi) =  \lambda (\exp(i\xi) - 1),
+    \end{align*}
+    following the derivation on pg 175 (MLN). Plugging this in, we have that
+    \begin{align*}
+        u(t, x) = \frac{1}{2\pi} \int_{\bbR} \exp(i \xi x + (T-t)\lambda (\exp(i\xi) - 1)) \hat{\phi}(\xi) \d \xi.
+    \end{align*}
+    page 186
+    We'll show that this satisfies the KBE with generator
+    \begin{align*}
+        \mathcal{A} &= \lambda \partial_{x} + \int_{\bbR} \lambda \delta_{1}(z)(\theta_{z} - 1 - z \partial_{x})\\
+                    &= \lambda \partial_{x} + \lambda \theta_{1} - \lambda - \lambda \partial_{x}\\
+                    &= \lambda (\theta_{1} - 1).
+    \end{align*}
+    We then have that
+    \begin{align*}
+        \mathcal{A} u &= \lambda [u(t, x + 1) - u(t, x)]\\
+                      &= \frac{1}{2\pi} \int_{\bbR} \lambda (\exp(i\xi) - 1)\exp(i \xi x + (T-t)\lambda (\exp(i\xi) - 1)) \hat{\phi}(\xi) \d \xi.
+    \end{align*}
+    Also notice that after interchanging the integral and derivative with respect to $t$, we have that
+    \begin{align*}
+        \partial_{t} u &= - \frac{1}{2\pi}\int_{\bbR}  \lambda (\exp(i\xi) - 1)\exp(i \xi x + (T-t)\lambda (\exp(i\xi) - 1)) \hat{\phi}(\xi) \d \xi.
+    \end{align*}
+    Therefore, $u$ satisfies the KBE
+    \begin{align*}
+     \mathcal{A} u +  \partial_{t}  u = 0.
+    \end{align*}
+    We can also check the boundary condition is satisfied as
+    \begin{align*}
+        u(T, x) = \frac{1}{2\pi} \int_{\bbR} \exp(i \xi x ) \hat{\phi}(\xi) \d \xi = \phi(x).
+    \end{align*}
+\end{sol}
+\end{document}

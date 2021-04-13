@@ -1,0 +1,509 @@
+%Preamble
+\documentclass[12pt]{article}
+\usepackage{fancyhdr}
+\usepackage{extramarks}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{amsrefs}
+\usepackage{amsfonts}
+\usepackage{mathrsfs}
+\usepackage{mathtools}
+\usepackage[mathcal]{eucal} %% changes meaning of \mathcal
+\usepackage{enumerate}
+\usepackage[shortlabels]{enumitem}
+\usepackage{verbatim} %% includes comment environment
+\usepackage{hyperref}
+\usepackage[capitalize]{cleveref}
+\crefformat{equation}{~(#2#1#3)}
+\usepackage{caption, subcaption}
+\usepackage{graphicx}
+\usepackage{fullpage} %%smaller margins
+\usepackage[all,arc]{xy}
+\usepackage{mathrsfs}
+\usepackage{color}
+
+\hypersetup{
+    linktoc=all,     % set to all if you want both sections and subsections linked
+}
+
+\topmargin=-0.45in
+\evensidemargin=0in
+\oddsidemargin=0in
+\textwidth=6.5in
+\textheight=9.0in
+\headsep=0.25in
+\setlength{\headheight}{16pt}
+
+\linespread{1.1}
+
+\pagestyle{fancy}
+\lhead{\Name}
+\chead{\hwTitle}
+\rhead{\hwClass}
+\lfoot{\lastxmark}
+\cfoot{\thepage}
+
+\renewcommand\headrulewidth{0.4pt}
+\renewcommand\footrulewidth{0.4pt}
+
+\setlength\parindent{0pt}
+
+%% Title Info
+\newcommand{\hwTitle}{HW \# 5}
+\newcommand{\hwDueDate}{Feb 22, 2021}
+\newcommand{\hwClass}{AMATH 562}
+\newcommand{\hwClassTime}{}
+\newcommand{\hwClassInstructor}{}
+\newcommand{\Name}{\textbf{Marlin Figgins}}
+
+
+%% MATH MACROS
+\newcommand{\bbF}{\mathbb{F}}
+\newcommand{\bbN}{\mathbb{N}}
+\newcommand{\bbQ}{\mathbb{Q}}
+\newcommand{\bbR}{\mathbb{R}}
+\newcommand{\bbZ}{\mathbb{Z}}
+\newcommand{\bbC}{\mathbb{C}}
+\newcommand{\Prob}{\mathbb{P}}
+\newcommand{\calF}{\mathcal{F}}
+\newcommand{\abs}[1]{ \left| #1 \right| }
+\newcommand{\diff}[2]{\frac{d #1}{d #2}}
+\newcommand{\infsum}[1]{\sum_{#1}^{\infty}}
+\newcommand{\norm}[1]{ \left|\left| #1 \right|\right| }
+\newcommand{\eval}[1]{ \left. #1 \right| }
+\newcommand{\Expect}{\mathbb{E}}
+\newcommand{\Var}{\text{Var}}
+\newcommand{\Cov}{\text{Cov}}
+
+\renewcommand{\phi}{\varphi}
+\renewcommand{\emptyset}{\O}
+\let\vec\mathbf
+\def\mA{{\bf A}}
+\def\vT{{\bf T}}
+\def\vx{{\bf x}}
+\def\vy{{\bf y}}
+\def\rd{{\rm d}}
+
+%--------Theorem Environments--------
+%theoremstyle{plain} --- defaultx
+\newtheorem{thm}{Theorem}[section]
+\newtheorem{cor}[thm]{Corollary}
+\newtheorem{prop}[thm]{Proposition}
+\newtheorem{lem}[thm]{Lemma}
+\newtheorem{conj}[thm]{Conjecture}
+\newtheorem{quest}[thm]{Question}
+
+\theoremstyle{definition}
+\newtheorem{defn}[thm]{Definition}
+\newtheorem{defns}[thm]{Definitions}
+\newtheorem{con}[thm]{Construction}
+\newtheorem{exmp}[thm]{Example}
+\newtheorem{exmps}[thm]{Examples}
+\newtheorem{notn}[thm]{Notation}
+\newtheorem{notns}[thm]{Notations}
+\newtheorem{addm}[thm]{Addendum}
+
+% Environments for answers and solutions
+\newtheorem{exer}{Exercise}
+\newtheorem{sol}{Solution}
+
+\theoremstyle{remark}
+\newtheorem{rem}[thm]{Remark}
+\newtheorem{rems}[thm]{Remarks}
+\newtheorem{warn}[thm]{Warning}
+\newtheorem{sch}[thm]{Scholium}
+
+\makeatletter
+\let\c@equation\c@thm
+\makeatother
+
+\def\mA{{\bf A}}
+\def\vT{{\bf T}}
+\def\vx{{\bf x}}
+\def\vy{{\bf y}}
+\def\d{{\rm d}}
+\def\vnu{\mbox{\boldmath$\nu$}}
+\def\vpi{\mbox{\boldmath$\pi$}}
+
+\begin{document}
+
+\begin{exer}
+  The concept of {\em change of measure} in
+terms of a Radon-Nikodym derivative can be summarized
+as in the following diagram:
+
+\begin{equation*}
+\label{eq004}
+\begin{picture}(100,60)(10,40)
+%states
+\put(-40,80){$ \big(\Omega,\mathcal{F},\mathbb{P}\big) $}
+\put(75,80){$ f_X(x) $}
+\put(-40,0){$ \big(\Omega,\mathcal{F},\tilde{\mathbb{P}}\big) $} 
+\put(75,0){$ \tilde{f}_{X}(x) $}
+%transitions
+\put(10,83){\vector(1,0){60}}
+\put(10,3){\vector(1,0){60}}
+\put(-20,73){\vector(0,-1){60}} 
+\put(85,73){\vector(0,-1){60}}
+%rate constants
+\put(22,90){$X(\omega)$}
+\put(22,10){$X(\omega)$}
+{\color{red}{\put(-55,45){$\frac{\rd\tilde{\mathbb{P}}}{\rd\mathbb{P}}(\omega) $}  }}
+\end{picture}
+\end{equation*}
+\vskip 2cm
+
+(a)   Assuming that in the diagram, both probability density
+functions $f_X(x)$ and $\tilde{f}_X(x)$ for a
+random variable $X(\omega)$ are given. Find the RND 
+$\frac{\rd\tilde{\mathbb{P}}}{\rd\mathbb{P}}(\omega)$ 
+in terms of the $X(\omega)$.
+
+(b)  In the diagram below, for a given random variable $X:\Omega\to\mathbb{R}$ and a smooth function $g(x):\mathbb{R}\to\mathbb{R}$,
+let us assume random variable $Y(\omega)=h^{-1}\big(X(\omega)\big)$ 
+under the new measure $\tilde{\mathbb{P}}$ has
+a probability density function
+\[
+              \tilde{f}_Y(x)=f_X(x).
+\]
+
+\begin{equation*}
+\label{eq004}
+\begin{picture}(100,60)(10,40)
+%states
+\put(-40,80){$ \big(\Omega,\mathcal{F},\mathbb{P}\big) $}
+\put(75,80){$ f_X(x) $}
+\put(-40,0){$ \big(\Omega,\mathcal{F},\tilde{\mathbb{P}}\big) $}
+\put(75,0){$ \tilde{f}_{X}(x) $}
+%transitions
+\put(10,83){\vector(1,0){60}}
+\put(10,3){\vector(1,0){60}}
+{\color{red}{ \put(-10,15){\vector(3,2){85}} }}
+\put(-20,73){\vector(0,-1){60}}
+\put(85,73){\vector(0,-1){60}}
+%rate constants
+\put(22,90){$X(\omega)$}
+\put(22,10){$X(\omega)$}
+{\color{red}{ \put(0,45){$Y(\omega)$} }}
+\put(-110,45){$\frac{\rd\tilde{\mathbb{P}}}{\rd\mathbb{P}}(\omega)= g[X(\omega)] $}
+\end{picture}
+\end{equation*}
+\vskip 2cm
+
+Find the function $h(y)$.
+
+(c) Now consider a probability space $(\Omega,\mathcal{F},
+\mathbb{P})$, and $X(\omega) = \big(X_1,X_2,\cdots,X_n)(\omega)$
+is a $n$-dimensional random variables, whose sccessive differences
+$X_j-X_{j-1}$ are all conditionally, normally distributed
+independent random variables:
+\[
+        X_{j+1}-X_j \sim \mathcal{N}\Big( \mu_{j+1}(X_j),
+            \sigma_{j+1}^2(X_j)\Big).
+\]   
+
+	Find the change of measures $Z(\omega)=\frac{\rd\tilde{\mathbb{P}}}{\rd\mathbb{P}}(\omega)$ such that under the new measure
+$\tilde{\mathbb{P}}$, 
+\[
+         X_{j+1}-X_j \sim \mathcal{N}\big(0,\sigma_{j+1}^2(X_j)\Big).
+\]
+What is the conditional expectation
+\[
+              \mathbb{E}\big[ Z| X_1,\cdots,X_k \big]
+\]
+for $k<n$?
+
+
+(d)  Applying the result from (c), show the 
+following expression
+\[
+            Z_T = \exp\left\{-\frac{1}{2}\int_0^T
+                         \left(\frac{b^2(X_s)}{A^2(X_s)}\right)\rd s
+           - \int_0^T \left(\frac{b(X_s)}{A(X_s)}\right)\rd W(t) \right\}
+\]
+represents a change of measure, from $\mathbb{P}$ to
+$\tilde{\mathbb{P}}$.  The Ito process on $[0,T]$,
+\[
+         \rd X_t = b(X_t)\rd t + A(X_t)\rd W(t),
+\]
+under measure $\mathbb{P}$ then becomes
+\[
+       \rd X_t = A(X_t)\rd \widetilde{W}(t)
+\]
+under measure $\tilde{\mathbb{P}}$.
+\end{exer}
+
+\begin{sol}
+    (a) Just to be clear I'm assuming that $\tilde{f}_{X}$ and $f_{X}$ are densities with respect to Lebesgue which I just write as $\d x$, so that we have
+\begin{align*}
+    \Prob( X \in A ) = \int_{A} f_{X}(x) \d x \\
+    \tilde{\Prob}(X \in A) = \int_{A} \tilde{f}_{X}(\omega) \d x.
+\end{align*}
+We then have that if $ \frac{\d \tilde{\Prob}}{\d \Prob}$ is the Radon-Nikodym derivative
+\begin{align*}
+    \tilde{\Prob}( X \in A ) &= \int_{A} \tilde{f}_{X}(x) \d x  \\
+                             &= \int_{A} \d \tilde{\Prob}  \\
+                             &= \int_{A}  \frac{\d \tilde{\Prob}}{\d \Prob} \d \Prob \\
+                             &= \int_{A} \frac{\d \tilde{\Prob}}{\d \Prob} f_{X}(x) \d x,
+\end{align*}
+where we've written $\d \Prob = f_{X}(x) \d x$ and $\d \tilde{\Prob} = \tilde{f}_{X}(x) \d x$. The above equalities hold when 
+\begin{align*}
+    \frac{\d \tilde{\Prob}}{\d \Prob}(x) = \frac{\tilde{f}_{X}(x)}{f_{X}(x)}.
+\end{align*}
+This appears to be just the likelihood ratio of the densities.
+
+(b) By the definition $Y = h^{-1}(X)$, we have that
+\begin{align*}
+    \tilde{\Prob}(Y \in h^{-1}(A)) &= \int_{h^{-1}(A)} \tilde{f}_{Y}(y) \d y\\
+                                   &= \int_{h^{-1}(A)} \tilde{f}_{X}(h(y)) \abs{\frac{\d h}{ \d y}(y)} \d y\\
+                                   &= \int_{A} \tilde{f}_{X}(u) \d u = \int_{A} \d \tilde{\Prob}\\
+\end{align*}
+using change of variables and a change of measure from $\tilde{\Prob}$ to $\Prob$ in the last line using (a). Additionally, we have that $\tilde{f}_{Y}(x) = f_{X}(x)$, so that
+\begin{align*}
+\Prob(X \in h^{-1}(A)) = \int_{h^{-1}(A)} \d \Prob = \int_{A} \d \tilde{\Prob}  = \tilde{\Prob}(X \in A)\end{align*}
+Therefore, for any $y$, $h$ satisfies
+\begin{align*}
+    f_{X}(y) = \tilde{f}_{X}(h(y)).
+\end{align*}
+
+(c) Using a bit of intuition from (a), we see that 
+\begin{align*}
+    \tilde{P}(A) &= \int_{A} Z_{j+1}(\omega) \d \Prob\\
+                 &= \int_{A} Z_{j+1} C_{j+1} \exp\left(- \frac{1}{2} \left(\frac{x - \mu_{j+1}(X_{j})}{\sigma_{j+1}(X_{j})}\right)^{2}  \right)\d x,
+\end{align*}
+where $C_{j+1}$ is the normalization constant for the distribution of $X_{j+1} - X_{j}$ under $\Prob$. Our desired mean zero normal distribution satisfies 
+\begin{align*}
+    \tilde{P}(A) = \int_{A} C_{j+1} \exp\left(- \frac{1}{2} \left(\frac{x}{\sigma_{j+1}(X_{j})}\right)^{2}\right) \d x,
+\end{align*}
+where $C_{j+1}$ is the same normalization constant as before. Therefore, we can write $Z$ as
+\begin{align*}
+Z_{j+1} =  \exp\left(- \frac{x \mu_{j+1}(X_{j})}{\sigma^{2}_{j+1}(X_{j})} + \frac{1}{2} \frac{\mu_{j+1}^{2}(X_{j})}{\sigma^{2}_{j+1}(X_{j})}  \right),
+\end{align*}
+replacing $Z_{j+1}$ with the above will give us the desired integral. For each change of measure $Z_{j+1}$. we can now compute the conditional expectation as
+\begin{align*}
+    \Expect_{\Prob}[Z_{j+1} \mid X_{1}, X_{2}, \ldots X_{j}] &= \int_{\Omega} Z_{j+1}(\omega) \d \Prob\\
+                                                       &= \int_{\Omega} C_{j+1} \exp\left(- \frac{1}{2} \left(\frac{x}{\sigma_{j+1}(X_{j})}\right)^{2} \right) \d x\\
+                                                       &= \tilde{\Prob}(\Omega)= 1,
+\end{align*}
+which makes sense as $Z$ is the Radon Nikodym derivative $\d \tilde{\Prob} / \d \Prob$.
+
+(d) Using Girsanov theorem (Thm 8.6.1 in MLN) allows us to define a change of measure $\d \tilde{W} =  \left( \frac{b(X_{t})}{A(X_{t})} \right) \d t + \d W_{t}$. Re-arranging this, allows us to write
+\begin{align*}
+    \d W_{t} = \d \tilde{W}_{t} - \left( \frac{b(X_{t})}{A(X_{t})} \right) \d t
+\end{align*}
+We can then apply this change of measure to $X$ to show that
+\begin{align*}
+    \d X_{t} &= b(X_{t}) \d t + A(X_{t}) \d W_{t}\\
+    \d X_{t} &= b(X_{t}) \d t + A(X_{t}) \left(\d \tilde{W}_{t} - \left( \frac{b(X_{t})}{A(X_{t})} \right) \d t \right)\\
+             &= A(X_{t}) \d \tilde{W}_{t}, 
+\end{align*}
+under the new measure $\tilde{\Prob}$.
+\end{sol}
+\newpage
+
+\begin{exer}
+The Ornstein-Uhlenbeck process, defined
+by linear SDE
+\[
+   \rd X(t) = -\mu X(t) \rd t +\sigma \rd W(t),   \
+            X(0)=x_0,
+\] 
+in which $\sigma$ and $\mu>0$ are two constants, has its
+Kolmogorov forward equation
+\begin{equation}
+      \frac{\partial}{\partial t} \Gamma(x_0;t,x)
+  =  \frac{\sigma^2}{2}\frac{\partial^2}{\partial x^2}
+          \Gamma(x_0;t,x)
+          + \frac{\partial}{\partial x}\Big( \mu x\Gamma(x_0;t,x)
+            \Big),
+\label{PDE}
+\end{equation}
+with the initial condition $\Gamma(x_0;0,x)=\delta(x-x_0)$.
+
+
+(a) Show that the solution to the linear PDE (\ref{PDE}) has 
+a Gaussian form and find the solution.
+
+(b)  What is the limit of 
+\[
+   \lim_{t\to\infty} \Gamma(x_0;t,x)?
+\]
+
+(c)  Find $\mathbb{E}[X(t)]$ and $\mathbb{V}[X(t)]$.
+
+(d)  You note that $\mathbb{E}[X(t)]$ is the same as 
+the solution to the ODE $\frac{\rd x}{\rd t} = -\mu x$,
+which is obtained when $\sigma=0$.
+Is this result true for a nonlinear SDE?
+\end{exer}
+
+\begin{sol}
+    (a) We begin by writing
+    \begin{align*}
+        X_{t} = x_{0} e^{-\mu t} +  \sigma \int_{0}^{t} \exp(-k(t-s)) \d W_{s}.
+    \end{align*}
+    This follows from Example 8.3.6. (MLN), but can be derived by using Ito's formula on $Z_{t} = e^{\mu t} X_{t}$. This can be written as a normal distribution as it is a constant plus an Ito integral. We can write this normal distribution using its expectation and variance so that
+    \begin{align*}
+        \Expect[ X_{t} ] &= x_{0} e^{-\mu t}  + \Expect \left[  \sigma \int_{0}^{t} \exp(-k(t-s)) \d W_{s} \right]\\
+                         &=  x_{0} e^{-\mu t}\\
+        \Var[X_{t}] &= \Var\left[  \sigma \int_{0}^{t} \exp(- \mu (t-s)) \d W_{s} \right]\\
+                    &= \frac{\sigma^{2}}{2\mu} \left(1 - \exp(-2 \mu t)\right). 
+    \end{align*}
+    We can then write the transition density as a Gausian 
+    \begin{align*}
+        \Gamma(x_{0}; t, x) &\sim \text{Normal}\left( x_{0} e^{-\mu t}, \frac{\sigma^{2}}{2\mu} \left(1 - \exp(-2 \mu t)\right)  \right)\\
+        \Gamma(x_{0}; t, x) &= \sqrt{\frac{\mu}{\pi \sigma^{2} (1 - \exp(-2 \mu t))}} \exp\left( -\mu\frac{(x - x_{0}e^{-\mu t})^{2} }{\sigma^{2} (1 - \exp(-2\mu t))} \right).
+    \end{align*}
+
+    (b) Taking $t \to \infty$, we see that this distribution approaches
+    \begin{align*}
+        \lim_{t\to \infty} \Gamma(x_{0}, t, x)  &\sim \text{Normal}\left(0, \frac{\sigma^{2}}{2\mu}\right) \\
+        \Gamma(x_{0}; t, x) &= \sqrt{\frac{\mu}{\pi \sigma^{2}}} \exp\left( -\mu\frac{x^{2}}{\sigma^{2} }\right).
+    \end{align*}
+
+    (c) This was solved above.
+
+    (d) Is what result clear? That the expectation of an SDE corresponds to the ODE that represents its drift? I believe this property can failure in cases where the martingale property fails for the $\d W_{t}$ integral. Basically, any SDE  of the form $\d X_{t} = a(X_{t}, t) \d t + b(X_{t}, t) \d W_{t}$ with
+\begin{align*}
+    \Expect \left[\int_{0}^{t} b(X_{s}, s)  \d W_{s} \right] \neq 0
+\end{align*}
+will not have the desired result.
+\end{sol}
+
+\newpage
+
+\begin{exer}
+ The time-independent solution to a
+Kolmogorov forward equation gives a stationary probability
+density function for the Ito process
+$\rd X_t = \mu(X_t)\rd t + \sigma(X_t)\rd W(t)$:
+\[
+        -\frac{\partial}{\partial x}\Big( \mu(x) f(x)\Big)
+       + \frac{1}{2}\frac{\partial^2}{\partial x^2} 
+         \Big( \sigma^2(x) f(x) \Big) = 0. 
+\]
+This is a linear, second-order ODE.  We assume that both
+$\mu(x)$ and $\sigma(x)$ satisfy the conditions required
+to have a solution $f(x)$ on the entire $\mathbb{R}$.  
+Find the expression for the general solution.  
+There are two constants of integration, which should be 
+determined according to appropriate probabilistic
+reasoning.
+\end{exer}
+
+\begin{sol}
+    We write the ODE as
+    \begin{align*}
+    \frac{1}{2}\frac{\partial^2}{\partial x^2} 
+         \Big( \sigma^2(x) f(x) \Big) =  \frac{\partial}{\partial x}\Big( \mu(x) f(x)\Big).
+    \end{align*}
+    Integrating, we see that
+    \begin{align*}
+        \frac{\partial }{\partial x} (\sigma^{2}(x) f(x))  = 2\mu(x)f(x) + C
+    \end{align*}
+    Using the product rule on the right side, we have that
+    \begin{align*}
+        f'(x) \sigma^{2}(x)  = (2\mu(x) - 2\sigma(x) \sigma'(x)) f(x) + C
+    \end{align*}
+    We then have that
+    \begin{align*}
+        f'(x) = \left( \frac{2\mu(x) - 2\sigma(x) \sigma'(x)}{\sigma^{2}(x)} \right) f(x) + \frac{C}{\sigma^{2}(x)}
+    \end{align*}
+    To ensure that $f'(x)$ approach zero in its tails, we set $C=0$. Integrating once more from $-\infty$ to $x$, we see that
+    \begin{align*}
+        f(x) &= C_{2} \exp \left( \int_{-\infty}^{x} \frac{2\mu(\xi) - 2\sigma(\xi) \sigma'(\xi)}{\sigma^{2}(\xi)} \d \xi   \right) \\
+             &= C_{2} \exp  \left( \int_{-\infty}^{x} \frac{2\mu(\xi)}{\sigma^{2}(\xi)} \d \xi - \int_{- \infty}^{x} \frac{2\sigma'(\xi) }{\sigma(\xi)} \d \xi   \right) \\
+             &= C_{2} \exp \left( \int_{-\infty}^{x} \frac{2\mu(\xi) }{\sigma^{2}(\xi)} \d \xi - \log( \sigma^{2}(x) ) + \log( \sigma^{2}(-\infty) )  \right) \\
+             &=\frac{C_{2}}{\sigma^{2}(x)} \exp \left( \int_{-\infty}^{x} \frac{2\mu(\xi) }{\sigma^{2}(\xi)} \d \xi \right),
+    \end{align*}
+    where we've wrapped $\sigma^{2}(-\infty)$ into the constant $C_{2}$. Here, $C_{2}$ will serve as a normalizing constant so that $\int_{\bbR} f(x) \d x = 1$ i.e.
+    \begin{equation*}
+        C_{2}^{-1} = \int_{\bbR} \frac{1}{\sigma^{2}(x)} \exp \left( \int_{-\infty}^{x} \frac{2\mu(\xi) }{\sigma^{2}(\xi)} \d \xi \right) \d x.
+    \end{equation*}
+\end{sol}
+
+\newpage
+
+\begin{exer}
+Let $X$ be a solution to the following SDE
+ \begin{equation*}
+     \rd X_{t} = \kappa (\theta - X_{t}) \d t + \delta \sqrt{X_{t}} \rd W_{t}.
+\end{equation*}
+Define
+\begin{align*}
+    u(t, x) = \Expect\left[ \exp \left( - \int_{t}^{t} X_{s} \rd s  \right ) \mid X_{t} = x_{T} \right]
+\end{align*}
+Derive a PDE for the function $u$. To solve the PDE for $u$, try a solution of the form
+\begin{align*}
+    u(t, x) = \exp( -x A(t) - B(t) ),
+\end{align*}
+where $A$ and  $B$ are determinisitc functions of  $t$, Show that $A$ and  $B$ must satisfy a coupled pairs of ODEs with appropriate terminal conidtions at time  $T$, Bonus question: solve the ODEs it may be helpful to note that one of the ODEs is a Riccati equation).
+\end{exer}
+
+\begin{sol}
+    We use theorem 9.2.1 (MLN) with $\mu(t, X_{t}) = \kappa(\theta - X_{t})$ and $\sigma(t, X_{t}) = \delta \sqrt{X_{t}}$. W This gives a PDE
+    \begin{align*}
+        \partial_{t} u = - \kappa(\theta - x) \partial_{x} u - \frac{\delta^{2}}{2} x \partial_{xx} u.
+    \end{align*}
+    Supposing that our solution is of the form above, we can write out its derivative as
+    \begin{align*}
+        \partial_{t} u &=  (-x A'(t) - B'(t))u\\
+        \partial_{x} u &= - A(t) u\\
+        \partial_{xx} u &= A(t)^{2} u
+    \end{align*}
+    Putting these together with the derived PDE , we have that
+    \begin{align*}
+        (-x A'(t) - B'(t)) u = A(t) \kappa(\theta - x) u - A(t)^{2} \frac{\delta^{2}}{2} u.
+    \end{align*}
+    This gives ODES
+    \begin{align*}
+        -x A'(t) - A(t) \kappa(\theta - x) + \frac{\delta^{2}}{2} A(t)^{2} = B'(t)\\
+        u(T, x) = x_{T}
+    \end{align*}
+\end{sol}
+\newpage
+
+\begin{exer}
+    For $i = 1, 2, \ldots, d$, let $X^{(i)}$ satisfy
+    \begin{align*}
+        \d X_{t}^{(i)} = - \frac{b}{2} X_{t}^{(i)} \d t + \frac{1}{2} \sigma \d W_{t}^{(i)},
+    \end{align*}
+    where the $(W^{(i)})_{i=1}^{d}$ are independent Brownian motions. Define
+    \begin{equation*}
+        R_{t} = \sum_{i=1}^{d} (X_{t}^{(i)})^{2}, \quad B_{t} = \sum_{i = 1}^{d} \int_{0}^{t} \frac{1}{\sqrt{R_{s}}} X_{s}^{(i)} \rd W_{s}^{(i)}.
+    \end{equation*}
+    Show that $B$ is a Brownian motion. Derive an SDE for $R$ that involves only  $\rd t$ and  $\rd B_{t}$ term i.e. no $\d W_{t}^{(i)}$ should appear.
+\end{exer}
+
+\begin{sol}
+    We'll use Levy's characterization of the Brownian motion to show that $B$ is a Brownian motion. We begin by noting that $B_{0} = 0$ since 
+\begin{align*}
+    B_{0} = \sum_{i=1}^{d} \int_{0}^{0} \frac{1}{\sqrt{R_{s}}} X_{s}^{(i)} \d W_{s}^{(i)} = 0.
+\end{align*}
+We write $B_{t}$ in differential form
+\begin{align*}
+    \d B_{t} = \sum_{i=1}^{d} \frac{1}{\sqrt{R_{t}}} X_{t}^{(i)} \d W_{t}^{(i)}.
+\end{align*} Next, we compute the quadratic variation as
+\begin{align*}
+   \d [B, B]_{t} = \frac{1}{R_{t}} \sum_{i=1}^{d} (X_{t}^{(i)})^{2} \d t,
+\end{align*}
+where we've used that $\d W_{t^{(i)}}$ are independent to cancel the cross terms. Using the definition of $R_{t}$, we have that
+\begin{align*}
+    \d [B,B] = \d t \implies [B, B]_{t} = t.
+\end{align*}
+What remains is to show that $B_{t}$ is a martingale. We begin by considering the integrability condition
+\begin{align*}
+    \Expect \int_{0}^{t} \frac{1}{R_{s}} (X_{s}^{(i)})^{2} \d W_{s}^{(i)} < \infty,
+\end{align*}
+which is satisfied for all $i = 1, \ldots, d$. Therefore, $B_{t}$ is an Ito integral and a martingale.  From thos, we see $B_{t}$ satisfies Levy's characterization of a Brownian motion.
+To derive an SDE for $R$, we begin by differentiating $R_{t}$ so that
+\begin{align*}
+    \d R_{t} &= \sum_{i=1}^{d} \left[ 2 X_{t} \d X_{t}^{(i)} + (\d X_{t}^{(i)})^{2} \right]\\
+             &= \sum_{i=1}^{d} \left(-b (X_{t}^{(i)})^{2} + \frac{1}{4}\sigma^2\right) \d t +\sigma  X_{t} \d W_{t}^{(i)}\\
+             &=  \left( \frac{d}{4}\sigma^{2}  -b \sum_{i=1}^{d} (X_{t}^{(i)})^{2} \right) \d t +\sigma \sum_{i=1}^{d} X_{t}^{(i)}\d W_{t}^{(i)}\\
+             &=  \frac{d}{4} \sigma^{2} - b R_{t} \d t + \sigma \sqrt{R_{t}} \d B_{t}
+\end{align*}
+
+\end{sol}
+\end{document}

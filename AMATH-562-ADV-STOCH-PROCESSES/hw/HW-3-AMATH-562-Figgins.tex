@@ -1,0 +1,449 @@
+%Preamble
+\documentclass[12pt]{article}
+\usepackage{fancyhdr}
+\usepackage{extramarks}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{amsrefs}
+\usepackage{amsfonts}
+\usepackage{mathrsfs}
+\usepackage{mathtools}
+\usepackage[mathcal]{eucal} %% changes meaning of \mathcal
+\usepackage{enumerate}
+\usepackage[shortlabels]{enumitem}
+\usepackage{verbatim} %% includes comment environment
+\usepackage{hyperref}
+\usepackage[capitalize]{cleveref}
+\crefformat{equation}{~(#2#1#3)}
+\usepackage{caption, subcaption}
+\usepackage{graphicx}
+\usepackage{fullpage} %%smaller margins
+\usepackage[all,arc]{xy}
+\usepackage{mathrsfs}
+
+\hypersetup{
+    linktoc=all,     % set to all if you want both sections and subsections linked
+}
+
+\topmargin=-0.45in
+\evensidemargin=0in
+\oddsidemargin=0in
+\textwidth=6.5in
+\textheight=9.0in
+\headsep=0.25in
+\setlength{\headheight}{16pt}
+
+\linespread{1.1}
+
+\pagestyle{fancy}
+\lhead{\Name}
+\chead{\hwTitle}
+\rhead{\hwClass}
+\lfoot{\lastxmark}
+\cfoot{\thepage}
+
+\renewcommand\headrulewidth{0.4pt}
+\renewcommand\footrulewidth{0.4pt}
+
+\setlength\parindent{0pt}
+
+%% Title Info
+\newcommand{\hwTitle}{HW \# 3}
+\newcommand{\hwDueDate}{Jan 29, 2021}
+\newcommand{\hwClass}{AMATH 562}
+\newcommand{\hwClassTime}{}
+\newcommand{\hwClassInstructor}{}
+\newcommand{\Name}{\textbf{Marlin Figgins}}
+
+
+%% MATH MACROS
+\newcommand{\bbF}{\mathbb{F}}
+\newcommand{\bbN}{\mathbb{N}}
+\newcommand{\bbQ}{\mathbb{Q}}
+\newcommand{\bbR}{\mathbb{R}}
+\newcommand{\bbZ}{\mathbb{Z}}
+\newcommand{\bbC}{\mathbb{C}}
+\newcommand{\Prob}{\mathbb{P}}
+\newcommand{\calF}{\mathcal{F}}
+\newcommand{\abs}[1]{ \left| #1 \right| }
+\newcommand{\diff}[2]{\frac{d #1}{d #2}}
+\newcommand{\infsum}[1]{\sum_{#1}^{\infty}}
+\newcommand{\norm}[1]{ \left|\left| #1 \right|\right| }
+\newcommand{\eval}[1]{ \left. #1 \right| }
+\newcommand{\Expect}{\mathbb{E}}
+\newcommand{\Var}{\text{Var}}
+\newcommand{\Cov}{\text{Cov}}
+
+\renewcommand{\phi}{\varphi}
+\renewcommand{\emptyset}{\O}
+\let\vec\mathbf
+\def\mA{{\bf A}}
+\def\vT{{\bf T}}
+\def\vx{{\bf x}}
+\def\vy{{\bf y}}
+\def\rd{{\rm d}}
+
+%--------Theorem Environments--------
+%theoremstyle{plain} --- defaultx
+\newtheorem{thm}{Theorem}[section]
+\newtheorem{cor}[thm]{Corollary}
+\newtheorem{prop}[thm]{Proposition}
+\newtheorem{lem}[thm]{Lemma}
+\newtheorem{conj}[thm]{Conjecture}
+\newtheorem{quest}[thm]{Question}
+
+\theoremstyle{definition}
+\newtheorem{defn}[thm]{Definition}
+\newtheorem{defns}[thm]{Definitions}
+\newtheorem{con}[thm]{Construction}
+\newtheorem{exmp}[thm]{Example}
+\newtheorem{exmps}[thm]{Examples}
+\newtheorem{notn}[thm]{Notation}
+\newtheorem{notns}[thm]{Notations}
+\newtheorem{addm}[thm]{Addendum}
+
+% Environments for answers and solutions
+\newtheorem{exer}{Exercise}
+\newtheorem{sol}{Solution}
+
+\theoremstyle{remark}
+\newtheorem{rem}[thm]{Remark}
+\newtheorem{rems}[thm]{Remarks}
+\newtheorem{warn}[thm]{Warning}
+\newtheorem{sch}[thm]{Scholium}
+
+\makeatletter
+\let\c@equation\c@thm
+\makeatother
+
+\def\mA{{\bf A}}
+\def\vT{{\bf T}}
+\def\vx{{\bf x}}
+\def\vy{{\bf y}}
+\def\rd{{\rm d}}
+\def\vnu{\mbox{\boldmath$\nu$}}
+\def\vpi{\mbox{\boldmath$\pi$}}
+
+\begin{document}
+\begin{exer}
+Consider a measurable space $(\Omega,\mathcal{F})$
+with finite elementary event set $\Omega=\{1,\cdots,n\}$,\footnote{If we let
+$\Omega=\{A,B,\cdots\}$ be a set of finite symbols, then nonlinear dynamic systems, 
+chaos and Smale's horseshoe, can be studied as {\em subshifts of finite type} in $\Omega^{\mathbb{Z}}$, the space of all bi-infinite sequences of elements of 
+$\Omega$, known as symbolic dynamics.
+} 
+the corresponding $\mathcal{F}=2^\Omega$, and the ``Lebesgue measure''
+$\nu_i = 1$, $1\le i\le n$.  In discrete time, a deterministic first-order
+``dynamics''  in the $\Omega$ has a one step map $S:\Omega\to\Omega$.  
+A stochastic Markov (chain) dynamics, $X_k$, has one step transitions in terms of a set of 
+conditional probabilities $p^{(\vnu)}(i,j) = \Pr\{X_{k+1}=j|X_k=i\}$.
+
+\vspace{0.5em}
+
+(a) Since a deterministic first-order dynamics is just a special, singular case of 
+a Markov dynamics, express the transition probability $p(i,j)$ in terms of the
+map $S$.
+
+(b) If a Markov chain with $p(i,j)$ has a unique invariant probability 
+$\vpi=\{\pi_1,\cdots,\pi_n\}\neq 0$, express the transition probability ``density''
+$p^{(\vpi)}(i,j)$ under the measure $\vpi$ in terms of the
+transition probabilty $p^{(\vnu)}(i,j)$.
+
+(c)  Show that 
+\[
+           \vpi P^{(\vpi)}  = \mathbf{1},
+\]
+and
+\[
+       P^{(\vpi)} \vpi^T = \mathbf{1}^T,
+\]
+where $P^{(\vpi)} $ is the transition probability density matrix w.r.t. $\vpi$
+and $\mathbf{1}=(1,\cdots,1)$.
+Please explain these two equations.
+
+(d) The {\em reversibility} of a Markov chain is introduced in \S4.5 of MLN.
+What is the $P^{(\vpi)}$ of a reversible Markov chain?
+
+(e)  Now return to a deterministic map $S:\Omega\to\Omega$.  Show that
+its has a stationary  probability $\vpi=(\tfrac{1}{n},\cdots,\tfrac{1}{n})$ 
+if and only if the map $S$ is one to one.  
+Within the context of a deterministic $S$,
+discuss the notion of {\em irreducibility} defined in \S4.3 of MLN.
+\end{exer}
+
+\begin{sol}
+
+    (a) Thinking of the $S$ in terms of a Markov chain, we can write the transition matrix as
+    \begin{align*}
+        p(i,j) = \Prob( X_{k+1} = j \mid X_{k} = i ) 
+        =
+        \begin{cases}
+            1, &\text{ if } S(i) = j\\
+            0, &\text{ otherwise.}
+        \end{cases}
+    \end{align*}
+
+    (b) 
+    Suppose that $\vpi$ is the stationary distribution to $p^{\vnu}(i,j)$, we then gave that
+    \begin{align*}
+        \vpi = \vpi P^{(\vnu)}
+    \end{align*}
+
+    Representing $p^{\vpi}$ as the Radon-Nikodym derivative of $p^{(\vnu)(i,j)}$ with respect to $\vpi$, we have that
+    \begin{align*}
+        p^{(\vpi)}(i, j) = p^{(\vnu)}(i, j) / \pi_{j}.
+    \end{align*}
+
+    (c) With this definition, the first equation is clear as 
+    \begin{align*}
+     \sum_{j\in \Omega} \pi_{j}   p^{(\vpi)}(i, j) =  \sum_{j\in \Omega} \pi_{j}   p^{(\vnu)}(i, j) / \pi_{j}  =  \sum_{j\in \Omega}   p^{(\vnu)}(i, j) =  1,
+    \end{align*}
+    for any $i \in \Omega$. The second equation follows as
+    \begin{align*}
+        \sum_{j\in \Omega} p^{(\vpi)}(j, i) \pi_{j} = \frac{1}{\pi_{i}} \sum_{j\in \Omega} p^{(\vnu)}(j, i) \pi_{j} = \pi_{i} / \pi_{i} = 1.
+    \end{align*}
+
+    (d) When the chain is reversible, we have that 
+    \begin{align*}
+        \pi_{i} p^{(\vnu)}(i,j) = \pi_{j} p^{(\vnu)}(j,i) \quad \text{ MLN (Defn. 4.5.3.) }.
+    \end{align*}
+
+    In this case, we have that
+    \begin{align*}
+            p^{(\vpi)}(i, j) = p^{(\vnu)}(i, j) / \pi_{j} = p^{(\vnu)}(j,i) / \pi_{i}.
+    \end{align*}
+
+    (e) In the case that we're working with a deterministic map $S$, the transition matrix is given by 
+        \begin{align*}
+        p(i,j) = \Prob( X_{k+1} = j \mid X_{k} = i ) 
+        =
+        \begin{cases}
+            1, &\text{ if } S(i) = j\\
+            0, &\text{ otherwise.}
+        \end{cases}
+    \end{align*}
+    Suppose that this Markov chain has stationary distribution $\vpi = (1 / n , \ldots , 1 / n)$. Then it follows that
+    \begin{align*}
+        \frac{1}{n} \sum_{j\in \Omega} p(i,j) = \frac{1}{n}, \text{ for all } i.
+    \end{align*}
+    This can only hold if each column has percisely one 1 in it due to our definition of $p(i,j)$. This means that the matrix $P$ is invertible as it is similar to the identity matrix and the underlying map $S$ must be a bijection.
+
+    Supposing that $S$ is a bijection, we have that for every $i$ there is exactly one $j$ such that $S(i) = j$ and for each $i$ there is exactly one $k$ so that $S(k) = i$. Therefore, in each column and row there is exactly one 1. Therefore, we have that
+    \begin{align*}
+            \frac{1}{n} \sum_{j\in \Omega} p(i,j) = \frac{1}{n},
+    \end{align*}
+    so $\vpi$ is a stationary distribution. Irreducibility in the sense of the deterministic map is the same as saying there are no cycles $S^{k}(i)$ with $k < n$ for any $i\in\bbN$. That is, there are no smaller subcyles of period $k < n$. 
+\end{sol}
+
+\newpage
+
+\begin{exer}
+ Let $W(t)$ be a standard Brownian motion.  Introducing a function
+of the Brown motion 
+\[
+           \tilde{W}(s) = (1-s) W\left(\frac{s}{1-s}\right), \  \  0< s < 1.
+\]
+Compute its expected value, variance, and covariance function
+\[
+                     \Cov\Big[\tilde{W}(s_1),\tilde{W}(s_2)\Big], \  \
+        0 < s_1 < s_2 < 1.
+\]
+$\tilde{W}(s)$ is known as a {\em Brownian bridge}.
+\end{exer}
+
+\begin{sol}
+Begining with the expectation, we have that
+\begin{align*}
+    \Expect[\tilde{W}(s)] &= (1-s) \Expect \left[W\left(\frac{s}{1-s}\right)\right]\\ 
+                          &= (1 - s) \cdot 0 = 0,
+\end{align*}
+since $W$ is a standard Brownian motion. Next up is variance
+\begin{align*}
+    \Var[ \tilde{W}(s)] &= (1 - s)^{2} \Var\left[ W\left( \frac{s}{1 - s}\right) \right]\\
+                        &= (1 - s)^{2} \left( \frac{s}{1 - s} \right)\\
+                        &= s(1 - s),
+\end{align*}
+where we've used that $W$ is a standard Brownian motion.
+Now to compute the covariance. Assuming $0 < s_{1} < s_{2} < 1$, we have that
+\begin{align*}
+    \Cov\left[\tilde{W}(s_{1}), \tilde{W}(s_{2})\right] &= (1-s_{1})(1-s_{2}) \Cov\left[ W\left( \frac{s_{1}}{1-s_{1}}\right), W\left( \frac{s_{2}}{1-s_{2}} \right)\right]\\
+                                                        &= (1-s_{1})(1-s_{2}) \frac{s_{1}}{1-s_{1}}\\
+                                                        &=s_{1} (1-s_{2}),
+\end{align*}
+where we've used that $W$ is a standard Brownian motion and that $s_{1} / (1 - s_{1}) < s_{2} / (1 - s_{2})$.
+\end{sol}
+\newpage
+
+\begin{exer}
+$W(t)$ is a standard Brownian motion.
+
+(a) Let $c>0$ a constant.
+Show that the procss defined by $B(t)=cW(t/c^2)$ is a standard 
+Brownian motion.
+
+(b) For $t=n=0,1,\cdots$, show that $W^2(n)-n$ is a discrete time martingale.
+\end{exer}
+
+\begin{sol}
+    (a) First, we have that  $B(0) = c W(0) = 0$. Taking $0 \leq r < s < t < u < \infty$, we have that
+    \begin{align*}
+        (B(u) - B(t)) \text{ independent } (B(s) - B(r))
+    \end{align*}
+    as this is just a constant scaling of a standard Brownian motion which satisfies this independent increments property.
+    Next for $0\leq r < s$,
+    \begin{align*}
+        B(s) - B(r) &= c (W(s  / c^{2}) - W(r / c^{2}))\\
+                    &\sim  \text{Normal}(0, s-r),
+    \end{align*}
+    where we've used that for a standard Brownian motion $W$, $W(s  / c^{2}) - W(r / c^{2})$ has distribution $\text{Normal}(0, (s - r) / c^{2})$. The map $t \mapsto B(t)$ is continuous for all $\omega$ since it is just composotion with continuous functions $t \mapsto t / c^{2}$ and $ x\mapsto cx$ with the individual $B(t)(\omega)$ which are continuous in $t$ themselves.
+
+    (b) Let $M_{n} = W^{2}(n) - n$ and $\calF_{n}$ be the filtration up to time $n$. We then have that
+    \begin{align*}
+        \Expect[M_{n+1} - M_{n} \mid \calF_{n}] &= \Expect[W^{2}(n+1) - W^{2}(n-1)\mid \calF_{n}] - 1\\
+                                                &= \Expect[ (W(n) + W(n+1) - W(n) )^{2} - W^{2}(n) \mid \calF_{n} ] - 1\\
+                                                &= \Expect[ 2 W(n)[ W(n+1) - W(n) ] + (W(n+1) - W(n))^{2}  \mid \calF_{n}] -1.
+    \end{align*}
+    We'll now simplify this using the choice of filtration, so that
+    \begin{align*}
+        \Expect[M_{n+1} - M_{n} \mid \calF_{n}] &= 2 W(n) \Expect[ W(n+1) - W(n)] + \Expect[ (W(n+1) - W(n))^{2}] - 1\\
+                                                &= 0 + 1 - 1\\
+                                                &= 0,
+    \end{align*}
+    where we've used that $W(n + 1) - W(n) \sim \text{Normal}(0,1)$.
+\end{sol}
+
+\newpage
+
+\begin{exer}
+ $W(t)$ is a standard Brownian motion.
+What is the characteristic function of $W(N_t)$ where $N_t$ is a Poisson process
+with intensity $\lambda$, and the Brownian motion $W(t)$ is independent of
+the Poisson process $N_t$.
+\end{exer}
+
+\begin{sol}
+    Write as sum of normals up to $N_{t}$? We'll probably use theorem 3.1.9.
+    Writing that $Z_{t} = W(N_{t})$, we have that the characteristic function of $Z_{t}$ can be written as
+    \begin{align*}
+        \phi_{Z_{t}}(u) = \Expect[ e^{iu W(N_{t})}] = \Expect\left[ \sum_{n=0}^{\infty} e^{iu W(m)} 1_{N_{t} = n} \right].
+    \end{align*}
+    By the independence of $N_{t}$ and $W(t)$, we have that
+    \begin{align*}
+        \phi_{Z_{t}}(u) &= \sum_{n=0}^{\infty} \Expect\left[e^{iu W(n)}\right] \Prob(N_{t} = n)\\
+                        &= \sum_{n=0}^{\infty} e^{-n u^{2} / 2} \cdot \Prob(N_{t} = n)\\
+                        &=\sum_{n=0}^{\infty} e^{-n u^{2} / 2} \cdot \frac{(\lambda t)^{n}}{n!} e^{-\lambda t}.
+    \end{align*}
+    where above we've used that $W(n) \sim \text{Normal}(0, n)$ and its corresponding characteristic function. Additionally, we've used that $N_{t} \sim \text{Pois}(\lambda t)$. We can try to simplify this as
+    \begin{align*}
+        \phi_{Z_{t}}(u) &= \sum_{n=0}^{\infty} e^{-n u^{2} / 2} \cdot \frac{(\lambda t)^{n}}{n!} e^{-\lambda t}\\
+                        &= e^{-\lambda t} \sum_{n=0}^{\infty} \frac{(\lambda t)^{n}}{n!} e^{-n u^{2} / 2}.
+    \end{align*}
+    I don't know if the sum can be evaluated to a closed form or to the characteristic function of a familiar distribution, so I did not proceed further.
+\end{sol}
+
+\newpage
+
+\begin{exer}
+ The $n^{th}$ variation of a function $f$, over the 
+interval $[0,T]$ is defined as 
+\[
+   V_T(n,f) := \lim_{\|\Pi\|\to 0} \sum_{j=0}^{m-1} 
+      \Big| f(t_{j+1})-f(t_j) \Big|^n, 
+\]
+in which $\Pi=\{0=t_0, t_1,\cdots, t_n=T\}$ is a {\em partition} of the $[0,T]$, and 
+\[
+         \|\Pi\| = \max_{0\le j\le n-1}\big( t_{j+1}-t_j\big).
+\]
+Show that $V_T(1,W)=\infty$ and $V_T(3,W)=0$, where $W$ is a realization
+of the Brownian motion.
+\end{exer}
+
+\begin{sol}
+    Suppose that the first variation of $B$ over $[0,T]$ is a finite number $C$ i.e.
+    \begin{equation*}
+        V_{T}(1, W) = C.
+    \end{equation*}
+    We can then write that
+    \begin{equation*}
+        \sum_{j-0}^{m-1}[ W(t_{j+1}) - W(t_{j})]^{2} \leq \max_{0\leq j \leq m-1} \abs{W(t_{j+1}) - W(t_{j})} \sum_{j=0}^{m-1} \abs{W(t_{j+1}) - W(t_{j})}.
+    \end{equation*}
+    Notice that the last term is similar to the first variation for a fixed partition $\Pi$. Since $W$ is contious on a compact interval, we know that
+    \begin{equation*}
+        \max_{0\leq j \leq m-1} \abs{W(t_{j+1}) - W(t_{j})} \xrightarrow{\norm{\Pi} \to 0} 0.
+    \end{equation*}
+    Since the first variation is finite in the limit as $\norm{\Pi} \to 0$, we then have that
+    \begin{align*}
+        V_{T}(2, W) =  \lim_{\norm{\Pi} \to 0} \sum_{j-0}^{m-1}[ W(t_{j+1}) - W(t_{j})]^{2}  = 0.
+    \end{align*}
+    This is in contradiction with thereom 7.3.3. (MLN) which states that $V_{T}(2, W) = T$ almost surely, so we have that $V_{T}(1, W)$ must be infinite  (almost surely).
+\end{sol}
+
+\newpage
+
+\begin{exer}
+ (a) Show the transition probability density function for standard
+Brownian motion $W(t)$: 
+\[
+         \frac{1}{d x}\Pr\Big\{ x< W(t+s)\le x+ d x \Big| W(s)=y\Big\} = 
+            \frac{1}{\sqrt{2\pi t}} e^{-\frac{(x-y)^2}{2t}}
+= p(x;t|y),
+\]
+in which $t,s>0$.
+
+(b) Show that $p(x;t|y)$ satisfies the following two linear partial differential
+equations:
+\[
+       \frac{\partial p(x;t|y)}{\partial t} = \frac{1}{2}\left(
+           \frac{\partial^2 p(x;t|y)}{\partial x^2}\right) \  \text{ and } \
+    \frac{\partial p(x;t|y)}{\partial t} = \frac{1}{2}\left(
+           \frac{\partial^2 p(x;t|y)}{\partial y^2}\right).
+\]
+\end{exer}
+
+\begin{sol}
+    (a) We have that 
+    \begin{equation*}
+        W(t + s) - W(s) \sim \text{Normal}(0, t)
+    \end{equation*}
+    as $W$ is a standard Brownian motion. We can then write for some $\Delta x \neq 0$,
+    \begin{align*}
+        \Prob( x < W(t + s) \leq x + \Delta x  \mid W(s) = y) &= \Prob(x - y < W(t + s) - W(s) < x + \Delta x - y )\\
+                                                        &= \Prob(x - y < Z < x - y + \Delta x),
+    \end{align*}
+    where $Z$ is $\text{Normal}(0,t)$. Diving this by $\Delta x$ and taking the limit as $\Delta x \to 0$, we have that
+    \begin{align*}
+        \frac{1}{d x}\Prob\Big\{ x< W(t+s)\le x+ d x \Big| W(s)=y\Big\} = f_{Z}(x - y), 
+    \end{align*}
+    where $f_{Z}$ is the density of $Z$ i.e.
+    \begin{align*}
+        \frac{1}{d x}\Prob\Big\{ x< W(t+s)\le x+ d x \Big| W(s)=y\Big\} = \frac{1}{\sqrt{2\pi t}}\exp\left( -\frac{(x-y)^{2}}{2t} \right) = p(x,t \mid y).
+    \end{align*}
+
+    (b) We start by computing the partial derivative with respect to $t$.
+    \begin{align*}
+        \frac{\partial }{\partial t} \left( p(x,t \mid y) \right) &=   \frac{\partial }{\partial t} \left( \frac{1}{\sqrt{2\pi t}} \right) \cdot e^{- \frac{(x-y)^{2}}{2t}} + \frac{1}{\sqrt{2\pi t}} \frac{\partial }{\partial t} \left(  e^{- \frac{(x-y)^{2}}{2t}}  \right)\\
+                                                                  &= - \frac{1}{2t \sqrt{2\pi t}} e^{- \frac{(x-y)^{2}}{2t}} + \frac{(x-y)^{2}}{2t^{2}\sqrt{2\pi t}} e^{- \frac{(x-y)^{2}}{2t}}.
+    \end{align*}
+    Next computing the first partial derivative with respect to $x$, we have
+    \begin{align*}
+        \frac{\partial }{\partial x} \left( p(x,t \mid y) \right) = -\frac{(x-y)}{t\sqrt{2\pi t}} e^{- \frac{(x-y)^{2}}{2t}}.
+    \end{align*}
+    Differentiating this again with respect to $x$ and using the product rule, we see 
+    \begin{align*}
+        \frac{\partial^{2} }{\partial x^{2}} \left( p(x,t \mid y) \right) &= -\frac{1}{t\sqrt{2\pi t}}\left( -\frac{(x-y)^{2}}{t} e^{- \frac{(x-y)^{2}}{2t}} + e^{- \frac{(x-y)^{2}}{2t}} \right)\\
+                                                                          &= - \frac{1}{t \sqrt{2\pi t}} e^{- \frac{(x-y)^{2}}{2t}} + \frac{(x-y)^{2}}{t^{2}\sqrt{2\pi t}} e^{- \frac{(x-y)^{2}}{2t}}.
+    \end{align*}
+    From our computations, it is clear that
+    \begin{align*}
+        \frac{\partial }{\partial t} \left( p(x,t \mid y) \right)  = \frac{1}{2}  \frac{\partial^{2} }{\partial x^{2}} \left( p(x,t \mid y) \right).
+    \end{align*}
+    The second desired equation follows from the fact that $x$ and $y$ are interchangable in the formula for $p(x,t\mid y)$. Therefore,
+    \begin{align*}
+        \frac{\partial^{2} }{\partial x^{2}} \left( p(x,t \mid y) \right) &= \frac{\partial^{2} }{\partial y^{2}} \left( p(x,t \mid y) \right)\\
+        \frac{\partial }{\partial t} \left( p(x,t \mid y) \right)  &= \frac{1}{2}  \frac{\partial^{2} }{\partial y^{2}} \left( p(x,t \mid y) \right).
+    \end{align*}
+
+\end{sol}
+
+\end{document}

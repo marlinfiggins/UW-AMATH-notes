@@ -1,0 +1,310 @@
+%Preamble
+\documentclass[12pt]{article}
+\usepackage{fancyhdr}
+\usepackage{extramarks}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{amsrefs}
+\usepackage{amsfonts}
+\usepackage{mathrsfs}
+\usepackage{mathtools}
+\usepackage[mathcal]{eucal} %% changes meaning of \mathcal
+\usepackage{enumerate}
+\usepackage[shortlabels]{enumitem}
+\usepackage{verbatim} %% includes comment environment
+\usepackage{hyperref}
+\usepackage[capitalize]{cleveref}
+\crefformat{equation}{~(#2#1#3)}
+\usepackage{caption, subcaption}
+\usepackage{graphicx}
+\usepackage{fullpage} %%smaller margins
+\usepackage[all,arc]{xy}
+\usepackage{mathrsfs}
+
+\hypersetup{
+    linktoc=all,     % set to all if you want both sections and subsections linked
+}
+
+\topmargin=-0.45in
+\evensidemargin=0in
+\oddsidemargin=0in
+\textwidth=6.5in
+\textheight=9.0in
+\headsep=0.25in
+\setlength{\headheight}{16pt}
+
+\linespread{1.1}
+
+\pagestyle{fancy}
+\lhead{\Name}
+\chead{\hwTitle}
+\rhead{\hwClass}
+\lfoot{\lastxmark}
+\cfoot{\thepage}
+
+\renewcommand\headrulewidth{0.4pt}
+\renewcommand\footrulewidth{0.4pt}
+
+\setlength\parindent{0pt}
+
+%% Title Info
+\newcommand{\hwTitle}{HW \# 2}
+\newcommand{\hwDueDate}{Jan 29, 2021}
+\newcommand{\hwClass}{AMATH 562}
+\newcommand{\hwClassTime}{}
+\newcommand{\hwClassInstructor}{}
+\newcommand{\Name}{\textbf{Marlin Figgins}}
+
+
+%% MATH MACROS
+\newcommand{\bbF}{\mathbb{F}}
+\newcommand{\bbN}{\mathbb{N}}
+\newcommand{\bbQ}{\mathbb{Q}}
+\newcommand{\bbR}{\mathbb{R}}
+\newcommand{\bbZ}{\mathbb{Z}}
+\newcommand{\bbC}{\mathbb{C}}
+\newcommand{\Prob}{\mathbb{P}}
+\newcommand{\calF}{\mathcal{F}}
+\newcommand{\abs}[1]{ \left| #1 \right| }
+\newcommand{\diff}[2]{\frac{d #1}{d #2}}
+\newcommand{\infsum}[1]{\sum_{#1}^{\infty}}
+\newcommand{\norm}[1]{ \left|\left| #1 \right|\right| }
+\newcommand{\eval}[1]{ \left. #1 \right| }
+\newcommand{\Expect}{\mathbb{E}}
+\newcommand{\Var}{\text{Var}}
+\renewcommand{\phi}{\varphi}
+\renewcommand{\emptyset}{\O}
+\let\vec\mathbf
+\def\mA{{\bf A}}
+\def\vT{{\bf T}}
+\def\vx{{\bf x}}
+\def\vy{{\bf y}}
+\def\rd{{\rm d}}
+
+%--------Theorem Environments--------
+%theoremstyle{plain} --- defaultx
+\newtheorem{thm}{Theorem}[section]
+\newtheorem{cor}[thm]{Corollary}
+\newtheorem{prop}[thm]{Proposition}
+\newtheorem{lem}[thm]{Lemma}
+\newtheorem{conj}[thm]{Conjecture}
+\newtheorem{quest}[thm]{Question}
+
+\theoremstyle{definition}
+\newtheorem{defn}[thm]{Definition}
+\newtheorem{defns}[thm]{Definitions}
+\newtheorem{con}[thm]{Construction}
+\newtheorem{exmp}[thm]{Example}
+\newtheorem{exmps}[thm]{Examples}
+\newtheorem{notn}[thm]{Notation}
+\newtheorem{notns}[thm]{Notations}
+\newtheorem{addm}[thm]{Addendum}
+
+% Environments for answers and solutions
+\newtheorem{exer}{Exercise}
+\newtheorem{sol}{Solution}
+
+\theoremstyle{remark}
+\newtheorem{rem}[thm]{Remark}
+\newtheorem{rems}[thm]{Remarks}
+\newtheorem{warn}[thm]{Warning}
+\newtheorem{sch}[thm]{Scholium}
+
+\makeatletter
+\let\c@equation\c@thm
+\makeatother
+
+\begin{document}
+
+\begin{exer}
+    Let $X_{1}$, $X_{2}$, $X_{3}, \ldots$ be a sequence of random variables such that
+    \begin{equation*}
+        X_{n} \sim \text{Geo}(\lambda / n) \text{ for } n \in \bbN, 
+    \end{equation*}
+    where $\lambda > 0$ is a constant. Define a new sequence as 
+    \begin{align*}
+    Y_{n} = \frac{X_{n}}{n}.
+    \end{align*}
+    Show that $Y_{n}$ converges in distribution to $\text{Exponential}(\lambda)$.
+\end{exer}
+
+\begin{sol}
+    Our goal is to show that
+    \begin{align*}
+    \abs{\Prob(Y_{n} < x) - \Prob(Y < x)} \rightarrow_{n \to \infty} 0,
+    \end{align*}
+    where $Y$ has $\text{Exponential}(\lambda)$ distribution. We begin by computing
+    \begin{align*}
+        \Prob(Y_{n} > x) &= \Prob(X_{n} > nx)\\
+                         &= \Prob(X_{n} > \lfloor nx \rfloor)
+    \end{align*}
+    since the geometric distribution only has mass at integers. Using that the $X_{n}$ has $\text{Geo}(\lambda / n)$ distribution, we see that
+     \begin{align*}
+         \Prob(Y_{n} > x) &= \left(1 - \frac{\lambda}{n}\right)^{\lfloor nx \rfloor}\\ 
+                          &= \left(1 - \frac{\lambda}{n}\right)^{nx} \left(1 - \frac{\lambda}{n}\right)^{\lfloor nx \rfloor - nt}.
+    \end{align*}
+    Notice that $0\geq \lfloor nx \rfloor - nt \geq 1$, so that in the limit the right hand term converges to $1$. The lefthand term converges to $e^{-\lambda x}$. Therefore, we have that
+
+    \begin{align*}
+        \lim_{n\to \infty} \abs{\Prob(Y_{n} > x) - \Prob(Y > x)} = e^{-\lambda x} - e^{-\lambda x} = 0.
+    \end{align*}
+    Therefore $Y_{n}$ converges in distribution to $Y \sim \text{Exponential}(\lambda)$.
+\end{sol}
+
+\newpage
+
+\begin{exer}
+    Consider the sample space $\Omega = [0,1]$ with uniform probability. Define the sequence $X _{n}$, $n\in\bbN$ as
+    \begin{equation*}
+        X_{n}(\omega) = \frac{n}{n+1} \omega + (1 - \omega)^{n}.
+    \end{equation*}
+    Also define $X(\omega) = \omega$. Show that $X_{n}$ converges almost surely to $X$.
+\end{exer}
+
+\begin{sol}
+    We begin by writing
+    \begin{equation*}
+        \abs{ X_{n}(\omega) - X(\omega)} = \abs{(1 - \omega)^{n} - \frac{1}{n+1} \omega}.
+    \end{equation*}
+    Taking the limit as $n\to \infty$, we see that
+    \begin{align*}
+    \lim_{n\to\infty} \abs{ X_{n}(\omega) - X(\omega)} 
+    =
+    \begin{cases}
+        1 \text{ if } \omega = 0\\
+        0 \text{ otherwise.}
+    \end{cases}
+    \end{align*}
+    Therefore, 
+    \begin{equation*}
+        \Prob( \lim_{n\to \infty} \abs{ X_{n}(\omega) - X(\omega)}  = 0 ) = \Prob( \omega \in (0, 1] ) = 1.
+    \end{equation*}
+    Therefore $X_{n}$ converges almost surely to $X$.
+\end{sol}
+
+\newpage
+
+\begin{exer}
+    Show that if $X_{n}$ is any sequence of random variables, then there are constants $c_{n} \to \infty$ so that $X_{n}/c_{n} \to^{\text{a.s.}} 0$.
+\end{exer}
+
+\begin{sol}
+For each $X_{n}$ pick $a_{n} > 0$ so that
+\begin{align*}
+    \Prob( \abs{X_{n}} \geq a_{n} ) = \Prob( \abs{X_{n}/ a_{n}} \geq 1 ) < \frac{1}{2^{n}}.
+\end{align*}
+Now defining $c_{n} = \max \{a_{n}^{2}, c_{n - 1} + 1 \}$ with $c_{0} = 1$. This sequence is $c_{n}$ is a positive increasing sequence with $c_{n} \to \infty$. Now we'll consider the events $ \{ \abs{X_{n} / c_{n}} \geq \epsilon \}$ for any $\epsilon > 0$. We have that
+\begin{equation*}
+    \sum_{n = 1}^{\infty} \Prob( \abs{X_{n} / c_{n}} \geq \epsilon ) =  \sum_{n = 1}^{\infty} \Prob( \abs{X_{n}} \geq \abs{c_{n}}\epsilon ) \leq  \sum_{n = 1}^{\infty} \Prob( \abs{X_{n}} \geq \abs{a_{n}}^{2}\epsilon ),
+\end{equation*}
+where we've used that $c_{n} \geq a_{n}^{2}.$ From this it follows that
+\begin{align*}
+\sum_{n = 1}^{\infty} \Prob( \abs{X_{n} / c_{n}} \geq \epsilon ) \leq \sum_{n = 1}^{\infty} \Prob( \abs{X_{n} / a_{n}} \geq a_{n} \epsilon ).
+\end{align*}
+For any $\epsilon > 0$, there will exist $N$ so that for $n > N$,  $a_{n} \epsilon > 1$. This means that 
+\begin{align*}
+    \sum_{n = 1}^{\infty} \Prob( \abs{X_{n} / c_{n}} \geq \epsilon ) \leq \sum_{n = 1}^{N} \Prob( \abs{X_{n} / a_{n}} \geq a_{n} \epsilon ) + \sum_{n=N+1}^{\infty} \frac{1}{2^{n}} < \infty.
+\end{align*}
+Therefore by Borel-Cantelli, we have that
+\begin{align*}
+    \Prob(  \abs{X_{n} / c_{n}} \geq \epsilon \text{ i.o.}) = 0
+\end{align*}
+for all $\epsilon > 0$. This tells us that
+\begin{align*}
+    \Prob( \lim_{n\to \infty}\abs{X_{n} / c_{n}} = 0 ) = 1,
+\end{align*}
+so $X_{n} / c_{n}$ converges almost surely to 0.
+\end{sol}
+
+\newpage
+
+\begin{exer}
+    Let $X_{n}$ be independent with $\Prob(X_{n} = 1) = p_{n}$ and $\Prob(X_{n} = 0) = 1 - p_{n}$. Show that 
+    \begin{enumerate}[a)]
+        \item $X_{n} \to^{\Prob} 0$ if and only if $p_{n} \to 0$.
+        \item $X_{n} \to^{\text{a.s.}} 0$ if and only if $\sum_{n} p_{n} < \infty$.
+    \end{enumerate} 
+\end{exer}
+
+\begin{sol}
+    a) Suppose that for all $\epsilon > 0$, 
+    \begin{equation*}
+        \lim_{n\to \infty} \Prob( \abs{X_{n}} > \epsilon) = 0.
+    \end{equation*}
+    Then for $\epsilon \in (0, 1)$, we have that 
+     \begin{equation*}
+         \Prob( \abs{X_{n}} > \epsilon) = p_{n}.
+    \end{equation*}
+    Therefore, we have that 
+    \begin{equation*}
+    \lim_{n\to \infty} p_{n} = 0.
+    \end{equation*}
+    The reverse direction follows since once again 
+    \begin{equation*}
+        p_{n} = \Prob( \abs{X_{n}} > \epsilon), \text{ when }\epsilon \in (0,1).
+    \end{equation*}
+
+
+    b) We'll consider the event 
+    \begin{equation*}
+        \Prob( \lim_{n\to\infty} \abs{X_{n}} = 0 ).
+    \end{equation*}
+    In the case this event has probability one, then $\Prob( \abs{X_{n}} > \epsilon \text{ i.o}) = 0$ for any $\epsilon \in (0,1)$. As these events are independent, we can use to the contrapositive of Borel-Cantelli (MLN 6.6.1) to see that
+    \begin{align*}
+       \Prob( \abs{X_{n}} > \epsilon \text{ i.o}) < 1 \implies \sum_{n=1}^{\infty} \Prob(\abs{X_{n}} > \epsilon) < \infty.
+    \end{align*}
+    Due to our choice of $\epsilon < 1$, we have that
+     \begin{equation*}
+         \sum_{n=1}^{\infty} p_{n} = \sum_{n=1}^{\infty} \Prob( X_{n} = 1) = \sum_{n=1}^{\infty} \Prob(\abs{X_{n}} > \epsilon) < \infty.
+    \end{equation*}
+
+    In the case that 
+    \begin{equation*}
+        \sum_{n=1}^{\infty} p_{n} = \sum_{n=1}^{\infty} \Prob( X_{n} = 1) < \infty
+    \end{equation*}
+    Borel-Cantell tells us that
+    \begin{equation*}
+        \Prob( X_{n} = 1 \text{ i.o.} ) = 0.
+    \end{equation*}
+    Therefore, 
+    \begin{equation*}
+        \Prob( \lim_{n\to \infty } \abs{X_{n}} = 0 ) = 1,
+    \end{equation*}
+    so  $X_{n}$ converges to 0 almost surely.
+
+
+\end{sol}
+
+\newpage
+
+\begin{exer}
+    Show that a sequence of random variables $X_{1}, X_{2}, \ldots$ for which
+    \begin{align*}
+        \Prob(X_{n} = 1) = \frac{1}{n}, \quad \Prob(X_{n} = 0) = 1 - \frac{1}{n}
+    \end{align*}
+    has limit $X_{n} \to^{\Prob} 0$ but the convergence is not almost surely. While your proof needs not to be perfectly rigorous, you are not allowed to use theorems from this class. In other words, show all the steps in your proof.
+\end{exer}
+
+\begin{sol}
+
+    For simplicity, we assume that the $X_{n}$ are independent.We can see that the $X_{n}$ converge to 0 in probability because for $\epsilon \in (0,1)$,
+\begin{equation*}
+    \Prob(\abs{X_{n}} > \epsilon) =  \Prob(X_{n} = 1) = \frac{1}{n} \xrightarrow{n \to \infty} 0.
+\end{equation*}
+In what follows, we'll show that work with the events $\{ X_{n} = 0 \}$. In order for this to not converge almost surely, we would need to show that $\Prob( X_{n} = 1 \text{ i.o.} ) > 0$ i.e. there is a some set of non-zero measure on which $X_{n} = 1$ infinitely often. That is, for a fixed $m$, we'll begin by looking at the probability that $X_{n} = 0$ for all $n \geq m$
+\begin{equation*}
+    \Prob(X_{n} = 0 \text{ for all } n \geq m) = \prod_{n = m}^{\infty} \Prob(X_{n} = 0) = \prod_{n=m}^{\infty} \left(1 - \frac{1}{n}\right) = 0,
+\end{equation*} 
+where we've used that the $X_{n}$ are independent. This implies 
+\begin{equation*}
+    \Prob( X_{n} = 1 \text{ for some } n\geq m) = 1 -  \Prob(X_{n} = 0 \text{ for all } n \geq m)  = 1.
+\end{equation*}
+This means there is zero probability that any sequence can converge after a fixed $m$ since there will eventually be $X_{n} = 1$. In short, this means that
+\begin{equation*}
+    \Prob( X_{n} = 0 \text{ i.o} ) = 0,
+\end{equation*}
+so that $X_{n}$ does not converge almost surely to 0.
+\end{sol}
+
+\end{document}
