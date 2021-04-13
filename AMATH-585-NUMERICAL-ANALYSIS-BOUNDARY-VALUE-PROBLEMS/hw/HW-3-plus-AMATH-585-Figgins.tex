@@ -1,0 +1,199 @@
+%Preamble
+\documentclass[12pt]{article}
+\usepackage{fancyhdr}
+\usepackage{extramarks}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{amsrefs}
+\usepackage{amsfonts}
+\usepackage{mathrsfs}
+\usepackage{mathtools}
+\usepackage[mathcal]{eucal} %% changes meaning of \mathcal
+\usepackage{enumerate}
+\usepackage[shortlabels]{enumitem}
+\usepackage{verbatim} %% includes comment environment
+\usepackage{hyperref}
+\usepackage[capitalize]{cleveref}
+\crefformat{equation}{~(#2#1#3)}
+\usepackage{caption, subcaption}
+\usepackage{graphicx}
+\usepackage{fullpage} %%smaller margins
+\usepackage[all,arc]{xy}
+\usepackage{mathrsfs}
+
+\hypersetup{
+    linktoc=all,     % set to all if you want both sections and subsections linked
+}
+
+\topmargin=-0.45in
+\evensidemargin=0in
+\oddsidemargin=0in
+\textwidth=6.5in
+\textheight=9.0in
+\headsep=0.25in
+\setlength{\headheight}{16pt}
+
+\linespread{1.0}
+
+\pagestyle{fancy}
+\lhead{\Name}
+\chead{\hwClass: \hwTitle}
+\rhead{\hwDueDate}
+\lfoot{\lastxmark}
+\cfoot{\thepage}
+
+\renewcommand\headrulewidth{0.4pt}
+\renewcommand\footrulewidth{0.4pt}
+
+\setlength\parindent{0pt}
+
+%% Title Info
+\newcommand{\hwTitle}{HW \# 3 +}
+\newcommand{\hwDueDate}{Feb 3, 2020}
+\newcommand{\hwClass}{AMATH 585}
+\newcommand{\hwClassTime}{}
+\newcommand{\hwClassInstructor}{}
+\newcommand{\Name}{\textbf{Marlin Figgins}}
+
+
+%% MATH MACROS
+\newcommand{\bbF}{\mathbb{F}}
+\newcommand{\bbN}{\mathbb{N}}
+\newcommand{\bbQ}{\mathbb{Q}}
+\newcommand{\bbR}{\mathbb{R}}
+\newcommand{\bbZ}{\mathbb{Z}}
+\newcommand{\bbC}{\mathbb{C}}
+\newcommand{\abs}[1]{ \left| #1 \right| }
+\newcommand{\diff}[2]{\frac{d #1}{d #2}}
+\newcommand{\infsum}[1]{\sum_{#1}^{\infty}}
+\newcommand{\norm}[1]{ \left|\left| #1 \right|\right| }
+\newcommand{\eval}[1]{ \left. #1 \right| }
+\newcommand{\Expect}[1]{\mathbb{E}\left[#1 \right]}
+\newcommand{\Var}[1]{\mathbb{V}\left[#1 \right]}
+\renewcommand{\vec}[1]{\mathbf{#1}}
+
+\renewcommand{\phi}{\varphi}
+\renewcommand{\emptyset}{\O}
+
+%--------Theorem Environments--------
+%theoremstyle{plain} --- defaultx
+\newtheorem{thm}{Theorem}[section]
+\newtheorem{cor}[thm]{Corollary}
+\newtheorem{prop}[thm]{Proposition}
+\newtheorem{lem}[thm]{Lemma}
+\newtheorem{conj}[thm]{Conjecture}
+\newtheorem{quest}[thm]{Question}
+
+\theoremstyle{definition}
+\newtheorem{defn}[thm]{Definition}
+\newtheorem{defns}[thm]{Definitions}
+\newtheorem{con}[thm]{Construction}
+\newtheorem{exmp}[thm]{Example}
+\newtheorem{exmps}[thm]{Examples}
+\newtheorem{notn}[thm]{Notation}
+\newtheorem{notns}[thm]{Notations}
+\newtheorem{addm}[thm]{Addendum}
+
+% Environments for answers and solutions
+\newtheorem{exer}{Exercise}
+\newtheorem{sol}{Solution}
+
+\theoremstyle{remark}
+\newtheorem{rem}[thm]{Remark}
+\newtheorem{rems}[thm]{Remarks}
+\newtheorem{warn}[thm]{Warning}
+\newtheorem{sch}[thm]{Scholium}
+
+\makeatletter
+\let\c@equation\c@thm
+\makeatother
+
+\begin{document}
+
+\begin{exer}(Finite elements)
+
+  Use the Galerkin finite element method with continuous piecewise linear basis functions to solve the problem
+  \begin{align}
+    - \frac{d}{dx} \left( (1 + x^{2}) \frac{du}{dx}\right) = f(x), \quad 0 \leq x \leq 1\\
+    u(0) = 0, u(1) = 0
+  \end{align}
+
+  \begin{enumerate}[(a)]
+    \item Derive the matrix equation that you will need to solve for this problem.
+    \item Write a code to solve this set of equation. You can test your code on a problem where you know the solution by choosing a function $u(x)$ that satisfies the boundary conditions and determining what $f(x)$ must be in order for $u(x)$ to satisfy the differential equation. Try $u(x) = x(1-x)$. Then $f(x) = 2 (3x^{2} - x + 1)$.
+    \item Try several different values for the mesh size $h$. Based on your results, what would you say is the order of accuracy of the Galerkin method with continuous piecewise linear basis functions?
+    \item Now try a non-uniform mesh spacing, say, $x_{i} = (i/(m+1))^{2}$, $i = 0, 1, m+1$. Do you see the same order of accuracy, if $h$ is defined as the maximum mesh spacing $\max_{i} (x_{_{i+1}} - x_{i})$.
+          \item Suppose the boundary conditions were $u(0) = a$ and $u(1) = b$. Show how you would represent the approximate solution $\hat{u}(x)$ as a linear combination of hat functions and how the matrix equation in part (a) would change.
+  \end{enumerate}
+\end{exer}
+
+\begin{sol}
+    (a) We begin by writing the weak form of the equation
+    \begin{equation*}
+        -\int_{0}^{1} \frac{d}{dx}\Big( (1+x^{2}) u'(x)\Big) \phi(x) dx = \int_{0}^{1} f(x)\phi(x)dx
+    \end{equation*}
+    Integrating the left side by parts
+    \begin{equation*}
+        -\int_{0}^{1} \frac{d}{dx}\Big( (1+x^{2}) u'(x)\Big) \phi(x) dx  =  \int_{0}^{1} (1 + x^{2}) u'(x) \phi'(x)dx   -\Big[ (1+x^{2}) u'(x) \phi(x) \Big]_{0}^{1}.
+    \end{equation*}
+    This gives us 
+    \begin{equation*}
+    \int_{0}^{1} (1 + x^{2}) u'(x) \phi'(x)dx   -\Big[ (1+x^{2}) u'(x) \phi(x) \Big]_{0}^{1} = \int_{0}^{1} f(x)\phi(x)dx.
+    \end{equation*}
+    Writing $\phi$ as a sum of continuous piece-wise linear basis functions $\phi(x) = \sum_{i=1}^{n-1} d_{j} \phi_{i}(x)$ where $\phi_{i}$ is given by equation (5) of the finite element notes, we have that
+    \begin{equation*}
+ \Big[ (1+x^{2}) u'(x) \phi_{i}(x) \Big]_{0}^{1} = 0
+    \end{equation*}
+    since $\phi_{i}(x) = 0$ for all $i = 1, \ldots, n-1$. Therefore, using linearity and writing $u$ in terms of the basis $\phi_{j}$ we write 
+    \begin{equation*}
+        \sum_{j = 1}^{n-1} c_{j} \int_{0}^{1} (1 + x^{2}) \phi_{j}'(x) \phi_{i}'(x)dx = \int_{0}^{1} f(x)\phi_{i}(x)dx,
+    \end{equation*}
+    for any $i = 1, \ldots, n - 1$. We can represent this as
+    \begin{equation*}
+        \vec{A} \vec{c} = \vec{f},
+    \end{equation*}
+    where $\vec{c}$ is the vector of the coefficients to the $\phi_{i}$ expansion of $u$ and $\vec{f}$ contains has entries equal to the right hand side of the above equation and the entries of $A$ are given by
+\begin{equation*}
+ \int_{0}^{1} (1 + x^{2}) \phi_{j}'(x) \phi_{i}'(x)dx
+\end{equation*}
+    We'll now simplify the entires of $A$. Starting with the diagonal entries $a_{ii}$,
+    \begin{align*}
+        a_{ii} &= \int_0^1  (1 + x^{2}) \phi_{i}'(x)^{2} dx\\
+               &= \left(\frac{1}{x_{i} - x_{i-1}}\right)^{2}\int_{x_{i-1}}^{x_{i}} 1 + x^{2} dx 
+               + \left( \frac{1}{x_{i+1} - x_{i}} \right)^{2} \int_{x_{i}}^{x_{i+1}} 1 + x^{2} dx\\
+               &= \frac{1}{(x_{i} - x_{i-1})^{2}} \left( \frac{x_{i}^{3} - x_{i-1}^{3}}{3} +  x_{i} - x_{i-1} \right) + \frac{1}{(x_{i+1} - x_{i})^{2}} \left( \frac{x_{i+1}^{3} - x_{i}^{3}}{3} +  x_{i+1} - x_{i} \right) \\
+\end{align*}
+
+Since the $\phi_{i}$ and $\phi_{j}$ only overlap when $j = i \pm 1$ or $i = j$, we know that this matrix should be tridiagonal. Similarly, a look at the equation for $a_{ij}$ shows it is symmetric. Therefore, we can compute the remaining non-zero elements as follows:
+\begin{align*}
+    a_{i,i+1} = a_{i+1,i} &= \int_{0}^{1}  (1 + x)^{2} \phi_{i}'(x) \phi_{i+1}'(x) dx\\
+                          &= \frac{-1}{(x_{i+1} - x_{i})^{2}} \int_{x_{i}}^{x_{i+1}} (1 + x^{2})dx\\
+                          &=  \frac{-1}{(x_{i+1} - x_{i})^{2}} \left( \frac{x_{i+1}^{3} - x_{i}^{3}}{3} + x_{i+1} - x_{i} \right).
+\end{align*}
+
+With these equations, we can now solve them using code.
+
+(b) See appendix for plots and code.
+
+
+(c) I would say the accuracy is order $O(h^{2})$. As seen in the code appendix, halving $h$ (doubling $M$) leads to the error being multiplied by $1 / 4$. 
+
+(d) As shown in the code appendix, the order appears to be the same as in part (c).
+
+(e) In order to accommodate for non-zero boundary conditions, we would need to add two basis functions $\phi_{0}$ and $\phi_{n}$ which are just the same as all other $\phi_{i}$ but one-sided so that they stay in the desired interval $[0,1]$. That is,
+\begin{align*}
+    \phi_{0}(x) &= \frac{x_{1} - x}{x_{1} - x_{0}}, x\in[x_{0}, x_{1}]\\
+    \phi_{n}(x) &= \frac{x-x_{n-1}}{x_{n}-x_{n-1}}, x\in [x_{n-1}, x_{n}].
+\end{align*}
+We would then write that 
+\begin{equation*}
+    \hat{u}(x) = \sum_{j=0}^{n} c_{j} \phi_{j}(x).
+\end{equation*}
+Which in our matrix gives extra equations for these conditions
+\begin{align*}
+   a_{0,j} = a_{j,0} = \int_{0}^{1} (1 + x^{2}) \phi_{j}'(x) \phi_{0}'(x)dx -  \Big[ (1 + x^{2}) \phi_{j}'(x) \phi_{0}(x) \Big]_{0}^{1} = \int_{0}^{1} f(x) \phi_{0}(x)dx\\
+   a_{n,j} = a_{j,n} =  \int_{0}^{1} (1 + x^{2}) \phi_{j}'(x) \phi_{n}'(x)dx  - \Big[ (1 + x^{2}) \phi_{j}'(x) \phi_{n}(x) \Big]_{0}^{1} = \int_{0}^{1} f(x) \phi_{n}(x)dx
+\end{align*}
+\end{sol}
+\end{document}
